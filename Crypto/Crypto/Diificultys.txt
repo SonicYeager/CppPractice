@@ -1,0 +1,10 @@
+Reinfuchsen;
+Pointer konzept von *& verstehen;
+Bestimmen wo es sinnvoll ist Ausnahmen/Assertions für Fehlercodes einzusetzten;
+
+Der Code ist insgesamt etwas kürzer und besser lesbar geworden, allerdings sind einige fehler bzw
+potentielle fehlerstellen schwierieger zu identifiezieren;
+
+Assertions: Bereichsüberschreitung/nullptr zugriffe/falsche Logik/Ungültige Werte;
+Ausnahmen: Falsche Nutzereingaben; Netzwerkfehler sofern eine Laufzeitlösung möglich ist;
+Fehlercodes: Datei I/O Fehler/ Gerätestörungen oder sonstige probleme die nicht vom Benutzer verusacht werden!

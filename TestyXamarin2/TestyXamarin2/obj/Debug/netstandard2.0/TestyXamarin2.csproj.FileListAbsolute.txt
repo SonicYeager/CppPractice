@@ -1,0 +1,14 @@
+C:\Übungsprojekte\TestyXamarin2\TestyXamarin2\bin\Debug\netstandard2.0\TestyXamarin2.deps.json
+C:\Übungsprojekte\TestyXamarin2\TestyXamarin2\bin\Debug\netstandard2.0\TestyXamarin2.dll
+C:\Übungsprojekte\TestyXamarin2\TestyXamarin2\bin\Debug\netstandard2.0\ref\TestyXamarin2.dll
+C:\Übungsprojekte\TestyXamarin2\TestyXamarin2\bin\Debug\netstandard2.0\TestyXamarin2.pdb
+C:\Übungsprojekte\TestyXamarin2\TestyXamarin2\obj\Debug\netstandard2.0\TestyXamarin2.csprojAssemblyReference.cache
+C:\Übungsprojekte\TestyXamarin2\TestyXamarin2\obj\Debug\netstandard2.0\App.xaml.g.cs
+C:\Übungsprojekte\TestyXamarin2\TestyXamarin2\obj\Debug\netstandard2.0\MainPage.xaml.g.cs
+C:\Übungsprojekte\TestyXamarin2\TestyXamarin2\obj\Debug\netstandard2.0\TestyXamarin2.AssemblyInfoInputs.cache
+C:\Übungsprojekte\TestyXamarin2\TestyXamarin2\obj\Debug\netstandard2.0\TestyXamarin2.AssemblyInfo.cs
+C:\Übungsprojekte\TestyXamarin2\TestyXamarin2\obj\Debug\netstandard2.0\TestyXamarin2.csproj.CoreCompileInputs.cache
+C:\Übungsprojekte\TestyXamarin2\TestyXamarin2\obj\Debug\netstandard2.0\XamlC.stamp
+C:\Übungsprojekte\TestyXamarin2\TestyXamarin2\obj\Debug\netstandard2.0\TestyXamarin2.dll
+C:\Übungsprojekte\TestyXamarin2\TestyXamarin2\obj\Debug\netstandard2.0\ref\TestyXamarin2.dll
+C:\Übungsprojekte\TestyXamarin2\TestyXamarin2\obj\Debug\netstandard2.0\TestyXamarin2.pdb

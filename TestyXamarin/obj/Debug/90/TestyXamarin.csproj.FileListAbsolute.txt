@@ -1,0 +1,7 @@
+C:\Übungsprojekte\TestyXamarin\obj\Debug\90\MonoAndroid,Version=v9.0.AssemblyAttributes.cs
+C:\Übungsprojekte\TestyXamarin\obj\Debug\90\build.props
+C:\Übungsprojekte\TestyXamarin\obj\Debug\90\adb.props
+C:\Übungsprojekte\TestyXamarin\obj\Debug\90\TestyXamarin.csprojAssemblyReference.cache
+C:\Übungsprojekte\TestyXamarin\obj\Debug\90\_VerifyXamarinAndroidSupportVersions.stamp
+C:\Übungsprojekte\TestyXamarin\obj\Debug\90\stamp\_BuildLibraryImportsCache.stamp
+C:\Übungsprojekte\TestyXamarin\obj\Debug\90\res.flag

@@ -1,0 +1,2 @@
+C:\Übungsprojekte\Multithreading\ComputePI\Debug\ComputePI\ComputePI.exe
+C:\Übungsprojekte\Multithreading\ComputePI\Debug\ComputePI\ComputePI.pdb

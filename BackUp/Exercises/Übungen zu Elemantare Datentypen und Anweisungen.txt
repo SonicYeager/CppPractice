@@ -1,0 +1,54 @@
+﻿Grundlegende Operationen
+
+
+a = 0
+b = 9
+c = 127
+
+
+Umfang und Flächen
+
+
+int main()
+{
+ double r, A, U, PI = 4 * atan(1);
+        std::cout << "Bitte Radius eingeben! <mit kommastellen moeglich>";
+ std::cin >> r;
+ A = PI*(r*r);
+ U = 2 * PI*r;
+ std::cout << "Der Flaecheninhalt des Kreises betreagt: " << A << "\nDer Umfang des Kreises betraegt: " << U;
+}
+
+
+Umrechnen:
+int main()
+{
+ bool exit = 0;
+ while (!exit)
+ {
+  bool countryValue;
+  double input, output;
+  const double translationFac = 0.12;
+  std::cout << "Geben sie den umzurechnenden Betrag ein: ";
+  std::cin >> input;
+  std::cout << "Geben sie \"1\" fuer Europaeische Waehrung ein, und \"0\" fuer US-Amerikanische!: ";
+  std::cin >> countryValue;
+  if (countryValue == 1)
+  {
+   output = input + (input * translationFac);
+  }
+  else
+  {
+   output = input - (input * translationFac);
+  }
+  std::cout << output;
+  std::cout << "\nZum Beenden des Programms \"1\" eingeben, zum fortfahren \"0\": ";
+  std::cin >> exit;
+ }
+}
+Wortbreiten
+
+
+a) unter Berücksichtigung dass die int Variablen nur 2 Byte im speicher belegen, was einem short datentyp entspricht hat die uy Variable einen Wert von 0
+b) B
+c)768

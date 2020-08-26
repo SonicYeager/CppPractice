@@ -1,0 +1,2 @@
+C:\Übungsprojekte\MiniArrangement\Debug\MiniArrangement.exe
+C:\Übungsprojekte\MiniArrangement\Debug\MiniArrangement.pdb

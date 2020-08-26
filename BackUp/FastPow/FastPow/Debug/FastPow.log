@@ -1,0 +1,4 @@
+﻿  FastPow.cpp
+i:\fastpow\fastpow\fastpow.cpp(43): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+i:\fastpow\fastpow\fastpow.cpp(44): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+  FastPow.vcxproj -> I:\FastPow\Debug\FastPow.exe

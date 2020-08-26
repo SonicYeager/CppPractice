@@ -1,0 +1,235 @@
+Sequ: computes PI=3.14276 with 1 Thread(s) in 14380.9 ms
+Start measurement with 1000000 steps
+Sequ Asy: computes PI=3.14198 with 2 Thread(s) in 7106.24 ms
+Start measurement with 1000000 steps
+Sequ Thl: computes PI=0 with 2 Thread(s) in 7102.8 ms
+Start measurement with 1000000 steps
+Sequ Thg: computes PI=3.14034 with 2 Thread(s) in 7191.22 ms
+Start measurement with 1000000 steps
+Sequ Asy: computes PI=3.14603 with 4 Thread(s) in 3577.75 ms
+Start measurement with 1000000 steps
+Sequ Thl: computes PI=0 with 4 Thread(s) in 3572.88 ms
+Start measurement with 1000000 steps
+Sequ Thg: computes PI=6.28213 with 4 Thread(s) in 3611.46 ms
+Start measurement with 1000000 steps
+Sequ Asy: computes PI=3.13985 with 6 Thread(s) in 2429.23 ms
+Start measurement with 1000000 steps
+Sequ Thl: computes PI=0 with 6 Thread(s) in 2442.09 ms
+Start measurement with 1000000 steps
+Sequ Thg: computes PI=9.42656 with 6 Thread(s) in 2565.37 ms
+Start measurement with 1000000 steps
+Sequ Asy: computes PI=3.14088 with 8 Thread(s) in 2122.96 ms
+Start measurement with 1000000 steps
+Sequ Thl: computes PI=0 with 8 Thread(s) in 2071.26 ms
+Start measurement with 1000000 steps
+Sequ Thg: computes PI=12.5665 with 8 Thread(s) in 2116.28 ms
+Start measurement with 1000000 steps
+Sequ Asy: computes PI=3.14184 with 10 Thread(s) in 1740.76 ms
+Start measurement with 1000000 steps
+Sequ Thl: computes PI=0 with 10 Thread(s) in 1731.68 ms
+Start measurement with 1000000 steps
+Sequ Thg: computes PI=15.7059 with 10 Thread(s) in 1764.6 ms
+Start measurement with 1000000 steps
+Sequ Asy: computes PI=3.14188 with 12 Thread(s) in 1500.62 ms
+Start measurement with 1000000 steps
+Sequ Thl: computes PI=0 with 12 Thread(s) in 1505.78 ms
+Start measurement with 1000000 steps
+Sequ Thg: computes PI=18.8453 with 12 Thread(s) in 1530.58 ms
+Start measurement with 1000000 steps
+Sequ Asy: computes PI=3.14148 with 14 Thread(s) in 1939.05 ms
+Start measurement with 1000000 steps
+Sequ Thl: computes PI=0 with 14 Thread(s) in 1553.43 ms
+Start measurement with 1000000 steps
+Sequ Thg: computes PI=21.9873 with 14 Thread(s) in 1565.29 ms
+Start measurement with 1000000 steps
+Sequ Asy: computes PI=3.14167 with 16 Thread(s) in 2039.4 ms
+Start measurement with 1000000 steps
+Sequ Thl: computes PI=0 with 16 Thread(s) in 1582.87 ms
+Start measurement with 1000000 steps
+Sequ Thg: computes PI=25.1288 with 16 Thread(s) in 1637.96 ms
+Start measurement with 1000000 steps
+Sequ Asy: computes PI=3.14234 with 18 Thread(s) in 1819.9 ms
+Start measurement with 1000000 steps
+Sequ Thl: computes PI=0 with 18 Thread(s) in 1568.74 ms
+Start measurement with 1000000 steps
+Sequ Thg: computes PI=28.2741 with 18 Thread(s) in 1567.21 ms
+Start measurement with 1000000 steps
+Sequ Asy: computes PI=3.14386 with 20 Thread(s) in 1749.12 ms
+Start measurement with 1000000 steps
+Sequ Thl: computes PI=0 with 20 Thread(s) in 1545.09 ms
+Start measurement with 1000000 steps
+Sequ Thg: computes PI=31.4162 with 20 Thread(s) in 1533.5 ms
+Start measurement with 1000000 steps
+Sequ Asy: computes PI=3.14211 with 22 Thread(s) in 1689.74 ms
+Start measurement with 1000000 steps
+Sequ Thl: computes PI=0 with 22 Thread(s) in 1522.47 ms
+Start measurement with 1000000 steps
+Sequ Thg: computes PI=34.5559 with 22 Thread(s) in 1588.83 ms
+Start measurement with 1000000 steps
+Sequ Alg: computes PI=0 with 2 Thread(s) in 5.0235 ms
+Start measurement with 1000000 steps
+Sequ Asy: computes PI=3.13959 with 2 Thread(s) in 7107 ms
+Start measurement with 1000000 steps
+Sequ Thl: computes PI=0 with 2 Thread(s) in 7117.19 ms
+Start measurement with 1000000 steps
+Sequ Thg: computes PI=3.14128 with 2 Thread(s) in 7186.67 ms
+Start measurement with 1000000 steps
+Sequ Alg: computes PI=0 with 4 Thread(s) in 4.7166 ms
+Start measurement with 1000000 steps
+Sequ Asy: computes PI=3.14172 with 4 Thread(s) in 3610.83 ms
+Start measurement with 1000000 steps
+Sequ Thl: computes PI=0 with 4 Thread(s) in 3560.97 ms
+Start measurement with 1000000 steps
+Sequ Thg: computes PI=6.28142 with 4 Thread(s) in 3633.93 ms
+Start measurement with 1000000 steps
+Sequ Alg: computes PI=0 with 6 Thread(s) in 5.9498 ms
+Start measurement with 1000000 steps
+Sequ Asy: computes PI=3.13808 with 6 Thread(s) in 2576.49 ms
+Start measurement with 1000000 steps
+Sequ Thl: computes PI=0 with 6 Thread(s) in 2480.12 ms
+Start measurement with 1000000 steps
+Sequ Thg: computes PI=9.42275 with 6 Thread(s) in 2526.08 ms
+Start measurement with 1000000 steps
+Sequ Alg: computes PI=0 with 8 Thread(s) in 5.1676 ms
+Start measurement with 1000000 steps
+Sequ Asy: computes PI=3.14142 with 8 Thread(s) in 2101.82 ms
+Start measurement with 1000000 steps
+Sequ Thl: computes PI=0 with 8 Thread(s) in 2067.45 ms
+Start measurement with 1000000 steps
+Sequ Thg: computes PI=12.5633 with 8 Thread(s) in 2080.62 ms
+Start measurement with 1000000 steps
+Sequ Alg: computes PI=0 with 10 Thread(s) in 4.3846 ms
+Start measurement with 1000000 steps
+Sequ Asy: computes PI=3.14143 with 10 Thread(s) in 1740.07 ms
+Start measurement with 1000000 steps
+Sequ Thl: computes PI=0 with 10 Thread(s) in 1734.9 ms
+Start measurement with 1000000 steps
+Sequ Thg: computes PI=15.7076 with 10 Thread(s) in 1753.48 ms
+Start measurement with 1000000 steps
+Sequ Alg: computes PI=0 with 12 Thread(s) in 5.1213 ms
+Start measurement with 1000000 steps
+Sequ Asy: computes PI=3.13651 with 12 Thread(s) in 1510.43 ms
+Start measurement with 1000000 steps
+Sequ Thl: computes PI=0 with 12 Thread(s) in 1505.41 ms
+Start measurement with 1000000 steps
+Sequ Thg: computes PI=18.8492 with 12 Thread(s) in 1533.93 ms
+Start measurement with 1000000 steps
+Sequ Alg: computes PI=0 with 14 Thread(s) in 7.9399 ms
+Start measurement with 1000000 steps
+Sequ Asy: computes PI=3.14526 with 14 Thread(s) in 2304.54 ms
+Start measurement with 1000000 steps
+Sequ Thl: computes PI=0 with 14 Thread(s) in 1594.5 ms
+Start measurement with 1000000 steps
+Sequ Thg: computes PI=21.9918 with 14 Thread(s) in 1620.79 ms
+Start measurement with 1000000 steps
+Sequ Alg: computes PI=0 with 16 Thread(s) in 7.6657 ms
+Start measurement with 1000000 steps
+Sequ Asy: computes PI=3.14146 with 16 Thread(s) in 2028.83 ms
+Start measurement with 1000000 steps
+Sequ Thl: computes PI=0 with 16 Thread(s) in 1628.63 ms
+Start measurement with 1000000 steps
+Sequ Thg: computes PI=25.1311 with 16 Thread(s) in 1637.71 ms
+Start measurement with 1000000 steps
+Sequ Alg: computes PI=0 with 18 Thread(s) in 8.4133 ms
+Start measurement with 1000000 steps
+Sequ Asy: computes PI=3.1416 with 18 Thread(s) in 1822.39 ms
+Start measurement with 1000000 steps
+Sequ Thl: computes PI=0 with 18 Thread(s) in 1638.92 ms
+Start measurement with 1000000 steps
+Sequ Thg: computes PI=28.2752 with 18 Thread(s) in 1567.63 ms
+Start measurement with 1000000 steps
+Sequ Alg: computes PI=0 with 20 Thread(s) in 9.3026 ms
+Start measurement with 1000000 steps
+Sequ Asy: computes PI=3.14183 with 20 Thread(s) in 1792.75 ms
+Start measurement with 1000000 steps
+Sequ Thl: computes PI=0 with 20 Thread(s) in 1617.41 ms
+Start measurement with 1000000 steps
+Sequ Thg: computes PI=31.4159 with 20 Thread(s) in 1624.23 ms
+Start measurement with 1000000 steps
+Sequ Alg: computes PI=0 with 22 Thread(s) in 11.6049 ms
+Start measurement with 1000000 steps
+Sequ Asy: computes PI=3.14083 with 22 Thread(s) in 1696.67 ms
+Start measurement with 1000000 steps
+Sequ Thl: computes PI=0 with 22 Thread(s) in 1532.1 ms
+Start measurement with 1000000 steps
+Sequ Thg: computes PI=34.5592 with 22 Thread(s) in 1626.38 ms
+Start measurement with 1000000 steps
+Sequ Alg: computes PI=3.14082 with 1 Thread(s) in 7.2021 ms
+Start measurement with 1000000 steps
+Sequ: computes PI=3.14082 with 1 Thread(s) in 14309.4 ms
+Start measurement with 1000000 steps
+Sequ Alg: computes PI=0 with 2 Thread(s) in 4.8602 ms
+Start measurement with 1000000 steps
+Sequ Asy: computes PI=3.14031 with 2 Thread(s) in 7121.65 ms
+Start measurement with 1000000 steps
+Sequ Thl: computes PI=0 with 2 Thread(s) in 7153.07 ms
+Start measurement with 1000000 steps
+Sequ Thg: computes PI=3.14027 with 2 Thread(s) in 7187.9 ms
+Start measurement with 1000000 steps
+Sequ Alg: computes PI=0 with 4 Thread(s) in 4.3297 ms
+Start measurement with 1000000 steps
+Sequ Asy: computes PI=3.13868 with 4 Thread(s) in 3562.82 ms
+Start measurement with 1000000 steps
+Sequ Thl: computes PI=0 with 4 Thread(s) in 3583.31 ms
+Start measurement with 1000000 steps
+Sequ Thg: computes PI=6.28478 with 4 Thread(s) in 3659.82 ms
+Start measurement with 1000000 steps
+Sequ Alg: computes PI=0 with 2 Thread(s) in 5.6264 ms
+Start measurement with 1000000 steps
+Sequ Asy: computes PI=3.14159 with 2 Thread(s) in 320.065 ms
+Start measurement with 1000000 steps
+Sequ Thl: computes PI=0 with 2 Thread(s) in 317.68 ms
+Start measurement with 1000000 steps
+Sequ Thg: computes PI=3.14051 with 2 Thread(s) in 447.978 ms
+Start measurement with 1000000 steps
+Sequ Alg: computes PI=0 with 4 Thread(s) in 4.5309 ms
+Start measurement with 1000000 steps
+Sequ Asy: computes PI=3.13847 with 4 Thread(s) in 181.082 ms
+Start measurement with 1000000 steps
+Sequ Thl: computes PI=0 with 4 Thread(s) in 177.239 ms
+Start measurement with 1000000 steps
+Sequ Thg: computes PI=6.2814 with 4 Thread(s) in 280.083 ms
+Start measurement with 1000000 steps
+Sequ Alg: computes PI=0 with 6 Thread(s) in 4.8263 ms
+Start measurement with 1000000 steps
+Sequ Asy: computes PI=3.14215 with 6 Thread(s) in 137.936 ms
+Start measurement with 1000000 steps
+Sequ Thl: computes PI=0 with 6 Thread(s) in 159.409 ms
+Start measurement with 1000000 steps
+Sequ Thg: computes PI=9.42452 with 6 Thread(s) in 295.012 ms
+Start measurement with 1000000 steps
+Sequ Alg: computes PI=0 with 8 Thread(s) in 3.8145 ms
+Start measurement with 1000000 steps
+Sequ Asy: computes PI=3.1415 with 8 Thread(s) in 136.586 ms
+Start measurement with 1000000 steps
+Sequ Thl: computes PI=0 with 8 Thread(s) in 135.227 ms
+Start measurement with 1000000 steps
+Sequ Thg: computes PI=12.5654 with 8 Thread(s) in 321.442 ms
+Start measurement with 1000000 steps
+Sequ Alg: computes PI=0 with 10 Thread(s) in 4.1436 ms
+Start measurement with 1000000 steps
+Sequ Asy: computes PI=3.14189 with 10 Thread(s) in 112.84 ms
+Start measurement with 1000000 steps
+Sequ Thl: computes PI=0 with 10 Thread(s) in 116.669 ms
+Start measurement with 1000000 steps
+Sequ Thg: computes PI=15.7066 with 10 Thread(s) in 336.238 ms
+Start measurement with 1000000 steps
+Sequ Alg: computes PI=0 with 12 Thread(s) in 4.9173 ms
+Start measurement with 1000000 steps
+Sequ Asy: computes PI=3.14472 with 12 Thread(s) in 98.6634 ms
+Start measurement with 1000000 steps
+Sequ Thl: computes PI=0 with 12 Thread(s) in 100.883 ms
+Start measurement with 1000000 steps
+Sequ Thg: computes PI=18.8467 with 12 Thread(s) in 350.031 ms
+Start measurement with 1000000 steps
+Sequ Alg: computes PI=0 with 14 Thread(s) in 5.5984 ms
+Start measurement with 1000000 steps
+Sequ Asy: computes PI=3.14424 with 14 Thread(s) in 126.767 ms
+Start measurement with 1000000 steps
+Sequ Thl: computes PI=0 with 14 Thread(s) in 111.052 ms
+Start measurement with 1000000 steps
+Sequ Thg: computes PI=21.9855 with 14 Thread(s) in 346.512 ms
+Start measurement with 1000000 steps
+Sequ Alg: computes PI=3.14121 with 1 Thread(s) in 7.6292 ms
+Start measurement with 1000000 steps
+Sequ: computes PI=3.14121 with 1 Thread(s) in 583.27 ms
