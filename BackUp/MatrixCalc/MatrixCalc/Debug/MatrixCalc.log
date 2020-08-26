@@ -1,3 +1,0 @@
-﻿  MatrixCalc.cpp
-i:\matrixcalc\matrixcalc\matrixcalc.cpp(35): warning C4244: "+=": Konvertierung von "double" in "int", möglicher Datenverlust
-  MatrixCalc.vcxproj -> I:\MatrixCalc\Debug\MatrixCalc.exe

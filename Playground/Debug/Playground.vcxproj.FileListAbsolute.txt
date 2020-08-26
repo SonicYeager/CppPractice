@@ -1,2 +1,0 @@
-C:\Übungsprojekte\Playground\Debug\Playground.exe
-C:\Übungsprojekte\Playground\Debug\Playground.pdb

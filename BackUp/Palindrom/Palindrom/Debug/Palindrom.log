@@ -1,6 +1,0 @@
-﻿  Palindrom.cpp
-i:\palindrom\palindrom\palindrom.cpp(47): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\stdio.h(208): note: Siehe Deklaration von "fopen"
-i:\palindrom\palindrom\palindrom.cpp(48): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\stdio.h(208): note: Siehe Deklaration von "fopen"
-  Palindrom.vcxproj -> I:\Palindrom\Debug\Palindrom.exe

@@ -1,2 +1,0 @@
-C:\Übungsprojekte\Multithreading\PrimeNumberCalculator\Debug\PrimeNumberCalculator.exe
-C:\Übungsprojekte\Multithreading\PrimeNumberCalculator\Debug\PrimeNumberCalculator.pdb

@@ -1,3 +1,0 @@
-﻿  FastMul.cpp
-i:\fastmul\fastmul\fastmul.cpp(53): warning C4244: "return": Konvertierung von "float" in "int", möglicher Datenverlust
-  FastMul.vcxproj -> I:\FastMul\Debug\FastMul.exe
