@@ -5,7 +5,8 @@
 
 std::vector<char> DecomposeRoman(std::string);
 std::vector<int> MapRomanToDecimal(std::vector<char>);
-int FuseDecimal(std::vector<int>);
+std::vector<int> ApplyRomanRules(std::vector<int>);
+int SumDecimal(std::vector<int>);
 
 std::vector<int> DecomposeDecimal(int);
 std::vector<std::string> MapDecimalToRoman(std::vector<int>);
@@ -22,7 +23,8 @@ int RomanToDecimal(std::string rom)
 {
     auto decomposed = DecomposeRoman(rom);
     auto mapped = MapRomanToDecimal(decomposed);
-    return FuseDecimal(mapped);
+    auto applyed = ApplyRomanRules(mapped);
+    return SumDecimal(applyed);
 }
 
 
@@ -72,17 +74,33 @@ std::vector<int> MapRomanToDecimal(std::vector<char> chars)
     return mappedDecimal;
 }
 
-int FuseDecimal(std::vector<int> decimals)
+std::vector<int> ApplyRomanRules(std::vector<int> decimals) 
+{
+    std::vector<int> applyed{};
+    for (size_t i = 1; i <= decimals.size(); ++i) 
+    {
+        if (i == decimals.size())
+            applyed.push_back(decimals[i - 1]);
+        else 
+        {
+            if (decimals[i - 1] < decimals[i])
+            {
+                applyed.push_back(decimals[i] - decimals[i - 1]);
+                ++i;
+            }
+            else
+                applyed.push_back(decimals[i - 1]);
+        }
+    }
+    return applyed;
+}
+
+int SumDecimal(std::vector<int> decimals)
 {
     int sum{};
-    int lastVal = 0;
-    for (auto dec : decimals) 
+    for (auto dec : decimals)
     {
-        if (sum != 0 && lastVal < dec)
-            sum -= (lastVal * 2) - dec;
-        else
-            sum += dec;
-        lastVal = dec;
+        sum += dec;
     }
     return sum;
 }
@@ -90,15 +108,20 @@ int FuseDecimal(std::vector<int> decimals)
 std::vector<int> DecomposeDecimal(int dec)
 {
     std::vector<int> decomposedDecimal{};
-
-    int fac = 1;
-    while (dec != 0)
+    std::vector<int> divider{1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+    for (auto div : divider)
     {
-        decomposedDecimal.push_back((dec % 10)*fac);
-        dec /= 10;
-        fac *= 10;
+        int divided = 0;
+        do 
+        {
+            divided = dec / div;
+            if (divided > 0)
+            {
+                dec -= div;
+                decomposedDecimal.push_back(div);
+            }
+        } while (divided > 0);
     }
-    std::reverse(std::begin(decomposedDecimal), std::end(decomposedDecimal));
     return decomposedDecimal;
 }
 
@@ -143,32 +166,12 @@ std::vector<std::string> MapDecimalToRoman(std::vector<int> decimals)
             mappedRoman.push_back("D");
             break;
         case(900):
-            mappedRoman.push_back("DM");
+            mappedRoman.push_back("CM");
             break;
         case(1000):
             mappedRoman.push_back("M");
             break;
         default:
-            int fac = 1;
-            while (dec % 10 == 0)
-            {
-                fac *= 10;
-                dec /= 10;
-            }
-            int val = dec % 10;
-            if (val > 5)
-            {
-                std::vector<int> tempVal{};
-                tempVal.push_back(5 * fac);
-                mappedRoman.push_back(MapDecimalToRoman(tempVal).at(0));
-                val -= 5;
-            }
-            for (size_t i = 0; i < val; i++)
-            {
-                std::vector<int> tempVal{};
-                tempVal.push_back(fac);
-                mappedRoman.push_back(MapDecimalToRoman(tempVal).at(0));
-            }
             break;
         }
     }
