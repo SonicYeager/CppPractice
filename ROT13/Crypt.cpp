@@ -4,17 +4,22 @@
 
 std::string StringToUpper(std::string);
 std::string ReplaceUmlauts(std::string);
+std::string CleanString(std::string);
 std::string Rotate(std::string);
 
 std::string EncryptROTXIII(std::string text)
 {
+    //both works <- thats what fu's are intended to be
+
     //auto replaced = ReplaceUmlauts(text);
     //auto capped = StringToUpper(replaced);
-    //return Rotate(capped);
+    //auto cleaned = CleanString(capped);
+    //return Rotate(cleaned);
 
     auto capped = StringToUpper(text);
     auto replaced = ReplaceUmlauts(capped);
-    return Rotate(replaced);
+    auto cleaned = CleanString(replaced);
+    return Rotate(cleaned);
 }
 
 std::string StringToUpper(std::string str)
@@ -42,6 +47,19 @@ std::string ReplaceUmlauts(std::string str)
     return res;
 }
 
+std::string CleanString(std::string str)
+{
+    auto clean = [](char& c)
+    {
+        if ((c < 65 || c > 90) && c != 32)
+            c = '*';
+    };
+
+    std::for_each(std::begin(str), std::end(str), clean);
+    str.erase(std::remove(std::begin(str), std::end(str), '*'), std::end(str));
+    return str;
+}
+
 std::string Rotate(std::string str)
 {
     auto rotate = [](char& c)
@@ -53,13 +71,8 @@ std::string Rotate(std::string str)
                 val -= 26;
             c = val;
         }
-        else if (c == 32)
-            c = ' ';
-        else
-            c = '*';
     };
     std::for_each(std::begin(str), std::end(str), rotate);
-    //;
     str.erase(std::remove(std::begin(str), std::end(str), '*'), std::end(str));
     return str;
 }
