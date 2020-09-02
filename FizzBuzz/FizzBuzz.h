@@ -2,4 +2,4 @@
 #include <vector>
 #include <string>
 
-std::vector<std::string> ReturnFizzBuzz(std::vector<int>);
+auto ReturnFizzBuzz(std::vector<int>) ->std::vector<std::string>;

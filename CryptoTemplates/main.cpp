@@ -1,3 +1,6 @@
+// This is a personal academic project. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: http://www.viva64.com
+
 #include <iostream>
 #include "Person.h"
 #include "PufferTools.h"
@@ -30,8 +33,7 @@ int main(int argc, const char* argv[])
 		Find(dBuff, 9.4) 
 	};
 
-	Puffer<double> cpy = Puffer<double>(3);
-	cpy = dBuff;
+	Puffer<double> cpy = dBuff;
 	Puffer<double> cpyii = Puffer<double>(dBuff);
 	cpyii[2] = 404.404;
 

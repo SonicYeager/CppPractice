@@ -13,7 +13,7 @@ enum ErrorCode
 
 namespace Crypto
 {
-	ErrorCode Run(int, const char*[]);
+	void Run(int /*argc*/, const char* /*argv*/[]);
 
 	enum class Algorithm
 	{
@@ -23,13 +23,13 @@ namespace Crypto
 		Last
 	};
 
-	void Parse(int, const char*[], Algorithm&, int&, char*&);
-	void ParseCount(const char*, int&);
-	void ParseAlgorithm(const char*, Algorithm&);
-	void ParseFilename(const char*, char*&);
-	void ValidateInput(Algorithm, int, const char*);
-	void Process(Algorithm, char*, size_t, int);
-	void Encode(char*, size_t, int);
-	void Decode(char*, size_t, int);
-	void PrintError(ErrorCode, const char*);
+	void Parse(int /*argc*/, const char* /*argv*/[], Algorithm& /*algo*/, int& /*shiftCount*/, char*& /*pFilename*/);
+	void ParseCount(const char* /*countString*/, int& /*result*/);
+	void ParseAlgorithm(const char* /*algoString*/, Algorithm& /*result*/);
+	void ParseFilename(const char* /*filename*/, char*& /*pResult*/);
+	void ValidateInput(Algorithm /*algo*/, int /*shiftCount*/, const char* /*filename*/);
+	void Process(Algorithm /*algo*/, char* /*pBuffer*/, size_t /*size*/, int /*shiftCount*/);
+	void Encode(char* /*pBuffer*/, size_t /*size*/, int /*shiftCount*/);
+	void Decode(char* /*pBuffer*/, size_t /*size*/, int /*shiftCount*/);
+	void PrintError(ErrorCode /*err*/, const char* /*pMsg*/);
 }; // namespace Crypto

@@ -15,7 +15,7 @@
 	class NoInputException : public BaseException
 	{
 		public:
-			virtual void Print()  override;
+			void Print()  override;
 
 	} ;
 
@@ -23,14 +23,14 @@
 	class WrongParamException : public BaseException
 	{
 		public:
-			virtual void Print()  override;
+			void Print()  override;
 	} ;
 
 	//UNKNOWN_ALGORITHM
 	class UnknownAlgorithmException : public BaseException
 	{
 		public:
-			virtual void Print()  override;
+			void Print()  override;
 	} ;
 
 

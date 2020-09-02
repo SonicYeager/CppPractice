@@ -12,12 +12,13 @@ public:
 
 	~Puffer() 
 	{
-		if (!keep)
+		if (!keep) {
 			delete[] mp_var;
+}
 	}
 
-	char* GetChar();
-	char*& SetChar();
+	auto GetChar() -> char*;
+	auto SetChar() -> char*&;
 
 private:
 	bool keep = false;

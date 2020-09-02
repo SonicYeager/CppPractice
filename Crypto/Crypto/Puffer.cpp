@@ -1,11 +1,11 @@
 #include "Puffer.h"
 
-char * Puffer::GetChar()
+auto Puffer::GetChar() -> char *
 {
 	return this->mp_var;
 }
 
-char*& Puffer::SetChar()
+auto Puffer::SetChar() -> char*&
 {
 	return this->mp_var;
 }

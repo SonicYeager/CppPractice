@@ -6,30 +6,30 @@ struct Complex {
 	float im = 0;
 };
 
-float AbsoluteValue(Complex num) {
+auto AbsoluteValue(Complex num) -> float {
 	float res;
 	return res = sqrt(pow(num.re, 2) + pow(num.im, 2)); //alternativ liese sich auch ein annäherungs algo für wurzelziehen aufsetzen
 }
 
-Complex ComplexConjugate(Complex num) {
+auto ComplexConjugate(Complex num) -> Complex {
 	return { num.re, -num.im };
 }
 
-Complex Add(Complex numA, Complex numB) {
+auto Add(Complex numA, Complex numB) -> Complex {
 	Complex res;
 	res.re = numA.re + numB.re;
 	res.im = numA.im + numB.im;
 	return res;
 }
 
-Complex Sub(Complex numA, Complex numB) {
+auto Sub(Complex numA, Complex numB) -> Complex {
 	Complex res;
 	res.re = numA.re - numB.re;
 	res.im = numA.im - numB.im;
 	return res;
 }
 
-Complex Mul(Complex numA, Complex numB) {
+auto Mul(Complex numA, Complex numB) -> Complex {
 	Complex res;
 	res.re = (numA.re * numB.re) - (numA.im * numB.im);
 	res.im = (numA.re * numB.im) + (numB.re * numA.im);
@@ -40,15 +40,10 @@ void PrintComplex(Complex num) {
 	std::cout << num.re << " + " << num.im << "i" << std::endl;
 }
 
-int main()
+auto main() -> int
 {
-	Complex ex;
-	ex.re = 12.6f;
-	ex.im = 7.89f;
-
-	Complex ex2;
-	ex2.re = 120.45f;
-	ex2.im = 19.03f;
+	Complex ex{12.6F, 7.89F};
+	Complex ex2{ 120.45F, 19.03F };
 
 	std::cout << AbsoluteValue(ex) << "\n";
 

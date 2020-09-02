@@ -1,7 +1,7 @@
 #include <assert.h>
 #include "FizzBuzz.h"
 
-void main()
+int main()
 {
 	std::vector<int> arr{};
 	for (size_t i = 1; i < 101; i++)
@@ -21,4 +21,6 @@ void main()
 		"91", "92", "Fizz", "94", "Buzz","Fizz","97","98","Fizz","Buzz", 
 	};
 	assert(result == expected);
+
+	return 0;
 }

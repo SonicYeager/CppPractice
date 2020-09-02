@@ -1,6 +1,6 @@
 #include "Datei.h"
 
-FILE * Datei::GetFile()
+auto Datei::GetFile() -> FILE *
 {
 	return this->mp_file;
 }

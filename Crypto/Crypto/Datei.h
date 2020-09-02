@@ -19,7 +19,7 @@ public:
 		fclose(mp_file);
 	}
 
-	FILE* GetFile();
+	auto GetFile() -> FILE*;
 
 private:
 	FILE* mp_file = nullptr;

@@ -4,14 +4,13 @@
 #include "Exceptions.h"
 #include <cassert>
 
-void ReadFileContent(const char* filename, char*& buffer, size_t& size);
+void ReadFileContent(const char* filename, char*& pResult, size_t& size);
 
-ErrorCode Crypto::Run(int argc, const char* argv[])
+void Crypto::Run(int argc, const char* argv[])
 {
 	Algorithm algo{};
 	int shiftCount = 0;
 	Puffer sourceFilename = Puffer(nullptr);
-	ErrorCode err{}; 
 
 	try
 	{
@@ -26,7 +25,6 @@ ErrorCode Crypto::Run(int argc, const char* argv[])
 		Process(algo, buffer.GetChar(), size, shiftCount);
 		size_t written = fwrite(buffer.GetChar(), sizeof(char), size, dest.GetFile());
 		assert(written == size);
-		return SUCCESS;
 	}
 	catch (BaseException& ex)
 	{
@@ -37,8 +35,9 @@ ErrorCode Crypto::Run(int argc, const char* argv[])
 
 void Crypto::Parse(int argc, const char* argv[], Algorithm& algo, int& shiftCount, char*& pFilename)
 {
-	if(argc < 3)
+	if(argc < 3) {
 		throw NoInputException();
+}
 
 	ParseAlgorithm(argv[0], algo);
 	ParseCount(argv[1], shiftCount);
@@ -106,29 +105,35 @@ void Crypto::Process(Algorithm algo, char* pBuffer, size_t size, int shiftCount)
 
 void Crypto::Encode(char* pBuffer, size_t size, int shiftCount)
 {
-	if(pBuffer == nullptr)
+	if(pBuffer == nullptr) {
 		throw WrongParamException();
-	if(size == 0)
+}
+	if(size == 0) {
 		throw WrongParamException();
+}
 
 	for(size_t i = 0; i < size; ++i)
 	{
 		if(pBuffer[i] >= 'a' and pBuffer[i] <= 'z')
 		{
 			char letter = pBuffer[i] + shiftCount;
-			if(letter > 'z')
+			if(letter > 'z') {
 				letter -= 26;
-			if(letter < 'a')
+}
+			if(letter < 'a') {
 				letter += 26;
+}
 			pBuffer[i] = letter;
 		}
 		else if(pBuffer[i] >= 'A' and pBuffer[i] <= 'Z')
 		{
 			char letter = pBuffer[i] + shiftCount;
-			if(letter > 'Z')
+			if(letter > 'Z') {
 				letter -= 26;
-			if(letter < 'A')
+}
+			if(letter < 'A') {
 				letter += 26;
+}
 			pBuffer[i] = letter;
 		}
 	}
@@ -146,8 +151,9 @@ void Crypto::PrintError(ErrorCode err, const char* pMsg)
 
 void ReadFileContent(const char* pFilename, char*& pResult, size_t& size)
 {
-	if(pFilename == nullptr)
+	if(pFilename == nullptr) {
 		throw WrongParamException();
+}
 
 	Datei src = Datei(pFilename, "rb");
 	assert(src.GetFile() != nullptr);
