@@ -4,7 +4,7 @@
 
 std::string StringToUpper(std::string);
 std::string ReplaceUmlauts(std::string);
-std::string CleanString(std::string);
+//std::string CleanString(std::string);
 std::string Rotate(std::string);
 
 std::string EncryptROTXIII(std::string text)
@@ -18,8 +18,8 @@ std::string EncryptROTXIII(std::string text)
 
     auto capped = StringToUpper(text);
     auto replaced = ReplaceUmlauts(capped);
-    auto cleaned = CleanString(replaced);
-    return Rotate(cleaned);
+    //auto cleaned = CleanString(replaced);
+    return Rotate(replaced);
 }
 
 std::string StringToUpper(std::string str)
@@ -73,6 +73,5 @@ std::string Rotate(std::string str)
         }
     };
     std::for_each(std::begin(str), std::end(str), rotate);
-    str.erase(std::remove(std::begin(str), std::end(str), '*'), std::end(str));
     return str;
 }
