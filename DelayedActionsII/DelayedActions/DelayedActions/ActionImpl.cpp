@@ -15,8 +15,6 @@ ActionsFactory* CreateFactory(int id)
 		ActionsFactory* factory = new DisplayExtensionFactory;
 		return factory;
 	}
-	ActionsFactory* factory = new StandartActionsFactory;
-	return factory;
 }
 
 PushFront::PushFront(int val, MemoryBlock* pMemory)
