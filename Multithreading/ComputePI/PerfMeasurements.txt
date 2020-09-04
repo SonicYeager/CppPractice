@@ -175,3 +175,12 @@ Paralell Alg: computes PI=-1.15337 with 8 Thread(s) in 903 ms
 Paralell Alg: computes PI=-1.15337 with 10 Thread(s) in 733 ms
 Paralell Alg: computes PI=-1.15337 with 12 Thread(s) in 619 ms
 Paralell Alg: computes PI=-1.15337 with 14 Thread(s) in 678 ms
+Start measurement with 1000000000 steps
+Sequ Alg: computes PI=3.14159 with 1 Thread(s) in 7378 ms
+Paralell Alg: computes PI=-1.15337 with 2 Thread(s) in 3432 ms
+Paralell Alg: computes PI=-1.15337 with 4 Thread(s) in 1789 ms
+Paralell Alg: computes PI=-1.15337 with 6 Thread(s) in 1169 ms
+Paralell Alg: computes PI=-1.15337 with 8 Thread(s) in 889 ms
+Paralell Alg: computes PI=-1.15337 with 10 Thread(s) in 717 ms
+Paralell Alg: computes PI=-1.15337 with 12 Thread(s) in 623 ms
+Paralell Alg: computes PI=-1.15337 with 14 Thread(s) in 725 ms

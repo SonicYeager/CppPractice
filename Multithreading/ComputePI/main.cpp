@@ -101,7 +101,7 @@ double ComputePIParalellLocal(int numSteps, int numth = std::thread::hardware_co
 	for (auto& thread : threads)
 		thread.join();
 	int sumNumHitsInCircle = 0;
-	for (auto var : localvars)
+	for (const auto& var : localvars)
 		sumNumHitsInCircle += var.localNumHitsInCircle;
 	return 4.0 * static_cast<double>(sumNumHitsInCircle) / numSteps;
 }
@@ -131,7 +131,7 @@ double ComputePIParalellAsync(int numSteps, int numth = std::thread::hardware_co
 	for (size_t i = 0; i < numth; i++)
 	{
 		int numiteration = numSteps / numth; //ectl round() für aufgerundete werte (is ja splicing momentan)
-		threads.push_back(std::async(AsyncThreadFunc, 0, numiteration));
+		threads.push_back(std::async(std::launch::async, AsyncThreadFunc, 0, numiteration));
 	}
 	for (auto& thread : threads)
 		sumNumHitsInCircle += thread.get();
@@ -180,7 +180,7 @@ double ComputeAlgorithmParallelLocal(int numSteps, int numth = std::thread::hard
 	}
 	for (auto& thread : threads)
 		thread.join();
-	for (auto var : localvars)
+	for (const auto& var : localvars)
 		sum += var.localNumHitsInCircle;
 	return static_cast<double>(sum) / numSteps;
 }

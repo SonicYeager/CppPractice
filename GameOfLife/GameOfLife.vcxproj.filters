@@ -21,9 +21,15 @@
     <ClCompile Include="GameOfLife.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="Tools.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameOfLife.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Tools.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
