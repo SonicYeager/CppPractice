@@ -39,8 +39,7 @@ Board MarkPossibleMove(const Board&, const Pos&);
 Board ShowNextMoves(const Board& board , char player)
 {
 	Board res(board);
-	auto onMarkPossibleMove = [&res](const Pos& pos) 
-	{ res = MarkPossibleMove(res, pos); };
+	auto onMarkPossibleMove = [&res](const Pos& pos) { res = MarkPossibleMove(res, pos); };
 
 	auto onCheckLineLeft = [onMarkPossibleMove](const Board& board, char player, Pos pos) { CheckLineLeft(board, player, pos, onMarkPossibleMove); };
 	auto onCheckLineRight = [onMarkPossibleMove](const Board& board, char player, Pos pos) { CheckLineRight(board, player, pos, onMarkPossibleMove); };
@@ -83,7 +82,7 @@ void CheckNeighbourFunctions::CheckEnemyNaighbours(const Board& board, char play
 void CheckLineLeft(const Board& board, char player, const Pos& pos, PossibleMoveAction onPossibleMove)
 {
 	char enemyPlayer = player == 'W' ? 'B' : 'W'; //enum or something like this
-	size_t x = pos.x - 1;
+	signed int x = pos.x - 1;
 	while(x >= 0 )
 	{
 		if (board[pos.y][x] != enemyPlayer) {
@@ -115,7 +114,7 @@ void CheckLineRight(const Board& board, char player, const Pos& pos, PossibleMov
 void CheckLineTop(const Board& board, char player, const Pos& pos, PossibleMoveAction onPossibleMove)
 {
 	char enemyPlayer = player == 'W' ? 'B' : 'W';
-	size_t y = pos.y - 1;
+	signed int y = pos.y - 1;
 	while (y >= 0)
 	{
 		if (board[y][pos.x] != enemyPlayer) {

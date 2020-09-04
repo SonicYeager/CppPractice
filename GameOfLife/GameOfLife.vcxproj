@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{519dcc93-0a74-4379-bf27-59ac1fe5fc92}</ProjectGuid>
-    <RootNamespace>ShowReversiMoves</RootNamespace>
+    <ProjectGuid>{628045e2-d7a0-4052-ab18-e6bedf4f0d13}</ProjectGuid>
+    <RootNamespace>GameOfLife</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -88,7 +88,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -140,11 +139,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GameOfLife.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Reversi.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Reversi.h" />
+    <ClInclude Include="GameOfLife.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
