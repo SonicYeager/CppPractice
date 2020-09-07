@@ -47,7 +47,7 @@ void RunGoFFor(size_t times, const Grid& grid)
 	{
 		system("CLS");
 		PrintToConsole(workingGrid);
-		//std::this_thread::sleep_for(std::chrono::milliseconds(50));
+		std::this_thread::sleep_for(std::chrono::milliseconds(50));
 		workingGrid = TheNextGeneration(workingGrid);
 		std::cout << "\n\n";
 	}
@@ -108,7 +108,7 @@ void Test()
 	expected = Grid{
 		{Cell('.'),Cell('.'), Cell('.'), Cell('.'),Cell('.')},
 		{Cell('.'),Cell('.'), Cell('.'), Cell('.'),Cell('.')},
-		{Cell('.'),Cell('*'), Cell('.'), Cell('*'),Cell('.') },
+		{Cell('.'),Cell('*'), Cell('.'), Cell('*'),Cell('.')},
 		{Cell('.'),Cell('.'), Cell('*'), Cell('*'),Cell('.')},
 		{Cell('.'),Cell('.'), Cell('*'), Cell('.'),Cell('.')},
 		{Cell('.'),Cell('.'), Cell('.'), Cell('.'),Cell('.')}
