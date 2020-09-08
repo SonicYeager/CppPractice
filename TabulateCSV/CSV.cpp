@@ -2,7 +2,6 @@
 #include <unordered_map>
 #include <algorithm>
 
-//using Columns = std::unordered_map<std::string, std::vector<std::string>>;
 using Table = std::vector<std::vector<std::string>>;
 
 Table ParseCSV(const  Lines&);
@@ -17,12 +16,10 @@ Lines TabulateCSV(const Lines& lines)
 
 std::vector<std::vector<std::string>> DecomposeLines(const Lines&);
 std::vector<std::string> DecomposeLine(const std::string&);
-//Columns ConvertToColumns(const std::vector<std::vector<std::string>>&);
 
 Table ParseCSV(const Lines& lines)
 {
     auto res = DecomposeLines(lines);
-    //auto res = ConvertToColumns(decomp);
     return res;
 }
 
@@ -48,20 +45,7 @@ std::vector<std::string> DecomposeLine(const std::string& line)
     return res;
 }
 
-//Columns ConvertToColumns(const std::vector<std::vector<std::string>>& columns)
-//{
-//    Columns res{};
-//    for (size_t i = 0; i < columns[0].size(); i++)
-//    {
-//        res.emplace(columns[0][i], std::vector<std::string>());
-//        for (size_t ii = 1; ii < columns.size(); ii++)
-//            res[columns[0][i]].push_back(columns[ii][i]);
-//    }
-//    return res;
-//}
-
 std::vector<int> GetMaxColumnLengths(const Table&);
-//int GetMaxColumnLength(const std::pair<std::string, std::vector<std::string>>&);
 Lines FormatTable(std::vector<int>, const Table&);
 
 Lines FormatToTable(const Table& table)
@@ -87,42 +71,12 @@ std::vector<int> GetMaxColumnLengths(const Table& table)
     return res;
 }
 
-//int GetMaxColumnLength(const std::pair<std::string, std::vector<std::string>>& col)
-//{
-//    int res = 0;
-//    auto greaterThan = [](const std::string& a, const std::string b) -> bool { return a.size() < b.size(); };
-//    auto maxElement = std::max_element(std::begin(col.second), std::end(col.second), greaterThan);
-//    res = maxElement._Unwrapped()->size();
-//    return res;
-//}
-
-//std::string CreateTableHead(std::vector<int>, const Table&);
-//std::string CreateTableHeadSeperation(std::vector<int>);
-//std::vector<std::vector<std::string>> ConvertToTable(const Columns& col);
-//std::vector<std::string> CreateContentLines(std::vector<int>, const std::vector<std::vector<std::string>>&);
-//Lines AddContentLines(const std::string& , const std::string& , const Lines& );
-
 Lines FormatLines(std::vector<int>, const Table&, std::string);
 
 Lines FormatTable(std::vector<int> maxColumnLeghth, const Table& table)
 {
-    //auto head = CreateTableHead(max, col);
-    //auto sep = CreateTableHeadSeperation(max);
-    //auto table = ConvertToTable(col);
-    //auto contentLines = (CreateContentLines(max, table));
-    //return AddContentLines(head, sep, contentLines);
     return FormatLines(maxColumnLeghth, table, "|");
 }
-
-//Lines AddContentLines(const std::string& head, const std::string& sep, const Lines& content )
-//{
-//    Lines res{};
-//    res.push_back(head);
-//    res.push_back(sep);
-//    for (auto con : content)
-//        res.push_back(con);
-//    return res;
-//}
 
 std::string FormatLine(std::vector<int>, const std::vector<std::string>&, std::string, std::string);
 
@@ -160,78 +114,3 @@ std::string FormatLine(std::vector<int> maxColumnWidth, const std::vector<std::s
     }
     return res;
 }
-
-//std::string CreateTableHead(std::vector<int> maxColumnWidth, const Columns& col)
-//{
-//    std::string res{};
-//    size_t index = 0;
-//    for (auto head : col)
-//    {
-//        std::string whiteSpaces{};
-//        for (size_t i = 0; i < maxColumnWidth[index] - head.first.size(); i++)
-//        {
-//            whiteSpaces += ' ';
-//        }
-//        res += head.first + whiteSpaces + "|";
-//        ++index;
-//    }
-//    return res;
-//}
-
-//std::string CreateTableHeadSeperation(std::vector<int> maxColumnWidth)
-//{
-//    std::string res{};
-//    for (size_t i = 0; i < maxColumnWidth.size(); i++)
-//    {
-//        for (size_t ii = 0; ii < maxColumnWidth[i]; ii++)
-//        {
-//            res += '-';
-//        }
-//        res += "+";
-//    }
-//    return res;
-//}
-
-//std::string CreateContentLine(std::vector<int>, const std::vector<std::string>&);
-//std::vector<std::vector<std::string>> ConvertToTable(const Columns&);
-//
-//std::vector<std::string> CreateContentLines(std::vector<int> max, const std::vector<std::vector<std::string>>& lines)
-//{
-//    std::vector<std::string> res{};
-//    for (auto line : lines) 
-//        res.push_back(CreateContentLine(max, line));
-//    return res;
-//}
-//
-//std::string CreateContentLine(std::vector<int> max, const std::vector<std::string>& line)
-//{
-//    std::string res{};
-//    size_t index = 0;
-//    for (auto word : line)
-//    {
-//        std::string whiteSpaces{};
-//        for (size_t i = 0; i < max[index] - word.size(); i++)
-//        {
-//            whiteSpaces += ' ';
-//        }
-//        res += word + whiteSpaces + "|";
-//        ++index;
-//    }
-//    return res;
-//}
-//
-//std::vector<std::vector<std::string>> ConvertToTable(const Columns& col)
-//{
-//    std::vector<std::vector<std::string>> res{};
-//    std::vector<std::vector<std::string>> tempRes{};
-//    for (auto c : col)
-//        tempRes.push_back(c.second);
-//    for (size_t i = 0; i < tempRes[0].size(); i++)
-//    {
-//        res.push_back(std::vector<std::string>());
-//        for (size_t ii = 0; ii < tempRes.size(); ii++)
-//            res[i].push_back(tempRes[ii][i]);
-//    }
-//
-//    return res;
-//}
