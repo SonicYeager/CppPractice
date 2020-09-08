@@ -1,20 +1,32 @@
 #include "CSV.h"
-#include <unordered_map>
-#include <algorithm>
 
-using Table = std::vector<std::vector<std::string>>;
+struct Table
+{
+    Table(const  std::vector<std::string>& head, const  std::vector<std::string>& seperation, std::vector<std::vector<std::string>> content) :
+        head(head), seperation(seperation), content(content)
+    {}
+
+    Table(const  std::vector<std::string>& head, std::vector<std::vector<std::string>> content) :
+        head(head), content(content)
+    {
+        seperation = std::vector<std::string>(head.size(), "");
+    }
+    std::vector<std::string> head;
+    std::vector<std::string> seperation; //optional
+    std::vector<std::vector<std::string>> content;
+};
 
 Table ParseCSV(const  Lines&);
-Lines FormatToTable(const Table&);
+Lines FormatTable(const Table&);
 
 Lines TabulateCSV(const Lines& lines)
 {
-    auto col = ParseCSV(lines);
-    auto res = FormatToTable(col);
+    Table table = ParseCSV(lines);
+    auto res = FormatTable(table);
     return res;
 }
 
-std::vector<std::vector<std::string>> DecomposeLines(const Lines&);
+Table DecomposeLines(const Lines&);
 std::vector<std::string> DecomposeLine(const std::string&);
 
 Table ParseCSV(const Lines& lines)
@@ -23,11 +35,18 @@ Table ParseCSV(const Lines& lines)
     return res;
 }
 
-Table DecomposeLines(const Lines& lines)
+Table DecomposeLines(const Lines& lines) //seperation extraction is possible to implement!!
 {
-    Table res{};
-    for (auto line : lines)
-        res.push_back(DecomposeLine(line));
+    std::vector<std::string> head{};
+    std::vector<std::vector<std::string>> content{};
+    for (size_t i = 0; i < lines.size(); i++)
+    {
+        if (i == 0) // can be set by params
+            head = DecomposeLine(lines[i]);
+        if (i > 0) // can be set by params
+            content.push_back(DecomposeLine(lines[i]));
+    }
+    Table res{head, content};
     return res;
 }
 
@@ -46,22 +65,24 @@ std::vector<std::string> DecomposeLine(const std::string& line)
 }
 
 std::vector<int> GetMaxColumnLengths(const Table&);
-Lines FormatTable(std::vector<int>, const Table&);
+Lines FormatLines(std::vector<int>, const Table&);
 
-Lines FormatToTable(const Table& table)
+Lines FormatTable(const Table& table)
 {
     auto maxLengths = GetMaxColumnLengths(table);
-    auto res = FormatTable(maxLengths, table);
+    auto res = FormatLines(maxLengths, table);
     return res;
 }
 
 std::vector<int> GetMaxColumnLengths(const Table& table)
 {
     std::vector<int> res{};
-    for (size_t i = 0; i < table[0].size(); i++)
+    for (size_t i = 0; i < table.head.size(); i++)
     {
         int last = 0;
-        for (auto line : table)
+        if (table.head[i].size() > last)
+            last = table.head[i].size();
+        for (auto line : table.content)
         {
             if(line[i].size() > last)
                 last = line[i].size();
@@ -71,30 +92,17 @@ std::vector<int> GetMaxColumnLengths(const Table& table)
     return res;
 }
 
-Lines FormatLines(std::vector<int>, const Table&, std::string);
-
-Lines FormatTable(std::vector<int> maxColumnLeghth, const Table& table)
-{
-    return FormatLines(maxColumnLeghth, table, "|");
-}
-
 std::string FormatLine(std::vector<int>, const std::vector<std::string>&, std::string, std::string);
 
-Lines FormatLines(std::vector<int> maxColumnWidth, const Table& table, std::string seperator)
+Lines FormatLines(std::vector<int> maxColumnWidth, const Table& table)
 {
     Lines res{};
 
-    auto cpy = table;
-    std::vector<std::string> insert{};
-    for (size_t i = 0; i < table[0].size(); i++)
-        insert.push_back("");
-    cpy.insert(++std::begin(cpy), insert);
-
-    size_t index = 0;
-    for (auto line : cpy)
+    res.push_back(FormatLine(maxColumnWidth, table.head, " ", "|"));
+    res.push_back(FormatLine(maxColumnWidth, table.seperation, "-", "+"));
+    for (auto line : table.content)
     {
-        res.push_back(FormatLine(maxColumnWidth,line, index == 1 ? "-" : " ", index == 1 ? "+" : seperator));
-        ++index;
+        res.push_back(FormatLine(maxColumnWidth,line, " ", "|"));
     }
     return res;
 }
