@@ -144,6 +144,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="InputTypes.h" />
+    <ClInclude Include="InternalTypes.h" />
     <ClInclude Include="TowerDefenseAnalysis.h" />
   </ItemGroup>
   <ItemGroup>

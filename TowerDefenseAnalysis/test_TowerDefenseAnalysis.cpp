@@ -12,7 +12,8 @@ void Test_Examples()
 							   "      1"};
 	Turrets turrets = {{'A', 3, 2}, {'B', 1, 4}, {'C', 2, 2}, {'D', 1, 3}};
 	IncomingWaves waves = {30, 14, 27, 21, 13, 0, 15, 17, 0, 18, 26};
-	assert(10 == TowerDefenseAnalysis(battlefield, turrets, waves));
+	auto res = TowerDefenseAnalysis(battlefield, turrets, waves);
+	assert(10 == res);
 
 	battlefield = {"011  1111",
 				   " A1  1BC1",
