@@ -55,14 +55,15 @@ Path GetPath(const Pos& pos, const Battlefield& field)
 	while(lastPos.x != -1 && lastPos.y != -1)
 	{
 		Pos nextPos{-1, -1};
-		if(pos.y - 1 >= 0 && field[pos.y - 1i64][pos.x] == '1' && lastPos.x != nextPos.x && lastPos.y != nextPos.y)
+		if(lastPos.y - 1 >= 0 && field[lastPos.y - 1i64][lastPos.x] == '1' && lastPos.y != lastPos.y - 1i64)
 			nextPos = Pos(lastPos.x, lastPos.y - 1);
-		if(pos.y + 1 < signed int(field.size()) && field[pos.y + 1i64][pos.x] == '1' && lastPos.x != nextPos.x && lastPos.y != nextPos.y)
+		if(lastPos.y + 1 < signed int(field.size()) && field[lastPos.y + 1i64][lastPos.x] == '1' && lastPos.y != lastPos.y + 1i64)
 			nextPos = Pos(lastPos.x, lastPos.y + 1);
-		if(pos.x - 1 >= 0 && field[pos.y][pos.x - 1i64] == '1' && lastPos.x != nextPos.x && lastPos.y != nextPos.y)
+		if(lastPos.x - 1 >= 0 && field[lastPos.y][lastPos.x - 1i64] == '1' && lastPos.x !=  lastPos.x - 1i64)
 			nextPos = Pos(lastPos.x - 1, lastPos.y);
-		if(pos.x + 1 < signed int(field[pos.y].size()) && field[pos.y][pos.x + 1i64] == '1' && lastPos.x != nextPos.x && lastPos.y != nextPos.y)
+		if(lastPos.x + 1 < signed int(field[lastPos.y].size()) && field[lastPos.y][lastPos.x + 1i64] == '1' && lastPos.x != lastPos.x + 1i64)
 			nextPos = Pos(lastPos.x + 1, lastPos.y);
+
 		if(lastPos.x != nextPos.x || lastPos.y != nextPos.y)
 		{
 			lastPos = nextPos;
