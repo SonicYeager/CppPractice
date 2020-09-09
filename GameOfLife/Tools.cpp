@@ -108,7 +108,7 @@ void Test()
 	expected = Grid{
 		{Cell('.'),Cell('.'), Cell('.'), Cell('.'),Cell('.')},
 		{Cell('.'),Cell('.'), Cell('.'), Cell('.'),Cell('.')},
-		{Cell('.'),Cell('*'), Cell('.'), Cell('*'),Cell('.') },
+		{Cell('.'),Cell('*'), Cell('.'), Cell('*'),Cell('.')},
 		{Cell('.'),Cell('.'), Cell('*'), Cell('*'),Cell('.')},
 		{Cell('.'),Cell('.'), Cell('*'), Cell('.'),Cell('.')},
 		{Cell('.'),Cell('.'), Cell('.'), Cell('.'),Cell('.')}

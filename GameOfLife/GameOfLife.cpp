@@ -15,7 +15,7 @@ using Action = std::function<void()>;
 
 int CountNeighbours(const Grid&, const Pos&);
 Cell CurrentState(const Grid&, const Pos&);
-int IsBorderZero(int, const Grid&, const Pos&);
+int ReturnZeroIfOnBorder(int, const Grid&, const Pos&);
 class Rules
 {
 public:
@@ -46,7 +46,7 @@ Grid TheNextGeneration(const Grid& grid)
 
 			int count = CountNeighbours(grid, pos);
 			Cell cell = CurrentState(grid, pos);
-			count = IsBorderZero(count, grid, pos);
+			count = ReturnZeroIfOnBorder(count, grid, pos);
 			r.NextState(count, cell);
 		}
 	}
@@ -57,21 +57,21 @@ Grid TheNextGeneration(const Grid& grid)
 int CountNeighbours(const Grid& grid, const Pos& pos)
 {
 	int count = 0;
-	if (pos.y - 1 >= 0 && grid[pos.y - 1][pos.x] == State::ALIVE)
+	if (pos.y - 1 >= 0 && grid[pos.y - 1i64][pos.x] == State::ALIVE)
 		++count;
-	if (pos.y + 1 < signed int(grid.size()) && grid[pos.y + 1][pos.x] == State::ALIVE)
+	if (pos.y + 1 < signed int(grid.size()) && grid[pos.y + 1i64][pos.x] == State::ALIVE)
 		++count;
-	if (pos.x - 1 >= 0 && grid[pos.y][pos.x - 1] == State::ALIVE)
+	if (pos.x - 1 >= 0 && grid[pos.y][pos.x - 1i64] == State::ALIVE)
 		++count;
-	if (pos.x + 1 < signed int(grid[pos.y].size()) && grid[pos.y][pos.x + 1] == State::ALIVE)
+	if (pos.x + 1 < signed int(grid[pos.y].size()) && grid[pos.y][pos.x + 1i64] == State::ALIVE)
 		++count;
-	if ((pos.y - 1 >= 0 && pos.x - 1 >= 0) && grid[pos.y - 1][pos.x - 1] == State::ALIVE)
+	if ((pos.y - 1 >= 0 && pos.x - 1 >= 0) && grid[pos.y - 1i64][pos.x - 1i64] == State::ALIVE)
 		++count;
-	if ((pos.y + 1 < signed int(grid.size()) && pos.x + 1 < signed int(grid[pos.y + 1].size())) && grid[pos.y + 1][pos.x + 1] == State::ALIVE)
+	if ((pos.y + 1 < signed int(grid.size()) && pos.x + 1 < signed int(grid[pos.y + 1i64].size())) && grid[pos.y + 1i64][pos.x + 1i64] == State::ALIVE)
 		++count;
-	if ((pos.y + 1 < signed int(grid.size()) && pos.x - 1 >= 0) && grid[pos.y + 1][pos.x - 1] == State::ALIVE)
+	if ((pos.y + 1 < signed int(grid.size()) && pos.x - 1 >= 0) && grid[pos.y + 1i64][pos.x - 1i64] == State::ALIVE)
 		++count;
-	if ((pos.y - 1 >= 0 && pos.x + 1 < signed int(grid[pos.y].size())) && grid[pos.y - 1][pos.x + 1] == State::ALIVE)
+	if ((pos.y - 1 >= 0 && pos.x + 1 < signed int(grid[pos.y].size())) && grid[pos.y - 1i64][pos.x + 1i64] == State::ALIVE)
 		++count;
 	return count;
 }
@@ -81,7 +81,7 @@ Cell CurrentState(const Grid& grid, const Pos& pos)
 	return grid[pos.y][pos.x];
 }
 
-int IsBorderZero(int count, const Grid& grid, const Pos& pos)
+int ReturnZeroIfOnBorder(int count, const Grid& grid, const Pos& pos)
 {
 	if (pos.x == grid[pos.y].size() - 1 or pos.x == 0 or pos.y == grid.size() - 1 or pos.y == 0)
 		count = 0;

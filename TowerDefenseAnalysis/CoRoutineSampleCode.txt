@@ -1,0 +1,89 @@
+#include <experimental/coroutine>
+#include <thread>
+#include <iostream>
+#include <sstream>
+
+void StartNewAsyncGeneratedComputation(Range range, Ui& ui)
+{
+
+	ComputePrimeNumbers* logic = new ComputePrimeNumbers; 
+	auto id = ui.AddProgress();
+
+	auto onFinishLambda = [&ui, id, range, logic]() 
+	{
+		ui.Finished(id, range);
+		delete logic;
+	};
+
+	logic->onProgress = std::bind(&Ui::UpdateProgress, &ui, id, std::placeholders::_1); //richtiger ansatz
+	logic->onFinish = onFinishLambda;
+	logic->ComputePrimesEventAsyncGenerated(range);
+}
+
+	ui.onRange = std::bind(StartNewAsyncGeneratedComputation, std::placeholders::_1, std::ref(ui));
+	
+size_t Ui::AddProgress() //unused yet
+{
+	progess.push_back({"Primes are "});
+	return progess.size() - 1;
+}
+
+void Ui::UpdateProgress(size_t id, PrimeNumber p) 
+{
+	progess[id].append(std::to_string(p));
+	progess[id].push_back(' ');
+	Display();
+}
+
+void Ui::Finished(size_t id, Range range) 
+{
+	std::ostringstream out;
+	out << "for scope [" << range.begin << ", " << range.end << ']';
+	progess[id].append(out.str());
+	Display();
+}
+
+void ComputePrimeNumbers::ComputePrimesEventGenerated(Range range)
+{
+	//PrimeNumbers result;
+	int last = range.end;
+	int candidate = std::max(2, range.begin);
+	while(candidate < last)
+	{
+		bool isPrime = true;
+		for(int trialDivisor = 2; trialDivisor * trialDivisor <= candidate; ++trialDivisor)
+		{
+			if(candidate % trialDivisor == 0)
+			{
+				isPrime = false;
+				break;
+			}
+		}
+		if(isPrime)
+		{
+			//result.push_back(candidate);
+			onProgress(candidate);
+			//onProgress(candidate);
+			//Slowdown computation ;)
+			std::this_thread::sleep_for(std::chrono::milliseconds(250));
+		}
+		candidate++;
+	}
+}
+
+std::future<void> ComputePrimeNumbers::ComputePrimesEventAsyncGenerated(Range range) //adpt type
+{
+	co_await std::async(std::launch::async, &ComputePrimeNumbers::ComputePrimesEventGenerated, this, range);
+	onFinish();
+}
+
+void Ui::Display()
+{
+	::system("cls");
+	std::ostringstream ostr;
+	for(auto p : progess)
+		ostr << p << '\n';
+	ostr << "Enter scope of prime numbers (ESC for abort)\n";
+	ostr << input;
+	std::cout << ostr.str() << std::endl;
+}
