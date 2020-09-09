@@ -51,26 +51,34 @@ Path GetPath(const Pos& pos, const Battlefield& field)
 {
 	Path res{};
 	res.push_back({pos, 0});
-	Pos lastPos(pos);
-	while(lastPos.x != -1 && lastPos.y != -1)
+	Pos nextPos{pos};
+	Pos lastPos(-1, -1);
+	while(nextPos.x != -1 && nextPos.y != -1)
 	{
-		Pos nextPos{-1, -1};
-		if(lastPos.y - 1 >= 0 && field[lastPos.y - 1i64][lastPos.x] == '1' && lastPos.y != lastPos.y - 1i64)
-			nextPos = Pos(lastPos.x, lastPos.y - 1);
-		if(lastPos.y + 1 < signed int(field.size()) && field[lastPos.y + 1i64][lastPos.x] == '1' && lastPos.y != lastPos.y + 1i64)
-			nextPos = Pos(lastPos.x, lastPos.y + 1);
-		if(lastPos.x - 1 >= 0 && field[lastPos.y][lastPos.x - 1i64] == '1' && lastPos.x !=  lastPos.x - 1i64)
-			nextPos = Pos(lastPos.x - 1, lastPos.y);
-		if(lastPos.x + 1 < signed int(field[lastPos.y].size()) && field[lastPos.y][lastPos.x + 1i64] == '1' && lastPos.x != lastPos.x + 1i64)
-			nextPos = Pos(lastPos.x + 1, lastPos.y);
-
-		if(lastPos.x != nextPos.x || lastPos.y != nextPos.y)
+		if (nextPos.y - 1 >= 0 && field[nextPos.y - 1i64][nextPos.x] == '1' && lastPos.y != nextPos.y - 1i64)
 		{
 			lastPos = nextPos;
-			res.push_back({lastPos, 0});
+			nextPos = Pos(nextPos.x, nextPos.y - 1);
+		}
+		else if (nextPos.y + 1 < signed int(field.size()) && field[nextPos.y + 1i64][nextPos.x] == '1' && lastPos.y != nextPos.y + 1i64)
+		{
+			lastPos = nextPos;
+			nextPos = Pos(nextPos.x, nextPos.y + 1);
+		}
+		else if (nextPos.x - 1 >= 0 && field[nextPos.y][nextPos.x - 1i64] == '1' && lastPos.x != nextPos.x - 1i64)
+		{
+			lastPos = nextPos;
+			nextPos = Pos(nextPos.x - 1, nextPos.y);
+		}
+		else if (nextPos.x + 1 < signed int(field[nextPos.y].size()) && field[nextPos.y][nextPos.x + 1i64] == '1' && lastPos.x != nextPos.x + 1i64)
+		{
+			lastPos = nextPos;
+			nextPos = Pos(nextPos.x + 1, nextPos.y);
 		}
 		else
-			lastPos = Pos(-1, -1);
+			nextPos = Pos(-1, -1);
+		if(nextPos.x != -1 && nextPos.y != -1)
+			res.push_back({nextPos, 0});
 	}
 	return res;
 }
