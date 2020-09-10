@@ -1,9 +1,16 @@
 #include "TowerDefenseAnalysis.h"
 #include "InternalTypes.h"
 #include "InputTypes.h"
+#include "Tools.h"
 #include <cmath>
 #include <algorithm>
-#include <functional>
+#include <chrono>
+#include <thread>
+
+auto CalcEuclidean2D(const Pos& p, const Pos& q) -> double
+{
+	return std::sqrt(std::pow(q.x - p.x, 2) + std::pow(q.y - p.y, 2));
+}
 
 std::pair<Path, ExtTurrets> ConvertData(const Battlefield&, const Turrets&);
 int PlayMoves(const Path&, const ExtTurrets&, const IncomingWaves&);
@@ -11,7 +18,7 @@ int PlayMoves(const Path&, const ExtTurrets&, const IncomingWaves&);
 AlienCount TowerDefenseAnalysis(const Battlefield& field, const Turrets& turrets, const IncomingWaves& waves)
 {
 	auto converted = ConvertData(field, turrets);
-	AlienCount count = PlayMoves(converted.first, converted.second, waves);
+	AlienCount count = PlayMoves(std::move(converted.first), std::move(converted.second), waves);
 	return count;
 }
 
@@ -23,7 +30,7 @@ ExtTurrets GetExtTurrets(const Battlefield&, const Turrets&, const Path&);
 std::pair<Path, ExtTurrets> ConvertData(const Battlefield& field, const Turrets& turr)
 {
 	auto path = GetPathFromField(field);
-	auto extTurr = GetExtTurrets(field, turr, path);
+	auto extTurr = GetExtTurrets(field, turr, path); //mp here eventually
 	return std::make_pair(path, extTurr);
 }
 
@@ -45,6 +52,7 @@ Pos GetSpawn(const Battlefield& field)
 		for(size_t x = 0; x < field[y].size(); ++x)
 			if(field[y][x] == '0')
 				return Pos(x,y);
+	return Pos(-1,-1);
 }
 
 Path GetPath(const Pos& pos, const Battlefield& field) 
@@ -53,7 +61,7 @@ Path GetPath(const Pos& pos, const Battlefield& field)
 	res.push_back({pos, 0});
 	Pos nextPos{pos};
 	Pos lastPos(-1, -1);
-	while(nextPos.x != -1 && nextPos.y != -1)
+	while(nextPos != Pos(-1,-1))
 	{
 		if (nextPos.y - 1 >= 0 && field[nextPos.y - 1i64][nextPos.x] == '1' && lastPos.y != nextPos.y - 1i64)
 		{
@@ -77,18 +85,18 @@ Path GetPath(const Pos& pos, const Battlefield& field)
 		}
 		else
 			nextPos = Pos(-1, -1);
-		if(nextPos.x != -1 && nextPos.y != -1)
+		if(nextPos != Pos(-1, -1))
 			res.push_back({nextPos, 0});
 	}
 	return res;
 }
 
-#pragma endregion
+#pragma endregion //DONE
 
 #pragma region GetExtTurrets
 
 Pos GetTurretPos(const Battlefield&, const TurretStats&);
-std::vector<Pos> GetFieldsInRange(const Pos&, const Path&, const TurretStats&);
+std::vector<Pos> GetFieldsInRange(const Pos&, const Path&, const TurretStats&, ActionReturnsDouble);
 ExtendedTurretStats AssembleExtendedTurretStats(const TurretStats&, const std::vector<Pos>&);
 
 ExtTurrets GetExtTurrets(const Battlefield& field, const Turrets& turr, const Path& path)
@@ -97,28 +105,28 @@ ExtTurrets GetExtTurrets(const Battlefield& field, const Turrets& turr, const Pa
 	for(const auto& t : turr)
 	{
 		auto pos = GetTurretPos(field, t);
-		auto inRangePos = GetFieldsInRange(pos, path, t);
+		auto inRangePos = GetFieldsInRange(pos, path, t, CalcEuclidean2D);
 		auto extStats = AssembleExtendedTurretStats(t, inRangePos);
 		res.push_back(extStats);
 	}
 	return res;
 }
 
-Pos GetTurretPos(const Battlefield& field, const TurretStats& stats)
+Pos GetTurretPos(const Battlefield& field, const TurretStats& stats) // eventually MP (least concern here)
 {
 	for(size_t y = 0; y < field.size(); ++y)
 		for(size_t x = 0; x < field[y].size(); ++x)
 			if(stats.name == field[y][x])
 				return Pos(x,y);
+	return Pos(-1,-1);
 }
 
-std::vector<Pos> GetFieldsInRange(const Pos& pos, const Path& path, const TurretStats& stats) 
+std::vector<Pos> GetFieldsInRange(const Pos& pos, const Path& path, const TurretStats& stats, ActionReturnsDouble euclideanCalc)
 {
 	std::vector<Pos> res{};
-	auto euclidean = [](const Pos& p, const Pos& q) -> double {return std::sqrt(std::pow(q.x - p.x, 2) + std::pow(q.y - p.y, 2));};
 
 	for(const auto& pElem : path)
-		if(euclidean(pos, pElem.pos) <= stats.range)
+		if(euclideanCalc(pos, pElem.pos) <= stats.range)
 			res.push_back(pElem.pos);
 	return res;
 }
@@ -128,15 +136,15 @@ ExtendedTurretStats AssembleExtendedTurretStats(const TurretStats& stats, const 
 	return {stats, positions};
 }
 
-#pragma endregion
+#pragma endregion //MP Awaiting
 
-#pragma endregion
+#pragma endregion //ALMOST DONE
 
 #pragma region PlayMoves
 
 Path SpawnWave(const Path&, const AlienCount&);
 Path TowerShoot(const Path&, const ExtTurrets&);
-Path MoveAliens(const Path&, std::function<void(const AlienCount&)>);
+Path MoveAliens(const Path&, ActionAlienCount);
 constexpr AlienCount GetSurvivedAlienCount(const AlienCount&);
 
 int PlayMoves(const Path& path, const ExtTurrets& extTurr, const IncomingWaves& waves)
@@ -144,7 +152,7 @@ int PlayMoves(const Path& path, const ExtTurrets& extTurr, const IncomingWaves& 
 	AlienCount res = 0;
 	auto OnSurvived = [&res](const AlienCount& c) { res += GetSurvivedAlienCount(c); };
 	auto moved{path};
-	for(auto wave : waves) //does not iterate through whole process!!!
+	for(auto wave : waves)
 	{
 		auto spawned = SpawnWave(moved, wave);
 		auto shot = TowerShoot(spawned, extTurr);
@@ -171,13 +179,13 @@ bool CanShoot(const Path&, const ExtTurrets&);
 Pos GetMostAdvancedOnPath(const Path&, const ExtendedTurretStats&);
 std::pair<Path, ExtendedTurretStats> Shoot(const Path&, const Pos& pos, const ExtendedTurretStats& extTStats);
 
-Path TowerShoot(const Path& path, const ExtTurrets& extTurr)
+Path TowerShoot(const Path& path, const ExtTurrets& extTurr) //make mp possible at least here
 {
 	Path res(path);
 	ExtTurrets temp(extTurr);
 	while(CanShoot(res, temp))
 	{
-		for(auto& extTurrStats : temp) //can be optimzed !!
+		for(auto& extTurrStats : temp)
 		{
 			auto mainTarget = GetMostAdvancedOnPath(res, extTurrStats);
 			auto shot = Shoot(res, mainTarget, extTurrStats);
@@ -190,60 +198,44 @@ Path TowerShoot(const Path& path, const ExtTurrets& extTurr)
 
 bool CanShoot(const Path& path, const ExtTurrets& extTurr) 
 {
-	
-	auto findElemInPath = [](const Path& path, const Pos& pos)->PathElement
-	{
-		for(auto elem : path)
-			if(elem.pos.x == pos.x && elem.pos.y == pos.y)
-				return elem;
-		return PathElement({-1, -1}, -1);
-	};
-
-	for(auto turr : extTurr)
+	for(const auto& turr : extTurr)
 		if(turr.stats.shots > 0)
-			for(auto pos : turr.positionsInRange)
-				if(findElemInPath(path, pos).alienCount > 0)
+			for(const auto& pos : turr.positionsInRange)
+			{
+				auto findPos = [pos](const PathElement& elem) -> bool { return elem.pos == pos; };
+				if(std::find_if(std::begin(path), std::end(path), findPos)._Unwrapped()->alienCount > 0)
 					return true;
-
+			}
 	return false;
 }
 
 Pos GetMostAdvancedOnPath(const Path& path, const ExtendedTurretStats& extTStats) 
 {
-	auto findElemInPath = [](const Path& path, const Pos& pos) -> PathElement {
-		for(auto elem : path)
-			if(elem.pos.x == pos.x && elem.pos.y == pos.y)
-				return elem;
-		return PathElement({-1,-1}, -1);
-	};
-
 	auto reversed(extTStats.positionsInRange);
 	std::reverse(std::begin(reversed), std::end(reversed));
 
-	for(auto pos : reversed)
-		if(findElemInPath(path, pos).alienCount > 0)
+	for(const auto& pos : reversed)
+	{
+		auto findPos = [pos](const PathElement& elem) -> bool { return elem.pos == pos; };
+		if(std::find_if(std::begin(path), std::end(path), findPos)._Unwrapped()->alienCount > 0)
 			return pos;
+	}
 
 	return Pos(-1,-1);
 }
 
 std::pair<Path, ExtendedTurretStats> Shoot(const Path& path, const Pos& pos, const ExtendedTurretStats& extTStats)
 {
-	auto findElemInPath = [](Path& path, const Pos& pos) -> PathElement& {
-		for(auto& elem : path)
-			if(elem.pos.x == pos.x && elem.pos.y == pos.y)
-				return elem;
-	};
-
 	Path pRes(path);
 	ExtendedTurretStats eRes(extTStats);
 
-	if(pos.x != -1 && pos.y != -1)
+	if(pos != Pos(-1, -1))
 	{
 		if(eRes.stats.shots != 0)
 		{
-			auto& elem = findElemInPath(pRes, pos);
-			elem.alienCount = elem.alienCount - 1;
+			auto findPos = [pos](const PathElement& elem) -> bool { return elem.pos == pos; };
+			auto elem = std::find_if(std::begin(pRes), std::end(pRes), findPos);
+			elem._Unwrapped()->alienCount = elem._Unwrapped()->alienCount - 1;
 			eRes.stats.shots = eRes.stats.shots - 1;
 		}
 	}
@@ -252,7 +244,7 @@ std::pair<Path, ExtendedTurretStats> Shoot(const Path& path, const Pos& pos, con
 
 #pragma endregion
 
-Path MoveAliens(const Path& path, std::function<void(const AlienCount&)> onSurvied)
+Path MoveAliens(const Path& path, ActionAlienCount onSurvied)
 {
 	Path res(path);
 	for(int i = res.size()-1; i >= 0; --i)
@@ -271,6 +263,43 @@ Path MoveAliens(const Path& path, std::function<void(const AlienCount&)> onSurvi
 constexpr AlienCount GetSurvivedAlienCount(const AlienCount& count)
 {
 	return count;
+}
+
+#pragma endregion
+
+#pragma region RUN
+
+void PlayMovesWithDisplay(const Path&, const ExtTurrets&, const IncomingWaves&, const Battlefield&);
+
+void RunTD(const Battlefield& field, const Turrets& turr, const IncomingWaves& waves)
+{
+	auto converted = ConvertData(field, turr);
+	const auto& path = converted.first;
+	const auto& extTurr = converted.second;
+	PlayMovesWithDisplay(path, extTurr, waves, field);
+}
+
+void PlayMovesWithDisplay(const Path& path, const ExtTurrets& extTurr, const IncomingWaves& waves, const Battlefield& field)
+{
+	auto OnSurvived = [](const AlienCount& c) { /*Dymmy*/ };
+	auto moved{path};
+	for(auto wave : waves)
+	{
+		auto spawned = SpawnWave(moved, wave);
+		auto shot = TowerShoot(spawned, extTurr);
+		moved = MoveAliens(shot, OnSurvived);
+		auto displayable = ConvertGameData(moved, field);
+		PrintBattlefieldToConsole(displayable);
+		std::this_thread::sleep_for(std::chrono::milliseconds(150));
+	}
+	for(size_t i = 0; i < path.size(); i++) // replace evtl. by While loop with IsAlienOnField() to minimize loop iterations
+	{
+		auto shot = TowerShoot(moved, extTurr);
+		moved = MoveAliens(shot, OnSurvived);
+		auto displayable = ConvertGameData(moved, field);
+		PrintBattlefieldToConsole(displayable);
+		std::this_thread::sleep_for(std::chrono::milliseconds(150));
+	}
 }
 
 #pragma endregion

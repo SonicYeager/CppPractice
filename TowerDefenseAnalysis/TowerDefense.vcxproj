@@ -88,7 +88,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <OpenMPSupport>false</OpenMPSupport>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -145,11 +146,13 @@
   <ItemGroup>
     <ClInclude Include="InputTypes.h" />
     <ClInclude Include="InternalTypes.h" />
+    <ClInclude Include="Tools.h" />
     <ClInclude Include="TowerDefenseAnalysis.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="test_TowerDefenseAnalysis.cpp" />
+    <ClCompile Include="Tools.cpp" />
     <ClCompile Include="TowerDefenseAnalysis.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
