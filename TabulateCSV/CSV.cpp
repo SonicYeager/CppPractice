@@ -2,15 +2,15 @@
 
 struct Table
 {
+    Table() = default;
     Table(const  std::vector<std::string>& head, const  std::vector<std::string>& seperation, std::vector<std::vector<std::string>> content) :
         head(head), seperation(seperation), content(content)
     {}
 
     Table(const  std::vector<std::string>& head, std::vector<std::vector<std::string>> content) :
-        head(head), content(content)
-    {
-        seperation = std::vector<std::string>(head.size(), "");
-    }
+        Table(head, { head.size(), "" }, content)
+    {}
+
     std::vector<std::string> head;
     std::vector<std::string> seperation; //optional
     std::vector<std::vector<std::string>> content;
@@ -26,7 +26,7 @@ Lines TabulateCSV(const Lines& lines)
     return res;
 }
 
-Table DecomposeLines(const Lines&);
+Table DecomposeLines(Lines);
 std::vector<std::string> DecomposeLine(const std::string&);
 
 Table ParseCSV(const Lines& lines)
@@ -35,18 +35,15 @@ Table ParseCSV(const Lines& lines)
     return res;
 }
 
-Table DecomposeLines(const Lines& lines) //seperation extraction is possible to implement!!
+Table DecomposeLines(Lines lines) //seperation extraction is possible to implement!!
 {
-    std::vector<std::string> head{};
-    std::vector<std::vector<std::string>> content{};
-    for (size_t i = 0; i < lines.size(); i++)
+    Table res{};
+    res.head = DecomposeLine(lines.front());
+    lines.erase(std::begin(lines));
+    for (auto line : lines)
     {
-        if (i == 0) // can be set by params
-            head = DecomposeLine(lines[i]);
-        if (i > 0) // can be set by params
-            content.push_back(DecomposeLine(lines[i]));
+        res.content.push_back(DecomposeLine(line));
     }
-    Table res{head, content};
     return res;
 }
 

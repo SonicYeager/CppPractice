@@ -1,6 +1,6 @@
 #include "Ui.h"
 #include "ComputePrimeNumbers.h"
-#include "Contracts.h" //added
+#include "Contracts.h"
 #include <vector>
 
 void StartNewComputation(Range range, Ui& ui)
