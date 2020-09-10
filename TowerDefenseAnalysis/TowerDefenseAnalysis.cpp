@@ -115,10 +115,10 @@ Pos GetTurretPos(const Battlefield& field, const TurretStats& stats)
 std::vector<Pos> GetFieldsInRange(const Pos& pos, const Path& path, const TurretStats& stats) 
 {
 	std::vector<Pos> res{};
-	auto euclidean = [](const Pos& p, const Pos& q) -> int {return std::sqrt(std::pow(q.x - p.x, 2) + std::pow(q.y - p.y, 2));};
+	auto euclidean = [](const Pos& p, const Pos& q) -> double {return std::sqrt(std::pow(q.x - p.x, 2) + std::pow(q.y - p.y, 2));};
 
 	for(const auto& pElem : path)
-		if(euclidean(pos, pElem.pos) == stats.range)
+		if(euclidean(pos, pElem.pos) <= stats.range)
 			res.push_back(pElem.pos);
 	return res;
 }
@@ -142,21 +142,27 @@ constexpr AlienCount GetSurvivedAlienCount(const AlienCount&);
 int PlayMoves(const Path& path, const ExtTurrets& extTurr, const IncomingWaves& waves)
 {
 	AlienCount res = 0;
-
 	auto OnSurvived = [&res](const AlienCount& c) { res += GetSurvivedAlienCount(c); };
-
-	for(auto wave : waves)
+	auto moved{path};
+	for(auto wave : waves) //does not iterate through whole process!!!
 	{
-		auto spawned = SpawnWave(path, wave);
-		auto shot = TowerShoot(path, extTurr);
-		auto moved = MoveAliens(path, OnSurvived);
+		auto spawned = SpawnWave(moved, wave);
+		auto shot = TowerShoot(spawned, extTurr);
+		moved = MoveAliens(shot, OnSurvived);
+	}
+	for(size_t i = 0; i < path.size(); i++)
+	{
+		auto shot = TowerShoot(moved, extTurr);
+		moved = MoveAliens(shot, OnSurvived);
 	}
 	return res;
 }
 
-Path SpawnWave(const Path&, const AlienCount&)
+Path SpawnWave(const Path& path, const AlienCount& count)
 {
-	return Path();
+	Path res{path};
+	res[0].alienCount = count;
+	return res;
 }
 
 #pragma region TowerShoot
@@ -169,13 +175,14 @@ Path TowerShoot(const Path& path, const ExtTurrets& extTurr)
 {
 	Path res(path);
 	ExtTurrets temp(extTurr);
-	while(CanShoot(res, extTurr))
+	while(CanShoot(res, temp))
 	{
-		for(const auto& extTurrStats : temp) //can be optimzed !!
+		for(auto& extTurrStats : temp) //can be optimzed !!
 		{
 			auto mainTarget = GetMostAdvancedOnPath(res, extTurrStats);
-			auto shot = Shoot(path, mainTarget, extTurrStats);
+			auto shot = Shoot(res, mainTarget, extTurrStats);
 			res = shot.first;
+			extTurrStats = shot.second;
 		}
 	}
 	return res;
@@ -193,7 +200,7 @@ bool CanShoot(const Path& path, const ExtTurrets& extTurr)
 	};
 
 	for(auto turr : extTurr)
-		if(turr.shots != 0)
+		if(turr.stats.shots > 0)
 			for(auto pos : turr.positionsInRange)
 				if(findElemInPath(path, pos).alienCount > 0)
 					return true;
@@ -214,7 +221,7 @@ Pos GetMostAdvancedOnPath(const Path& path, const ExtendedTurretStats& extTStats
 	std::reverse(std::begin(reversed), std::end(reversed));
 
 	for(auto pos : reversed)
-		if(findElemInPath(path, pos).alienCount != -1)
+		if(findElemInPath(path, pos).alienCount > 0)
 			return pos;
 
 	return Pos(-1,-1);
@@ -222,11 +229,10 @@ Pos GetMostAdvancedOnPath(const Path& path, const ExtendedTurretStats& extTStats
 
 std::pair<Path, ExtendedTurretStats> Shoot(const Path& path, const Pos& pos, const ExtendedTurretStats& extTStats)
 {
-	auto findElemInPath = [](const Path& path, const Pos& pos) -> PathElement {
-		for(auto elem : path)
+	auto findElemInPath = [](Path& path, const Pos& pos) -> PathElement& {
+		for(auto& elem : path)
 			if(elem.pos.x == pos.x && elem.pos.y == pos.y)
 				return elem;
-		return PathElement({-1, -1}, -1);
 	};
 
 	Path pRes(path);
@@ -234,11 +240,11 @@ std::pair<Path, ExtendedTurretStats> Shoot(const Path& path, const Pos& pos, con
 
 	if(pos.x != -1 && pos.y != -1)
 	{
-		if(eRes.shots != 0)
+		if(eRes.stats.shots != 0)
 		{
-			auto elem = findElemInPath(pRes, pos);
-			--elem.alienCount;
-			--eRes.shots;
+			auto& elem = findElemInPath(pRes, pos);
+			elem.alienCount = elem.alienCount - 1;
+			eRes.stats.shots = eRes.stats.shots - 1;
 		}
 	}
 	return std::make_pair(pRes, eRes);
@@ -252,9 +258,12 @@ Path MoveAliens(const Path& path, std::function<void(const AlienCount&)> onSurvi
 	for(int i = res.size()-1; i >= 0; --i)
 	{
 		if(i + 1i64 < res.size())
-			res[i + 1].alienCount = path[i].alienCount;
-		else
-			onSurvied(path[i].alienCount);
+		{
+			res[i + 1].alienCount = res[i].alienCount;
+			res[i].alienCount = 0;
+		}
+		else if(res[i].alienCount > 0)
+			onSurvied(res[i].alienCount);
 	}
 	return res;
 }

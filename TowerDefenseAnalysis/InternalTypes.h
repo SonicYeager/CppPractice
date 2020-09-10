@@ -24,12 +24,12 @@ struct PathElement
 using Path = std::vector<PathElement>;
 
 //ExtendedTowerStruct (Keeps the fields in range already on hand ordered as well as their position -> so its simple to get the alien)
-struct ExtendedTurretStats : TurretStats
+struct ExtendedTurretStats
 {
 	ExtendedTurretStats(const TurretStats& stats, const std::vector<Pos>& positions) : stats(stats), positionsInRange(positions)
 	{}
 	TurretStats stats;
-	const std::vector<Pos> positionsInRange;
+	std::vector<Pos> positionsInRange;
 };
 
 using ExtTurrets = std::vector<ExtendedTurretStats>;
