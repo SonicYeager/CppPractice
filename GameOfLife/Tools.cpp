@@ -4,17 +4,20 @@
 #include <thread>
 #include <random>
 #include <assert.h>
+#include <sstream>
 
 Grid SetGrid(size_t, size_t);
 
 void PrintToConsole(const Grid& grid)
 {
+	std::stringstream ostr;
 	for (auto row : grid)
 	{
 		for (auto col : row)
-			std::cout << col << " ";
-		std::cout << "\n";
+			ostr << col << " ";
+		ostr << "\n";
 	}
+	std::cout << ostr.str() << std::endl;
 }
 
 Cell GenerateRandomCell(const Cell& dead, const Cell& alive)
@@ -48,6 +51,19 @@ void RunGoFFor(size_t times, const Grid& grid)
 		system("CLS");
 		PrintToConsole(workingGrid);
 		std::this_thread::sleep_for(std::chrono::milliseconds(100));
+		workingGrid = TheNextGeneration(workingGrid);
+		std::cout << "\n\n";
+	}
+}
+
+void RunGoF(const Grid& grid)
+{
+	auto workingGrid(grid);
+	while (true)
+	{
+		//system("CLS");
+		PrintToConsole(workingGrid);
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
 		workingGrid = TheNextGeneration(workingGrid);
 		std::cout << "\n\n";
 	}
