@@ -57,21 +57,21 @@ Grid TheNextGeneration(const Grid& grid)
 int CountNeighbours(const Grid& grid, const Pos& pos)
 {
 	int count = 0;
-	if (pos.y - 1 >= 0 && grid[pos.y - 1i64][pos.x] == State::ALIVE)
+	if (pos.y - 1 >= 0 && grid[pos.y - 1i64][pos.x] == STATE::ALIVE)
 		++count;
-	if (pos.y + 1 < signed int(grid.size()) && grid[pos.y + 1i64][pos.x] == State::ALIVE)
+	if (pos.y + 1 < signed int(grid.size()) && grid[pos.y + 1i64][pos.x] == STATE::ALIVE)
 		++count;
-	if (pos.x - 1 >= 0 && grid[pos.y][pos.x - 1i64] == State::ALIVE)
+	if (pos.x - 1 >= 0 && grid[pos.y][pos.x - 1i64] == STATE::ALIVE)
 		++count;
-	if (pos.x + 1 < signed int(grid[pos.y].size()) && grid[pos.y][pos.x + 1i64] == State::ALIVE)
+	if (pos.x + 1 < signed int(grid[pos.y].size()) && grid[pos.y][pos.x + 1i64] == STATE::ALIVE)
 		++count;
-	if ((pos.y - 1 >= 0 && pos.x - 1 >= 0) && grid[pos.y - 1i64][pos.x - 1i64] == State::ALIVE)
+	if ((pos.y - 1 >= 0 && pos.x - 1 >= 0) && grid[pos.y - 1i64][pos.x - 1i64] == STATE::ALIVE)
 		++count;
-	if ((pos.y + 1 < signed int(grid.size()) && pos.x + 1 < signed int(grid[pos.y + 1i64].size())) && grid[pos.y + 1i64][pos.x + 1i64] == State::ALIVE)
+	if ((pos.y + 1 < signed int(grid.size()) && pos.x + 1 < signed int(grid[pos.y + 1i64].size())) && grid[pos.y + 1i64][pos.x + 1i64] == STATE::ALIVE)
 		++count;
-	if ((pos.y + 1 < signed int(grid.size()) && pos.x - 1 >= 0) && grid[pos.y + 1i64][pos.x - 1i64] == State::ALIVE)
+	if ((pos.y + 1 < signed int(grid.size()) && pos.x - 1 >= 0) && grid[pos.y + 1i64][pos.x - 1i64] == STATE::ALIVE)
 		++count;
-	if ((pos.y - 1 >= 0 && pos.x + 1 < signed int(grid[pos.y].size())) && grid[pos.y - 1i64][pos.x + 1i64] == State::ALIVE)
+	if ((pos.y - 1 >= 0 && pos.x + 1 < signed int(grid[pos.y].size())) && grid[pos.y - 1i64][pos.x + 1i64] == STATE::ALIVE)
 		++count;
 	return count;
 }
@@ -90,13 +90,13 @@ int ReturnZeroIfOnBorder(int count, const Grid& grid, const Pos& pos)
 
 void Rules::NextState(int count, const Cell& cell)
 {
-	if (count < 2 && cell == State::ALIVE)
+	if (count < 2 && cell == STATE::ALIVE)
 		onDead();
-	if (count > 3 && cell == State::ALIVE)
+	else if(count > 3 && cell == STATE::ALIVE)
 		onDead();
-	if (count == 3 || count == 2 && cell == State::ALIVE)
-		onAlive();
-	if (count == 3 && cell == State::ALIVE)
+	//if ((count == 3 || count == 2) && cell == STATE::ALIVE)
+	//	onAlive();
+	else if (count == 3 && cell == STATE::DEAD)
 		onAlive();
 }
 

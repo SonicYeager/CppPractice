@@ -6,6 +6,6 @@ int main()
 {
 	Test();
 
-	auto testy = GenerateRandomGrid(50, 100);
+	auto testy = GenerateRandomGrid(25, 25);
 	RunGoF(testy);
 }

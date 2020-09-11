@@ -10,6 +10,7 @@ int main()
 
 	//{ INIT
 
+	
 	Battlefield battlefield = {"  111111111111111111",
 				   "0 1               A1",
 				   "1 1 1111111111111111",

@@ -11,9 +11,9 @@ Grid SetGrid(size_t, size_t);
 void PrintToConsole(const Grid& grid)
 {
 	std::stringstream ostr;
-	for (auto row : grid)
+	for (const auto& row : grid)
 	{
-		for (auto col : row)
+		for (const auto& col : row)
 			ostr << col << " ";
 		ostr << "\n";
 	}
@@ -63,7 +63,7 @@ void RunGoF(const Grid& grid)
 	{
 		//system("CLS");
 		PrintToConsole(workingGrid);
-		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+		std::this_thread::sleep_for(std::chrono::milliseconds(250));
 		workingGrid = TheNextGeneration(workingGrid);
 		std::cout << "\n\n";
 	}

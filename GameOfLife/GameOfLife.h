@@ -2,12 +2,12 @@
 #include <vector>
 #include <iostream>
 
-enum struct State : char
+enum struct STATE : char
 {
 	DEAD = '.',
 	ALIVE = '*'
 };
-using Cell = State;
+using Cell = STATE;
 
 std::ostream& operator<<(std::ostream& os, const Cell& dt);
 
