@@ -136,32 +136,33 @@ ExtendedTurretStats AssembleExtendedTurretStats(const TurretStats& stats, const 
 	return {stats, positions};
 }
 
-#pragma endregion //MP Awaiting
+#pragma endregion 
 
-#pragma endregion //ALMOST DONE
+#pragma endregion 
 
 #pragma region PlayMoves
 
 Path SpawnWave(const Path&, const AlienCount&);
 Path TowerShoot(const Path&, const ExtTurrets&);
-Path MoveAliens(const Path&, ActionAlienCount);
-constexpr AlienCount GetSurvivedAlienCount(const AlienCount&);
+Path MoveAliens(const Path&);
+AlienCount GetSurvivedAlienCount(const Path&);
 
 int PlayMoves(const Path& path, const ExtTurrets& extTurr, const IncomingWaves& waves)
 {
 	AlienCount res = 0;
-	auto OnSurvived = [&res](const AlienCount& c) { res += GetSurvivedAlienCount(c); };
 	auto moved{path};
 	for(auto wave : waves)
 	{
 		auto spawned = SpawnWave(moved, wave);
 		auto shot = TowerShoot(spawned, extTurr);
-		moved = MoveAliens(shot, OnSurvived);
+		res += GetSurvivedAlienCount(shot);
+		moved = MoveAliens(shot);
 	}
 	for(size_t i = 0; i < path.size(); i++)
 	{
 		auto shot = TowerShoot(moved, extTurr);
-		moved = MoveAliens(shot, OnSurvived);
+		res += GetSurvivedAlienCount(shot);
+		moved = MoveAliens(shot);
 	}
 	return res;
 }
@@ -203,7 +204,7 @@ bool CanShoot(const Path& path, const ExtTurrets& extTurr)
 			for(const auto& pos : turr.positionsInRange)
 			{
 				auto findPos = [pos](const PathElement& elem) -> bool { return elem.pos == pos; };
-				if(std::find_if(std::begin(path), std::end(path), findPos)._Unwrapped()->alienCount > 0)
+				if(std::find_if(std::begin(path), std::end(path), findPos)->alienCount > 0)
 					return true;
 			}
 	return false;
@@ -217,7 +218,8 @@ Pos GetMostAdvancedOnPath(const Path& path, const ExtendedTurretStats& extTStats
 	for(const auto& pos : reversed)
 	{
 		auto findPos = [pos](const PathElement& elem) -> bool { return elem.pos == pos; };
-		if(std::find_if(std::begin(path), std::end(path), findPos)._Unwrapped()->alienCount > 0)
+		auto it = std::find_if(std::begin(path), std::end(path), findPos);
+		if(it != std::end(path) and it->alienCount > 0) // just for safety
 			return pos;
 	}
 
@@ -235,7 +237,7 @@ std::pair<Path, ExtendedTurretStats> Shoot(const Path& path, const Pos& pos, con
 		{
 			auto findPos = [pos](const PathElement& elem) -> bool { return elem.pos == pos; };
 			auto elem = std::find_if(std::begin(pRes), std::end(pRes), findPos);
-			elem._Unwrapped()->alienCount = elem._Unwrapped()->alienCount - 1;
+			elem->alienCount = elem->alienCount - 1;
 			eRes.stats.shots = eRes.stats.shots - 1;
 		}
 	}
@@ -244,30 +246,25 @@ std::pair<Path, ExtendedTurretStats> Shoot(const Path& path, const Pos& pos, con
 
 #pragma endregion
 
-Path MoveAliens(const Path& path, ActionAlienCount onSurvied)
+Path MoveAliens(const Path& path/*, ActionAlienCount onSurvied*/)
 {
 	Path res(path);
-	for(int i = res.size()-1; i >= 0; --i)
+	for(int i = res.size()-2; i >= 0; --i)
 	{
-		if(i + 1i64 < res.size())
-		{
 			res[i + 1].alienCount = res[i].alienCount;
-			res[i].alienCount = 0;
-		}
-		else if(res[i].alienCount > 0)
-			onSurvied(res[i].alienCount);
 	}
+	res.front().alienCount = 0;
 	return res;
 }
 
-constexpr AlienCount GetSurvivedAlienCount(const AlienCount& count)
+AlienCount GetSurvivedAlienCount(const Path& path)
 {
-	return count;
+	return path.back().alienCount;
 }
 
 #pragma endregion
 
-#pragma region RUN
+#pragma region DISPLAY
 
 void PlayMovesWithDisplay(const Path&, const ExtTurrets&, const IncomingWaves&, const Battlefield&);
 
@@ -279,15 +276,14 @@ void RunTD(const Battlefield& field, const Turrets& turr, const IncomingWaves& w
 	PlayMovesWithDisplay(path, extTurr, waves, field);
 }
 
-void PlayMovesWithDisplay(const Path& path, const ExtTurrets& extTurr, const IncomingWaves& waves, const Battlefield& field)
+void PlayMovesWithDisplay(const Path& path, const ExtTurrets& extTurr, const IncomingWaves& waves, const Battlefield& field) //has not yet bin specialized
 {
-	auto OnSurvived = [](const AlienCount& c) { /*Dymmy*/ };
 	auto moved{path};
 	for(auto wave : waves)
 	{
 		auto spawned = SpawnWave(moved, wave);
 		auto shot = TowerShoot(spawned, extTurr);
-		moved = MoveAliens(shot, OnSurvived);
+		moved = MoveAliens(shot);
 		auto displayable = ConvertGameData(moved, field);
 		PrintBattlefieldToConsole(displayable);
 		std::this_thread::sleep_for(std::chrono::milliseconds(150));
@@ -295,7 +291,7 @@ void PlayMovesWithDisplay(const Path& path, const ExtTurrets& extTurr, const Inc
 	for(size_t i = 0; i < path.size(); i++) // replace evtl. by While loop with IsAlienOnField() to minimize loop iterations
 	{
 		auto shot = TowerShoot(moved, extTurr);
-		moved = MoveAliens(shot, OnSurvived);
+		moved = MoveAliens(shot);
 		auto displayable = ConvertGameData(moved, field);
 		PrintBattlefieldToConsole(displayable);
 		std::this_thread::sleep_for(std::chrono::milliseconds(150));
