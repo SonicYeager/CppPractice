@@ -6,16 +6,18 @@
              x:Class="AvaloniaTesty.Views.TodoListView">
   <DockPanel>
     <Button DockPanel.Dock="Bottom" Command="{Binding $parent[Window].DataContext.AddItem}">Add an item</Button>
-    <ItemsControl Items="{Binding Items}">
-      <ItemsControl.ItemTemplate>
-        <DataTemplate>
-          <CheckBox 
-            Margin="4"
-            IsChecked="{Binding IsChecked}"
-            Content="{Binding Description}"
-          />
-        </DataTemplate>
-      </ItemsControl.ItemTemplate>
-    </ItemsControl>
+    <ScrollViewer>
+      <ItemsControl Items="{Binding Items}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <CheckBox 
+              Margin="4"
+              IsChecked="{Binding IsChecked}"
+              Content="{Binding Description}"
+            />
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </ScrollViewer>
   </DockPanel>
 </UserControl>

@@ -12,7 +12,7 @@ namespace AvaloniaTesty.ViewModels
         {
             var okEnabled = this.WhenAnyValue(
                 x => x.Description,
-                x => !string.IsNullOrWhiteSpace(x));
+                x => !string.IsNullOrWhiteSpace(x) && x.Length < 255);
 
             Ok = ReactiveCommand.Create(
                 () => new TodoItem { Description = Description },
