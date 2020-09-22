@@ -1,0 +1,1 @@
+start /d "Debug\" CSVPrinter.exe ..\SampleCSV.txt
