@@ -3,23 +3,23 @@
 #include "Contracts.h"
 #include <vector>
 
-void StartNewComputation(Range range, Ui& ui)
-{
-	ComputePrimeNumbers logic;
-	auto primes  = logic.ComputePrimes(range);
-	ui.ShowResult(range, primes);
-}
-
-void StartNewGeneratedComputation(Range range, Ui& ui)
-{
-	ComputePrimeNumbers logic;
-	auto id = ui.AddProgress();
-	for(auto prim : logic.ComputePrimesGenerated(range))
-	{
-		ui.UpdateProgress(id, prim);
-	}
-	ui.Finished(id, range);
-}
+//void StartNewComputation(Range range, Ui& ui)
+//{
+//	ComputePrimeNumbers logic;
+//	auto primes  = logic.ComputePrimes(range);
+//	ui.ShowResult(range, primes);
+//}
+//
+//void StartNewGeneratedComputation(Range range, Ui& ui)
+//{
+//	ComputePrimeNumbers logic;
+//	auto id = ui.AddProgress();
+//	for(auto prim : logic.ComputePrimesGenerated(range))
+//	{
+//		ui.UpdateProgress(id, prim);
+//	}
+//	ui.Finished(id, range);
+//}
 
 //solution 3
 

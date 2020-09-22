@@ -80,7 +80,7 @@ void ComputePrimeNumbers::ComputePrimesEventGenerated(Range range)
 			onProgress(candidate);
 			//onProgress(candidate);
 			//Slowdown computation ;)
-			std::this_thread::sleep_for(std::chrono::milliseconds(250));
+			std::this_thread::sleep_for(std::chrono::milliseconds(200));
 		}
 		candidate++;
 	}
