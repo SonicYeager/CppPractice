@@ -21,7 +21,7 @@ public:
 		: onLeft(onleft), onRight(onright), onTop(ontop), onBottom(onbottom)
 	{}
 
-	void CheckEnemyNaighbours(const Board&, char, const std::vector<Pos>&);
+	void CheckEnemyNeighbours(const Board&, char, const std::vector<Pos>&);
 private:
 	NeighbourAction onLeft;
 	NeighbourAction onRight;
@@ -49,7 +49,7 @@ Board ShowNextMoves(const Board& board , char player)
 	auto cnf = CheckNeighbourFunctions(onCheckLineLeft, onCheckLineRight, onCheckLineTop, onCheckLineBottom);
 
 	std::vector<Pos> pos = GetPlayerPos(board, player);
-	cnf.CheckEnemyNaighbours(board, player, pos);
+	cnf.CheckEnemyNeighbours(board, player, pos);
 
 	return res;
 }
@@ -64,10 +64,10 @@ std::vector<Pos> GetPlayerPos(const Board& board, char player)
 	return res;
 }
 
-void CheckNeighbourFunctions::CheckEnemyNaighbours(const Board& board, char player, const std::vector<Pos>& positions)
+void CheckNeighbourFunctions::CheckEnemyNeighbours(const Board& board, char player, const std::vector<Pos>& positions)
 {
 	char enemyPlayer = player == 'W' ? 'B' : 'W';
-	for (auto pos :positions) {
+	for (const auto& pos :positions) {
 		if (pos.y - 1 >= 0 && board[pos.y - 1][pos.x] == enemyPlayer)
 			onTop(board, player, pos);
 		if (pos.y + 1 < board.size() && board[pos.y + 1][pos.x] == enemyPlayer)
