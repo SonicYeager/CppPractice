@@ -3,82 +3,100 @@
 #include <Wt/WContainerwidget.h>
 #include <Wt/WLink.h>
 #include <Wt/WText.h>
+#include <Wt/cpp17/any.hpp>
 #include <memory>
 
-using namespace Wt;
-
-class ControlExample : public WApplication {
+class ControlExample : public Wt::WApplication {
 private:
     std::string appName;
-    WContainerWidget* _content;
+    std::unique_ptr<Wt::WContainerWidget> _content = nullptr;
 
 public:
-    ControlExample(const WEnvironment& env) : WApplication(env) {
+    ControlExample(const Wt::WEnvironment& env)
+        : WApplication(env) 
+    {
         appName = "Application Name";
         setTitle(appName);
-        _content = 0;
         internalPathChanged().connect(this, &ControlExample::onInternalPathChange);
 
-        header();
-        home();
-        sidebar();
-        footer();
+        SetHeader();
+        SetHome();
+        SetSidebar();
+        SetFooter();
+        UpdateRoot();
     }
 
-    WContainerWidget* content() {
-        if (_content == 0) {
-            _content = new WContainerWidget(root());
+    void AddContent(std::unique_ptr<Wt::WWidget> widget) 
+    {
+        if (_content == nullptr) 
+        {
+            _content = std::make_unique<Wt::WContainerWidget>();
             _content->setId("content");
         }
-        return _content;
+        _content->addWidget(std::move(widget));
     }
 
-    void onInternalPathChange() {
-        content()->clear();
-        if (internalPath() == "/") {
-            home();
-        }
-        else if (internalPath() == "/page1") {
-            page1();
-        }
+    void UpdateRoot()
+    {
+        root()->addWidget(std::move(_content));
     }
 
-    void header() {
-        std::unique_ptr<WContainerWidget> header = std::make_unique<Wt::WContainerWidget>(root());
+    void onInternalPathChange() //navigate
+    {
+        if (internalPath() == "/") 
+            SetHome();
+        else if (internalPath() == "/page") 
+            SetPage_1();
+    }
+
+    void SetHeader()
+    {
+        std::unique_ptr<Wt::WContainerWidget> header = std::make_unique<Wt::WContainerWidget>();
         header->setId("header");
-        header->addWidget(std::make_unique<Wt::WText>(WText("<h1>" + appName + "</h1>")));
+        header->addWidget(std::make_unique<Wt::WText>("<h1>" + appName + "</h1>"));
+        AddContent(std::move(header));
     }
 
-    void sidebar() {
-        std::unique_ptr<WContainerWidget> sidebar = std::make_unique<Wt::WContainerWidget>(root());
+    void SetSidebar() 
+    {
+        std::unique_ptr<Wt::WContainerWidget> sidebar = std::make_unique<Wt::WContainerWidget>();
         sidebar->setId("sidebar");
-        sidebar->addWidget(std::make_unique<Wt::WText>(WText("Sidebar Information")));
+        sidebar->addWidget(std::make_unique<Wt::WText>("Sidebar Information"));
+        AddContent(std::move(sidebar));
     }
 
-    void footer() {
-        std::unique_ptr<WContainerWidget> footer = std::make_unique<Wt::WContainerWidget>(root());
+    void SetFooter()
+    {
+        std::unique_ptr<Wt::WContainerWidget> footer = std::make_unique<Wt::WContainerWidget>();
         footer->setId("footer");
-        footer->addWidget(std::make_unique<Wt::WText>(WText("Developed using C++/Wt")));
+        footer->addWidget(std::make_unique<Wt::WText>("Developed using C++/Wt"));
+        AddContent(std::move(footer));
     }
 
-    void home() {
-        std::unique_ptr<Wt::WText> t = std::make_unique<Wt::WText>(Wt::WText("<strong>Home</strong> content and a link to <a href='#/page1'>page1</a>"));
-        t->setInternalPathEncoding(true);
-        content()->addWidget(t);
+    void SetHome() 
+    {
+        Wt::WLink link = Wt::WLink(Wt::LinkType::InternalPath, "/page");
+        link.setInternalPath("/page");
 
+        std::unique_ptr<Wt::WAnchor> a = std::make_unique<Wt::WAnchor>(std::move(link), "<strong>Page</strong>");
+        AddContent(std::move(a));
+        UpdateRoot();
     }
 
-    void page1() {
-        content()->addWidget(std::make_unique<Wt::WText>(Wt::WText("<strong>Home</strong> content and a link to ")));
-        std::unique_ptr<Wt::WAnchor> a = std::make_unique<Wt::WAnchor>(Wt::WLink(Wt::LinkType::InternalPath, "/"), "home", content());
+    void SetPage_1()
+    {
+        Wt::WLink link = Wt::WLink(Wt::LinkType::InternalPath, "/");
+        link.setInternalPath("/");
+
+        std::unique_ptr<Wt::WAnchor> a = std::make_unique<Wt::WAnchor>(std::move(link), "<strong>Home</strong>");
+        root()->addWidget(std::move(a));
+        UpdateRoot();
     }
 
 };
 
-std::unique_ptr<Wt::WApplication> createApplication(const WEnvironment& env) {
-    return std::make_unique<Wt::WApplication>(ControlExample(env));
-}
-
-int main(int argc, char** argv) {
-    return WRun(argc, argv, &createApplication);
+int main(int argc, char** argv) 
+{
+    auto creator = [](const Wt::WEnvironment& env) {return std::move(std::make_unique<ControlExample>(env)); };
+    return Wt::WRun(argc, argv, creator);
 }
