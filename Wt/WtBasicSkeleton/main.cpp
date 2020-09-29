@@ -43,10 +43,15 @@ public:
 
     void onInternalPathChange() //navigate
     {
-        if (internalPath() == "/") 
+        if (internalPath() == "/")
             SetHome();
-        else if (internalPath() == "/page") 
+        else if (internalPath() == "/page")
             SetPage_1();
+        else
+        {
+            SetHome();
+            setInternalPath("/");
+        }
     }
 
     void SetHeader()
@@ -80,7 +85,7 @@ public:
 
         std::unique_ptr<Wt::WAnchor> a = std::make_unique<Wt::WAnchor>(std::move(link), "<strong>Page</strong>");
         AddContent(std::move(a));
-        UpdateRoot();
+        //UpdateRoot();
     }
 
     void SetPage_1()
@@ -90,7 +95,7 @@ public:
 
         std::unique_ptr<Wt::WAnchor> a = std::make_unique<Wt::WAnchor>(std::move(link), "<strong>Home</strong>");
         root()->addWidget(std::move(a));
-        UpdateRoot();
+        //UpdateRoot();
     }
 
 };
