@@ -1,6 +1,11 @@
-x64
-Debug
 .vs
 *.user
-obj
-bin
+*.obj
+*.idb
+*.pdb
+*.exe
+*.log
+*.ilk
+*.recipe
+*.tlog
+*.lastbuildstate
