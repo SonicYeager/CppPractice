@@ -1,0 +1,2 @@
+C:\Übungsprojekte\Wt\WtTestz\x64\Debug\WtTestz.exe
+C:\Übungsprojekte\Wt\WtTestz\x64\Debug\WtTestz.pdb

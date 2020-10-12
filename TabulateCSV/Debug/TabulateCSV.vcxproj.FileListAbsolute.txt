@@ -1,0 +1,2 @@
+C:\Übungsprojekte\TabulateCSV\Debug\TabulateCSV.exe
+C:\Übungsprojekte\TabulateCSV\Debug\TabulateCSV.pdb

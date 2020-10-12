@@ -1,0 +1,2 @@
+C:\Übungsprojekte\FormatCSV\Debug\FormatCSV.dll
+C:\Übungsprojekte\FormatCSV\Debug\FormatCSV.pdb

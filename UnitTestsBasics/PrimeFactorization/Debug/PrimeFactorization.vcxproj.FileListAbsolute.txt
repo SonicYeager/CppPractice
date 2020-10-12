@@ -1,0 +1,2 @@
+C:\Übungsprojekte\UnitTestsBasics\PrimeFactorization\Debug\PrimeFactorization.pdb
+C:\Übungsprojekte\UnitTestsBasics\PrimeFactorization\Debug\PrimeFactorization.dll

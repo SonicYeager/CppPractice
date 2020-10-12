@@ -1,0 +1,2 @@
+C:\Übungsprojekte\GameOfLife\x64\Debug\GameOfLife.exe
+C:\Übungsprojekte\GameOfLife\x64\Debug\GameOfLife.pdb

@@ -1,0 +1,2 @@
+C:\Übungsprojekte\FizzBuzz\x64\Debug\FizzBuzz.exe
+C:\Übungsprojekte\FizzBuzz\x64\Debug\FizzBuzz.pdb
