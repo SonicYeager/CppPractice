@@ -11,5 +11,7 @@
     <TestDuration Test="TestGame.Roll_OnePin_SetHistoryAndScoreToOne" Duration="1" />
     <TestDuration Test="TestGame.Roll_TwoRollsOnePin_SetHistoryAndScore" Duration="1" />
     <TestDuration Test="TestGame.Roll_ThreeRollsMultiplePin_SetHistoryAndScore" Duration="1" />
+    <TestDuration Test="TestGame.Roll_RollSpare_SetHistoryAndScore" Duration="1" />
+    <TestDuration Test="TestGame.Roll_RollStrike_SetHistoryAndScore" Duration="1" />
   </TestDurations>
 </GtaTestDurations>

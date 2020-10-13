@@ -91,3 +91,35 @@ TEST(TestGame, Roll_ThreeRollsMultiplePin_SetHistoryAndScore)
 	EXPECT_EQ(actualHistory, expectHistory);
 	EXPECT_EQ(actualScore, expectScore);
 }
+
+TEST(TestGame, Roll_RollSpare_SetHistoryAndScore)
+{
+	auto actual = Bowling::Game{};
+	actual.Roll(7);
+	actual.Roll(3);
+	actual.Roll(3);
+	actual.Roll(4);
+	auto actualHistory = actual.History();
+	auto actualScore = actual.Score();
+	auto expectHistory = std::vector<Bowling::Frame>{ { {7, 3}, 13 }, {{3, 4}, 7} };
+	auto expectScore = 20;
+
+	EXPECT_EQ(actualHistory, expectHistory);
+	EXPECT_EQ(actualScore, expectScore);
+}
+
+TEST(TestGame, Roll_RollStrike_SetHistoryAndScore)
+{
+	auto actual = Bowling::Game{};
+	actual.Roll(10);
+	actual.Roll(3);
+	actual.Roll(5);
+	actual.Roll(1);
+	auto actualHistory = actual.History();
+	auto actualScore = actual.Score();
+	auto expectHistory = std::vector<Bowling::Frame>{ { {10}, 18 }, {{3, 5}, 8}, {{1}, 1} };
+	auto expectScore = 27;
+
+	EXPECT_EQ(actualHistory, expectHistory);
+	EXPECT_EQ(actualScore, expectScore);
+}
