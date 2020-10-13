@@ -20,6 +20,7 @@ namespace Bowling
 			if (res.size() > 0 && res[res.size() - 1].pinsPerRoll.size() < 2)
 			{
 				res[res.size() - 1].pinsPerRoll.push_back(kickedPins);
+				res[res.size() - 1].score += kickedPins;
 			}
 			else
 			{
@@ -44,9 +45,9 @@ namespace Bowling
 					res[i].score += res[i+1].pinsPerRoll[0];
 				}
 			}
-			else if (res[i].pinsPerRoll.size() == 1 && res[i].score == 10) //strike
+			else if (res.size() - 1 > i + 1 && res[i].pinsPerRoll[0] == 10 && res[i+ 1].pinsPerRoll[0] < 10) //strike
 			{
-				if (res.size() - 1 > i + 1 && res[i+1].pinsPerRoll.size() == 2)
+				if (res[i+1].pinsPerRoll.size() == 2)
 				{
 					res[i].score = res[i+1].pinsPerRoll[0] + res[i+1].pinsPerRoll[1];
 				}
@@ -55,28 +56,17 @@ namespace Bowling
 					res[i].score = res[i + 1].pinsPerRoll[0];
 				}
 			}
-			//else if (res[i].pinsPerRoll.size() == 1 && res[i].score == 10) //strike
-			//{
-			//	if (res.size() - 1 > i + 1 && res[i+1].pinsPerRoll.size() == 2)
-			//	{
-			//		res[i].score += res[i+1].pinsPerRoll[0] + res[i+1].pinsPerRoll[1];
-			//	}
-			//	else
-			//	{
-			//		res[i].score += res[i + 1].pinsPerRoll[0];
-			//	}
-			//}
-			//else if (res[i].pinsPerRoll.size() == 1 && res[i].score > 10) //strike check if changed
-			//{
-			//	if (res.size() - 1 > i + 1 && res[i+1].pinsPerRoll[0] < 10 && (res[i + 1].pinsPerRoll[0] + res[i].pinsPerRoll[0] + res[i + 1].pinsPerRoll[1] + res[i].pinsPerRoll[0]) >= res[i].score)
-			//	{
-			//		res[i].score += res[i + 1].pinsPerRoll[1];
-			//	}
-			//	else if (res.size() - 1 > i + 2 && res[i + 1].pinsPerRoll[0] < 10 && (res[i + 1].pinsPerRoll[0] + res[i].pinsPerRoll[0] + res[i + 1].pinsPerRoll[1] + res[i].pinsPerRoll[0]) >= res[i].score)
-			//	{
-			//		res[i].score += res[i + 2].pinsPerRoll[1];
-			//	}
-			//}
+			else if (res.size() - 1 > i + 1 && res[i].pinsPerRoll[0] == 10 && res[i + 1].pinsPerRoll[0] == 10)
+			{
+				if (res.size() - 1 > i + 2)
+				{
+					res[i].score = res[i + 1].pinsPerRoll[0] + res[i + 2].pinsPerRoll[0];
+				}
+				else
+				{
+					res[i].score = res[i + 1].pinsPerRoll[0];
+				}
+			}
 		}
 
 		return res;

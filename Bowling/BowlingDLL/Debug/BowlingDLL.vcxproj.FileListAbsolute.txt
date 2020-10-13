@@ -1,2 +1,4 @@
 C:\Übungsprojekte\Bowling\BowlingDLL\Debug\BowlingDLL.dll
 C:\Übungsprojekte\Bowling\BowlingDLL\Debug\BowlingDLL.pdb
+H:\TraineeProjectsCpp\Bowling\BowlingDLL\Debug\BowlingDLL.dll
+H:\TraineeProjectsCpp\Bowling\BowlingDLL\Debug\BowlingDLL.pdb
