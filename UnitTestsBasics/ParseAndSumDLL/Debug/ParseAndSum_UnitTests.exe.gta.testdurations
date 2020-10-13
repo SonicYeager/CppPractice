@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GtaTestDurations xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Executable>C:\Übungsprojekte\UnitTestsBasics\ParseAndSumDLL\Debug\ParseAndSum_UnitTests.exe</Executable>
+  <TestDurations>
+    <TestDuration Test="TestParseSum.ParseAndSum_SingleDigit_ReturnParsedDigit" Duration="1" />
+    <TestDuration Test="TestParseSum.ParseAndSum_TwoSemicolonSeperatedDigit_ReturnParsedDigitSummed" Duration="1" />
+    <TestDuration Test="TestParseSum.ParseAndSum_MultipleSemicolonSeperatedDigit_ReturnParsedDigitSummed" Duration="1" />
+    <TestDuration Test="TestParseSum.ParseAndSum_HugeMultipleSemicolonSeperatedDigit_ReturnParsedDigitSummed" Duration="1" />
+  </TestDurations>
+</GtaTestDurations>
