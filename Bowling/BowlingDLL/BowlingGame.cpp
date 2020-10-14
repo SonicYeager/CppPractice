@@ -29,17 +29,7 @@ namespace Bowling
 		}
 		else if (res.size() == 10)
 		{
-			if (res.size() > 0 && res[res.size() - 1].pinsPerRoll.size() < 2 && res[res.size() - 1].pinsPerRoll[0] < 10)
-			{
-				res[res.size() - 1].pinsPerRoll.push_back(kickedPins);
-				res[res.size() - 1].score += kickedPins;
-			}
-			else if (res[res.size() - 1].pinsPerRoll.size() == 1 && res[res.size() - 1].pinsPerRoll[0] == 10)
-			{
-				res[res.size() - 1].pinsPerRoll.push_back(kickedPins);
-				res[res.size() - 1].score += kickedPins;
-			}
-			else if (res[res.size() - 1].pinsPerRoll.size() == 2 && res[res.size() - 1].pinsPerRoll[0] + res[res.size() - 1].pinsPerRoll[1] == 10)
+			if (res[res.size() - 1].pinsPerRoll.size() < 3)
 			{
 				res[res.size() - 1].pinsPerRoll.push_back(kickedPins);
 				res[res.size() - 1].score += kickedPins;
@@ -55,33 +45,37 @@ namespace Bowling
 
 		for (size_t i{}; i < res.size(); ++i)
 		{
-			if (res[i].pinsPerRoll.size() == 2 && res[i].score == 10) //spare
+			if (res.size() - 1 >= i + 1)
 			{
-				if (res.size() - 1 >= i + 1)
+				if (res[i].pinsPerRoll.size() == 2 && res[i].score == 10) //spare
 				{
 					res[i].score += res[i+1].pinsPerRoll[0];
 				}
-			}
-			else if (res.size() - 1 >= i + 1 && res[i].pinsPerRoll[0] == 10 && res[i+ 1].pinsPerRoll[0] < 10) //strike
-			{
-				if (res[i+1].pinsPerRoll.size() >= 2)
+				else if (res[i].pinsPerRoll[0] == 10 && res[i+ 1].pinsPerRoll[0] < 10) //strike
 				{
-					res[i].score = res[i].pinsPerRoll[0] + res[i+1].pinsPerRoll[0] + res[i+1].pinsPerRoll[1];
+					if (res[i+1].pinsPerRoll.size() >= 2)
+					{
+						res[i].score = res[i].pinsPerRoll[0] + res[i+1].pinsPerRoll[0] + res[i+1].pinsPerRoll[1];
+					}
+					else
+					{
+						res[i].score = res[i].pinsPerRoll[0] + res[i + 1].pinsPerRoll[0];
+					}
 				}
-				else
+				else if (res[i + 1].pinsPerRoll.size() >= 2 && res[i].pinsPerRoll[0] == 10 && res[i + 1].pinsPerRoll[0] == 10 && res[i + 1].pinsPerRoll[1] == 10)
 				{
-					res[i].score = res[i].pinsPerRoll[0] + res[i + 1].pinsPerRoll[0];
+					res[i].score = res[i].pinsPerRoll[0] + res[i + 1].pinsPerRoll[0] + res[i + 1].pinsPerRoll[1];
 				}
-			}
-			else if (res.size() - 1 >= i + 1 && res[i].pinsPerRoll[0] == 10 && res[i + 1].pinsPerRoll[0] == 10)
-			{
-				if (res.size() - 1 >= i + 2)
+				else if (res[i].pinsPerRoll[0] == 10 && res[i + 1].pinsPerRoll[0] == 10)
 				{
-					res[i].score = res[i].pinsPerRoll[0] + res[i + 1].pinsPerRoll[0] + res[i + 2].pinsPerRoll[0];
-				}
-				else
-				{
-					res[i].score = res[i].pinsPerRoll[0] + res[i + 1].pinsPerRoll[0];
+					if (res.size() - 1 >= i + 2)
+					{
+						res[i].score = res[i].pinsPerRoll[0] + res[i + 1].pinsPerRoll[0] + res[i + 2].pinsPerRoll[0];
+					}
+					else
+					{
+						res[i].score = res[i].pinsPerRoll[0] + res[i + 1].pinsPerRoll[0];
+					}
 				}
 			}
 		}

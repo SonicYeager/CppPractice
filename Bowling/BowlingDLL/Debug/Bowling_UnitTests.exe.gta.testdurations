@@ -16,5 +16,7 @@
     <TestDuration Test="TestGame.Roll_RollEntireGame_SetHistoryAndScoreAndRespectCornerCase" Duration="1" />
     <TestDuration Test="TestGame.Roll_RollEntireGame_SetHistoryAndScoreAndRespectCornerCaseWithSpare" Duration="1" />
     <TestDuration Test="TestGame.Roll_RollEntireGame_SetHistoryAndScoreAndRespectCornerCaseWithStrike" Duration="1" />
+    <TestDuration Test="TestGame.Roll_PerfectGame_ReturnScore300" Duration="1" />
+    <TestDuration Test="TestGame.Score_EmptyInstance_ReturnZero" Duration="1" />
   </TestDurations>
 </GtaTestDurations>

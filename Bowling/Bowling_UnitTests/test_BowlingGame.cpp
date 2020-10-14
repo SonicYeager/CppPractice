@@ -20,23 +20,12 @@ TEST(TestGame, History_EmptyInstance_ReturnEmptyHistory)
 	EXPECT_EQ(actualHistory, expectHistory);
 }
 
-TEST(TestGame, Score_EmptyInstance_ReturnEmptyScore)
+TEST(TestGame, Score_EmptyInstance_ReturnZero)
 {
 	auto actual = Bowling::Game{};
 	auto actualScore = actual.Score();
 	auto expectScore = 0;
 	EXPECT_EQ(actualScore, expectScore);
-}
-
-TEST(TestGame, History_ModifiedInstance_ReturnModiefiedHistory)
-{
-	auto actual = GameMock{};
-
-	actual.SetHistory(std::vector<Bowling::Frame>{ { {2, 4}, 6 }});
-
-	auto actualHistory = actual.History();
-	auto expectHistory = std::vector<Bowling::Frame>{ { {2, 4}, 6 } };
-	EXPECT_EQ(actualHistory, expectHistory);
 }
 
 TEST(TestGame, Score_ModifiedInstance_ReturnModifiedScore)
@@ -179,8 +168,22 @@ TEST(TestGame, Roll_RollEntireGame_SetHistoryAndScoreAndRespectCornerCaseWithStr
 	actual.Roll(8);
 	auto actualHistory = actual.History();
 	auto actualScore = actual.Score();
-	auto expectHistory = std::vector<Bowling::Frame>{ { {1, 4}, 5 }, {{4, 5}, 9}, {{6, 4}, 15}, {{5, 5}, 20}, {{10}, 11}, {{0, 1}, 1}, {{7, 3}, 16}, {{6, 4}, 20}, {{10}, 20}, {{10, 6}, 16} };
-	auto expectScore = 133;
+	auto expectHistory = std::vector<Bowling::Frame>{ { {1, 4}, 5 }, {{4, 5}, 9}, {{6, 4}, 15}, {{5, 5}, 20}, {{10}, 11}, {{0, 1}, 1}, {{7, 3}, 16}, {{6, 4}, 20}, {{10}, 20}, {{10, 6, 8}, 24} };
+	auto expectScore = 141;
+
+	EXPECT_EQ(actualHistory, expectHistory);
+	EXPECT_EQ(actualScore, expectScore);
+}
+
+TEST(TestGame, Roll_PerfectGame_ReturnScore300)
+{
+	auto actual = Bowling::Game{};
+	for (int i = 0; i < 12; ++i)
+		actual.Roll(10);
+	auto actualHistory = actual.History();
+	auto actualScore = actual.Score();
+	auto expectHistory = std::vector<Bowling::Frame>{ {{ 10 }, 30 }, {{ 10 }, 30 }, {{ 10 }, 30 }, {{ 10 }, 30 }, {{ 10 }, 30 }, {{ 10 }, 30 }, {{ 10 }, 30 }, {{ 10 }, 30 }, {{ 10 }, 30 }, {{ 10, 10, 10 }, 30 } };
+	auto expectScore = 300;
 
 	EXPECT_EQ(actualHistory, expectHistory);
 	EXPECT_EQ(actualScore, expectScore);

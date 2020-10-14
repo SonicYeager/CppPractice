@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <iostream>
 
 #ifdef BOWLINGDLL_EXPORTS
 #define BOWLING_API __declspec(dllexport)
@@ -10,16 +11,27 @@
 
 namespace Bowling
 {
+
+
 	struct BOWLING_API Frame
 	{
 		std::vector<int> pinsPerRoll{};
 		int score{};
-
-		bool operator==(const Bowling::Frame& right) const
-		{
-			return this->pinsPerRoll == right.pinsPerRoll && this->score == right.score;
-		}
 	};
+
+	bool operator==(const Bowling::Frame& left, const Bowling::Frame& right)
+	{
+		return left.pinsPerRoll == right.pinsPerRoll && left.score == right.score;
+	}
+
+	std::ostream& operator<<(std::ostream& os, const Frame& fr)
+	{
+		os << "{{";
+		for (auto entry : fr.pinsPerRoll)
+			os << " " << entry;
+		os << " } ";
+		return os << fr.score << " }";
+	}
 
 	class BOWLING_API Game
 	{
