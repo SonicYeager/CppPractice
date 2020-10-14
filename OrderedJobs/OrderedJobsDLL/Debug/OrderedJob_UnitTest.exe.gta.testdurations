@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GtaTestDurations xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Executable>C:\Übungsprojekte\OrderedJobs\OrderedJobsDLL\Debug\OrderedJob_UnitTest.exe</Executable>
+  <TestDurations>
+    <TestDuration Test="TestOrderedJobs.Sort_RegisterIndependent_ReturnJobsUnordered" Duration="1" />
+    <TestDuration Test="TestOrderedJobs.Sort_RegisterOneDependentAndIndependent_ReturnJobsOrderedByDependentIndependent" Duration="1" />
+    <TestDuration Test="TestOrderedJobs.Sort_RegisterTwoDependentAndOneIndependent_ReturnJobsOrderedByDependency" Duration="1" />
+    <TestDuration Test="TestOrderedJobs.Sort_DependencyChain_ReturnJobsOrderedByDependency" Duration="1" />
+  </TestDurations>
+</GtaTestDurations>
