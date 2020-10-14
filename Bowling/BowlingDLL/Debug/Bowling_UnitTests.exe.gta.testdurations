@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <GtaTestDurations xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Executable>H:\TraineeProjectsCpp\Bowling\BowlingDLL\Debug\Bowling_UnitTests.exe</Executable>
+  <Executable>C:\Übungsprojekte\Bowling\BowlingDLL\Debug\Bowling_UnitTests.exe</Executable>
   <TestDurations>
     <TestDuration Test="TestGame.History_EmptyInstance_ReturnEmptyHistory" Duration="1" />
     <TestDuration Test="TestGame.Roll_ZeroPins_SetHistoryAndScore" Duration="0" />
@@ -11,7 +11,10 @@
     <TestDuration Test="TestGame.Roll_OnePin_SetHistoryAndScoreToOne" Duration="1" />
     <TestDuration Test="TestGame.Roll_TwoRollsOnePin_SetHistoryAndScore" Duration="1" />
     <TestDuration Test="TestGame.Roll_ThreeRollsMultiplePin_SetHistoryAndScore" Duration="1" />
-    <TestDuration Test="TestGame.Roll_RollSpare_SetHistoryAndScore" Duration="2" />
+    <TestDuration Test="TestGame.Roll_RollSpare_SetHistoryAndScore" Duration="1" />
     <TestDuration Test="TestGame.Roll_RollStrike_SetHistoryAndScore" Duration="1" />
+    <TestDuration Test="TestGame.Roll_RollEntireGame_SetHistoryAndScoreAndRespectCornerCase" Duration="1" />
+    <TestDuration Test="TestGame.Roll_RollEntireGame_SetHistoryAndScoreAndRespectCornerCaseWithSpare" Duration="1" />
+    <TestDuration Test="TestGame.Roll_RollEntireGame_SetHistoryAndScoreAndRespectCornerCaseWithStrike" Duration="1" />
   </TestDurations>
 </GtaTestDurations>

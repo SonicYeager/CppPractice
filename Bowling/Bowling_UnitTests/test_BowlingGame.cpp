@@ -123,3 +123,65 @@ TEST(TestGame, Roll_RollStrike_SetHistoryAndScore)
 	EXPECT_EQ(actualHistory, expectHistory);
 	EXPECT_EQ(actualScore, expectScore);
 }
+
+TEST(TestGame, Roll_RollEntireGame_SetHistoryAndScoreAndRespectCornerCaseWithSpare)
+{
+	auto actual = Bowling::Game{};
+	actual.Roll(1);
+	actual.Roll(4);
+	actual.Roll(4);
+	actual.Roll(5);
+	actual.Roll(6);
+	actual.Roll(4);
+	actual.Roll(5);
+	actual.Roll(5);
+	actual.Roll(10);
+	actual.Roll(0);
+	actual.Roll(1);
+	actual.Roll(7);
+	actual.Roll(3);
+	actual.Roll(6);
+	actual.Roll(4);
+	actual.Roll(10);
+	actual.Roll(2);
+	actual.Roll(8);
+	actual.Roll(6);
+	auto actualHistory = actual.History();
+	auto actualScore = actual.Score();
+	auto expectHistory = std::vector<Bowling::Frame>{ { {1, 4}, 5 }, {{4, 5}, 9}, {{6, 4}, 15}, {{5, 5}, 20}, {{10}, 11}, {{0, 1}, 1}, {{7, 3}, 16}, {{6, 4}, 20}, {{10}, 20}, {{2, 8, 6}, 16}};
+	auto expectScore = 133;
+
+	EXPECT_EQ(actualHistory, expectHistory);
+	EXPECT_EQ(actualScore, expectScore);
+}
+
+TEST(TestGame, Roll_RollEntireGame_SetHistoryAndScoreAndRespectCornerCaseWithStrike)
+{
+	auto actual = Bowling::Game{};
+	actual.Roll(1);
+	actual.Roll(4);
+	actual.Roll(4);
+	actual.Roll(5);
+	actual.Roll(6);
+	actual.Roll(4);
+	actual.Roll(5);
+	actual.Roll(5);
+	actual.Roll(10);
+	actual.Roll(0);
+	actual.Roll(1);
+	actual.Roll(7);
+	actual.Roll(3);
+	actual.Roll(6);
+	actual.Roll(4);
+	actual.Roll(10);
+	actual.Roll(10);
+	actual.Roll(6);
+	actual.Roll(8);
+	auto actualHistory = actual.History();
+	auto actualScore = actual.Score();
+	auto expectHistory = std::vector<Bowling::Frame>{ { {1, 4}, 5 }, {{4, 5}, 9}, {{6, 4}, 15}, {{5, 5}, 20}, {{10}, 11}, {{0, 1}, 1}, {{7, 3}, 16}, {{6, 4}, 20}, {{10}, 20}, {{10, 6}, 16} };
+	auto expectScore = 133;
+
+	EXPECT_EQ(actualHistory, expectHistory);
+	EXPECT_EQ(actualScore, expectScore);
+}
