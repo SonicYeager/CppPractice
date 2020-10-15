@@ -6,5 +6,11 @@
     <TestDuration Test="TestOrderedJobs.Sort_RegisterOneDependentAndIndependent_ReturnJobsOrderedByDependentIndependent" Duration="1" />
     <TestDuration Test="TestOrderedJobs.Sort_RegisterTwoDependentAndOneIndependent_ReturnJobsOrderedByDependency" Duration="1" />
     <TestDuration Test="TestOrderedJobs.Sort_DependencyChain_ReturnJobsOrderedByDependency" Duration="1" />
+    <TestDuration Test="TestOrderedJobs.Sort_RegisterTwoIndependent_ReturnJobsOrdered" Duration="1" />
+    <TestDuration Test="TestOrderedJobs.Sort_RegisterOneJob_ReturnTwoJobsOrdered" Duration="1" />
+    <TestDuration Test="TestOrderedJobs.Sort_RegisterOneJobAndChangeDependency_ReturnTwoJobsOrdered" Duration="1" />
+    <TestDuration Test="TestOrderedJobs.Sort_CircularDependency_ReturnException" Duration="1" />
+    <TestDuration Test="TestOrderedJobs.Sort_DirectCircularDependency_ReturnException" Duration="1" />
+    <TestDuration Test="TestOrderedJobs.Sort_IndirectCircularDependency_ReturnException" Duration="1" />
   </TestDurations>
 </GtaTestDurations>

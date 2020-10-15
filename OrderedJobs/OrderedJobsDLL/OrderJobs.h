@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include <unordered_map>
+#include <set>
 #include <iostream>
 
 #ifdef ORDEREDJOBSDLL_EXPORTS
@@ -11,8 +11,30 @@
 
 namespace OrderJobs
 {
+	const char EMPTYDEPENDENCY = '0';
 
-	using RegisteredJobs = std::unordered_map<char, char>;
+	struct Job
+	{
+		Job(char job, char dependency) 
+			: job_key(job), jobDependency_value(dependency)
+		{}
+
+		const char job_key{};
+		char jobDependency_value{ EMPTYDEPENDENCY };
+	};
+
+	bool operator<(const Job& left, const Job& right)
+	{
+		if (left.job_key == right.job_key)
+			return false;
+		if (left.jobDependency_value == EMPTYDEPENDENCY && right.jobDependency_value == EMPTYDEPENDENCY)
+			return left.job_key < right.job_key;
+		if (left.jobDependency_value == right.jobDependency_value)
+			return left.job_key < right.job_key;
+		return left.job_key == right.jobDependency_value || left.jobDependency_value == EMPTYDEPENDENCY;
+	};
+
+	using RegisteredJobs = std::set<Job, std::less<>>;
 
 	class ORDEREDJOBS_API OrderedJobs
 	{

@@ -19,5 +19,8 @@
     <ClInclude Include="OrderJobs.h">
       <Filter>Ressourcendateien</Filter>
     </ClInclude>
+    <ClInclude Include="Exceptions.h">
+      <Filter>Ressourcendateien</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

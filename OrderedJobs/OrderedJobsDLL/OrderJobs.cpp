@@ -1,87 +1,79 @@
 #include "OrderJobs.h"
+#include "Exceptions.h"
 #include <algorithm>
 
 namespace OrderJobs
 {
 
-	bool operator==(const const std::pair<const char, char>& left, const std::pair<const char, char>& right)
+	RegisteredJobs::iterator FindKey(const RegisteredJobs& reg, char jkey) //only a helper
 	{
-		return left.first == right.first;
+		RegisteredJobs::iterator it{ reg.begin() };
+
+		for (auto& key : reg)
+		{
+			if (key.job_key == jkey)
+				return it;
+			++it;
+		}
+		return reg.end();
 	}
-	bool operator<(const std::pair<const char, char>& left, const std::pair<const char, char>& right)
+
+	Job ValidateDependency(const RegisteredJobs& reg, char jkey, char jval)
 	{
-		return left.first == right.second;
-	};
+		for (auto& key : reg)
+		{
+			if (key.jobDependency_value == jkey && jval == key.job_key)
+				throw DirectCircularDependencyException(key.job_key, jkey);
+		}
+
+		Job j{'.','.'};
+		for (auto& key : reg)
+		{
+			if (key.job_key == jkey)
+				if (jval == EMPTYDEPENDENCY)
+					return { jkey, jval };
+				else
+					continue;
+			if (key.jobDependency_value == EMPTYDEPENDENCY)
+				return { jkey, jval };
+		}
+		throw IndirectCircularDependencyException();
+		
+	}
 
 	void OrderedJobs::Register(char dependentJob, char independentJob)
 	{
-		registeredJobs[dependentJob] = independentJob;
-		if (registeredJobs.find(independentJob) == std::end(registeredJobs))
+		if (FindKey( registeredJobs, independentJob) == registeredJobs.end())
 			Register(independentJob);
+		auto found = FindKey(registeredJobs, dependentJob);
+		if (found != registeredJobs.end())
+		{
+			Job temp{ ValidateDependency(registeredJobs, found->job_key, independentJob) };
+			registeredJobs.erase(found);
+			registeredJobs.insert(temp);
+		}
+		else
+			registeredJobs.insert({ dependentJob, independentJob });
 	}
 
 	void OrderedJobs::Register(char independentJob)
 	{
-		registeredJobs[independentJob] = '0';
+		auto found = FindKey(registeredJobs, independentJob);
+		if (found != registeredJobs.end())
+		{
+			Job temp{ ValidateDependency(registeredJobs, found->job_key, EMPTYDEPENDENCY) };
+			registeredJobs.erase(found);
+			registeredJobs.insert(temp);
+		}
+		else
+			registeredJobs.insert({ independentJob, EMPTYDEPENDENCY });
 	}
-
-	RegisteredJobs GetIndependentJobs(const RegisteredJobs&);
-	RegisteredJobs GetDependentJobs(const RegisteredJobs&);
-	RegisteredJobs OrderDependentJobsByDependency(const RegisteredJobs&);
-	std::string MergeIndependentAndDependentJobs(const RegisteredJobs&, const RegisteredJobs&);
 
 	std::string OrderedJobs::Sort()
 	{
 		std::string res{};
-		auto independent = GetIndependentJobs(registeredJobs);
-		auto dependent = GetDependentJobs(registeredJobs);
-		res = MergeIndependentAndDependentJobs(independent, dependent);
-		return res;
-	}
-
-	RegisteredJobs GetIndependentJobs(const RegisteredJobs& reg)
-	{
-		RegisteredJobs res{};
-		for (auto& entry : reg)
-			if(entry.second == '0')
-				res.emplace(entry);
-		return res;
-	}
-
-	RegisteredJobs GetDependentJobs(const RegisteredJobs& reg)
-	{
-		RegisteredJobs res{};
-		for (auto& entry : reg)
-			if (entry.second != '0')
-				res.emplace(entry);
-		return res;
-	}
-
-	RegisteredJobs OrderDependentJobsByDependency(const RegisteredJobs& depReg)
-	{
-		RegisteredJobs res{};
-
-		for (auto& regEntry : depReg)
-		{
-			for (auto& resEntry : res)
-			{
-				if (res.find(regEntry.second) != std::end(res))
-					res.insert(res.find(resEntry.first), regEntry);
-				else
-					res.insert(std::begin(res), regEntry);
-			}
-		}
-
-		return res;
-	}
-
-	std::string MergeIndependentAndDependentJobs(const RegisteredJobs& independentJobs, const RegisteredJobs& dependentJobs)
-	{
-		std::string res{};
-		for (auto& entry : independentJobs)
-			res += entry.first;
-		for (auto& entry : dependentJobs)
-			res += entry.first;
+		for (auto& job : registeredJobs)
+			res += job.job_key;
 		return res;
 	}
 }

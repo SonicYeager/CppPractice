@@ -22,6 +22,7 @@
     <ClCompile Include="OrderJobs.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Exceptions.h" />
     <ClInclude Include="OrderJobs.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
