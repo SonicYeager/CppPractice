@@ -22,9 +22,10 @@ struct DirectCircularDependencyException : public std::exception
 
 struct IndirectCircularDependencyException : public std::exception
 {
-	IndirectCircularDependencyException()
+	IndirectCircularDependencyException(char job_key, char job_val) : job_key(job_key), job_val(job_val)
 	{
-		msg = "No Independent Job was Registered -> causing Indirect Circular Dependency";
+		msg = "Job: " + job_key + ',' + job_val;
+		msg += " is causing Indirect Circular Dependency";
 	}
 
 	std::string what()
@@ -32,5 +33,7 @@ struct IndirectCircularDependencyException : public std::exception
 		return msg;
 	}
 
+	const char job_key;
+	const char job_val;
 	std::string msg;
 };

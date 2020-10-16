@@ -77,7 +77,7 @@ TEST(TestOrderedJobs, Sort_DirectCircularDependency_ReturnException)
 	);
 }
 
-TEST(TestOrderedJobs, Sort_IndirectCircularDependency_ReturnException)
+TEST(TestOrderedJobs, Sort_IndirectCircularDependencyWithoutIndependent_ReturnException)
 {
 	OrderJobs::OrderedJobs oJobs{};
 	EXPECT_THROW(
@@ -85,6 +85,21 @@ TEST(TestOrderedJobs, Sort_IndirectCircularDependency_ReturnException)
 			oJobs.Register('a', 'b');
 			oJobs.Register('b', 'c');
 			oJobs.Register('c', 'a');
+			auto actual = oJobs.Sort();
+		}, IndirectCircularDependencyException
+	);
+}
+
+TEST(TestOrderedJobs, Sort_IndirectCircularDependencyWithIndependent_ReturnException)
+{
+	OrderJobs::OrderedJobs oJobs{};
+	EXPECT_THROW(
+		{
+			oJobs.Register('a');
+			oJobs.Register('b', 'c');
+			oJobs.Register('c', 'd');
+			oJobs.Register('d', 'b');
+			oJobs.Register('e', 'a');
 			auto actual = oJobs.Sort();
 		}, IndirectCircularDependencyException
 	);

@@ -26,18 +26,29 @@ namespace OrderJobs
 				throw DirectCircularDependencyException(key.job_key, jkey);
 		}
 
-		Job j{'.','.'};
-		for (auto& key : reg)
+		RegisteredJobs::iterator next{ --reg.end() };
+
+		for (size_t i{}; i < reg.size(); ++i)
 		{
-			if (key.job_key == jkey)
-				if (jval == EMPTYDEPENDENCY)
-					return { jkey, jval };
-				else
-					continue;
-			if (key.jobDependency_value == EMPTYDEPENDENCY)
-				return { jkey, jval };
+			if (next == reg.end() && i == reg.size() - 1)
+				break;
+			else if (next == reg.end())
+			{
+				next = --reg.end();
+				for (size_t k{}; k < i; ++k)
+					--next;
+			}
+
+			if(next->job_key == jkey)
+				next = FindKey(reg, jval);
+			else
+				next = FindKey(reg, next->jobDependency_value);
+
 		}
-		throw IndirectCircularDependencyException();
+		if(reg.end() == next)
+			return { jkey, jval };
+
+		throw IndirectCircularDependencyException(next->job_key, next->jobDependency_value);
 		
 	}
 
@@ -53,7 +64,10 @@ namespace OrderJobs
 			registeredJobs.insert(temp);
 		}
 		else
-			registeredJobs.insert({ dependentJob, independentJob });
+		{
+			auto validated = ValidateDependency(registeredJobs, dependentJob, independentJob);
+			registeredJobs.insert({ validated.job_key, validated.jobDependency_value });
+		}
 	}
 
 	void OrderedJobs::Register(char independentJob)
