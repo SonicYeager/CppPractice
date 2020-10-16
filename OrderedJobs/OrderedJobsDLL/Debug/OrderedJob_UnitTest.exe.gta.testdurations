@@ -14,5 +14,6 @@
     <TestDuration Test="TestOrderedJobs.Sort_IndirectCircularDependency_ReturnException" Duration="1" />
     <TestDuration Test="TestOrderedJobs.Sort_IndirectCircularDependencyWithoutIndependent_ReturnException" Duration="1" />
     <TestDuration Test="TestOrderedJobs.Sort_IndirectCircularDependencyWithIndependent_ReturnException" Duration="1" />
+    <TestDuration Test="TestOrderedJobs.Sort_DirectCircularDependencyOnSelf_ReturnException" Duration="1" />
   </TestDurations>
 </GtaTestDurations>

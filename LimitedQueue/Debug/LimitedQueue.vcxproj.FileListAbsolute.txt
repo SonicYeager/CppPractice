@@ -1,0 +1,2 @@
+C:\Übungsprojekte\LimitedQueue\Debug\LimitedQueue.dll
+C:\Übungsprojekte\LimitedQueue\Debug\LimitedQueue.pdb

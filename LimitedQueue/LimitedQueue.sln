@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30523.141
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LimitedQueue_UnitTests", "..\LimitedQueue_UnitTests\LimitedQueue_UnitTests.vcxproj", "{56552C8B-4A01-4E28-90C1-46A85C96632F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestFramework", "TestFramework\GoogleMock\TestFramework.vcxitems", "{AAC85E24-C2BD-4A83-9DD9-48C57441C065}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		TestFramework\GoogleMock\TestFramework.vcxitems*{56552c8b-4a01-4e28-90c1-46a85c96632f}*SharedItemsImports = 4
+		TestFramework\GoogleMock\TestFramework.vcxitems*{aac85e24-c2bd-4a83-9dd9-48c57441c065}*SharedItemsImports = 9
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{56552C8B-4A01-4E28-90C1-46A85C96632F}.Debug|x64.ActiveCfg = Debug|x64
+		{56552C8B-4A01-4E28-90C1-46A85C96632F}.Debug|x64.Build.0 = Debug|x64
+		{56552C8B-4A01-4E28-90C1-46A85C96632F}.Debug|x86.ActiveCfg = Debug|Win32
+		{56552C8B-4A01-4E28-90C1-46A85C96632F}.Debug|x86.Build.0 = Debug|Win32
+		{56552C8B-4A01-4E28-90C1-46A85C96632F}.Release|x64.ActiveCfg = Release|x64
+		{56552C8B-4A01-4E28-90C1-46A85C96632F}.Release|x64.Build.0 = Release|x64
+		{56552C8B-4A01-4E28-90C1-46A85C96632F}.Release|x86.ActiveCfg = Release|Win32
+		{56552C8B-4A01-4E28-90C1-46A85C96632F}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {08222C9C-7735-4CE3-874C-2E4054A6F4FF}
+	EndGlobalSection
+EndGlobal

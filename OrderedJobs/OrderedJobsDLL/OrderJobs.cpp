@@ -22,7 +22,7 @@ namespace OrderJobs
 	{
 		for (auto& key : reg)
 		{
-			if (key.jobDependency_value == jkey && jval == key.job_key)
+			if (key.jobDependency_value == jkey && jval == key.job_key) //corner case self dependent
 				throw DirectCircularDependencyException(key.job_key, jkey);
 		}
 
