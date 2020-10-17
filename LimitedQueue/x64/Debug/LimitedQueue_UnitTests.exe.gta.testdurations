@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GtaTestDurations xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Executable>H:\TraineeProjectsCpp\LimitedQueue\x64\Debug\LimitedQueue_UnitTests.exe</Executable>
+  <TestDurations>
+    <TestDuration Test="TestBoundedQueue.Enqueue_OneEnqueueViaOneThread_SetOneEntryInQueue" Duration="1" />
+    <TestDuration Test="TestBoundedQueue.Dequeue_OneEnqueueOneDequeue_ReturnQueuedEntry" Duration="1" />
+    <TestDuration Test="TestBoundedQueue.Enqueue_EnqueueOnFullQueue_ThreadBlocked" Duration="1" />
+    <TestDuration Test="TestBoundedQueue.Dequeue_DequeueOnEmptyQueue_ThreadBlocked" Duration="1" />
+    <TestDuration Test="TestBoundedQueue.Dequeue_ManyEntrys_ReturnCorrectValue" Duration="1812" />
+  </TestDurations>
+</GtaTestDurations>

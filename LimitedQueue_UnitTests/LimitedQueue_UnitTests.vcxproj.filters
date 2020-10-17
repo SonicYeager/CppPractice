@@ -20,7 +20,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\LimitedQueue\BoundedQueue.h">
+    <ClInclude Include="BoundedQueue.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

@@ -10,8 +10,8 @@ TEST(TestBoundedQueue, Enqueue_OneEnqueueViaOneThread_SetOneEntryInQueue)
 	auto as = std::async(std::launch::async, std::bind(&Bounded::BoundedQueue<int>::Enqueue, &queue, 2));
 	as.get();
 
-	auto actual = queue.Size();
-	auto expect = 1;
+	const auto actual = queue.Size();
+	constexpr auto expect = 1;
 	EXPECT_EQ(queue.Size(), expect);
 }
 
@@ -23,7 +23,7 @@ TEST(TestBoundedQueue, Dequeue_OneEnqueueOneDequeue_ReturnQueuedEntry)
 	auto readingThread = std::async(std::launch::async, std::bind(&Bounded::BoundedQueue<int>::Dequeue, &queue));
 
 	auto actual = readingThread.get();
-	auto expect = 2;
+	constexpr auto expect = 2;
 	EXPECT_EQ(actual, expect);
 }
 
@@ -64,5 +64,28 @@ TEST(TestBoundedQueue, Dequeue_DequeueOnEmptyQueue_ThreadBlocked)
 
 	actual = as.get();
 	expect = 3;
+	EXPECT_EQ(actual, expect);
+}
+
+TEST(TestBoundedQueue, Dequeue_ManyEntrys_ReturnCorrectValue)
+{
+	Bounded::BoundedQueue<int> queue{5};
+	std::vector<std::future<int>> rthreads{};
+	std::vector<std::future<void>> wthreads{};
+
+	for (size_t i = 0; i < 10; ++i)
+	{
+		wthreads.push_back(std::async(std::launch::async, std::bind(&Bounded::BoundedQueue<int>::Enqueue, &queue, i)));
+	}
+	for (size_t i = 0; i < 10; i++)
+	{
+		rthreads.push_back(std::async(std::launch::async, std::bind(&Bounded::BoundedQueue<int>::Dequeue, &queue)));
+	}
+	int sum{};
+	for (auto& th : rthreads)
+		sum += th.get();
+
+	const auto actual = sum;
+	constexpr auto expect = 45;
 	EXPECT_EQ(actual, expect);
 }

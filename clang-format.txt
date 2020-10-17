@@ -1,0 +1,8 @@
+﻿---
+BasedOnStyle: WebKit
+SpaceBeforeParens: Never
+SpacesInContainerLiterals: 'true'
+SpacesInParentheses: 'true'
+Standard: Auto
+
+...
