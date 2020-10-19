@@ -3,7 +3,7 @@
 #include <future>
 
 
-TEST(TestBoundedQueue, Enqueue_OneEnqueueViaOneThread_SetOneEntryInQueue)
+TEST(TestBoundedQueue, Enqueue_OneEnqueue_SetOneEntryInQueue)
 {
 	Bounded::BoundedQueue<int> queue{};
 
@@ -41,13 +41,8 @@ TEST(TestBoundedQueue, Enqueue_EnqueueOnFullQueue_ThreadBlocked)
 	auto expect = 2;
 	EXPECT_EQ(actual, expect);
 
-	auto as = std::async(std::launch::async, std::bind(&Bounded::BoundedQueue<int>::Dequeue, &queue));
-	auto s = as.get();
+	queue.Dequeue();
 	as3.get();
-
-	actual = queue.Size();
-	expect = 2;
-	EXPECT_EQ(actual, expect);
 }
 
 TEST(TestBoundedQueue, Dequeue_DequeueOnEmptyQueue_ThreadBlocked)
@@ -60,11 +55,8 @@ TEST(TestBoundedQueue, Dequeue_DequeueOnEmptyQueue_ThreadBlocked)
 	auto expect = 0;
 	EXPECT_EQ(actual, expect);
 
-	auto as2 = std::async(std::launch::async, std::bind(&Bounded::BoundedQueue<int>::Enqueue, &queue, 3));
-
-	actual = as.get();
-	expect = 3;
-	EXPECT_EQ(actual, expect);
+	queue.Enqueue(1);
+	as.get();
 }
 
 TEST(TestBoundedQueue, Dequeue_ManyEntrys_ReturnCorrectValue)
@@ -88,4 +80,57 @@ TEST(TestBoundedQueue, Dequeue_ManyEntrys_ReturnCorrectValue)
 	const auto actual = sum;
 	constexpr auto expect = 45;
 	EXPECT_EQ(actual, expect);
+}
+
+TEST(TestBoundedQueue, TryEnqueue_EnqueueOne_ReturnFalseQueueEmpty)
+{
+	Bounded::BoundedQueue<int> queue{ 1 };
+
+	queue.Enqueue(2);
+
+	auto actual = queue.TryEnqueue(2, 10ms);
+	auto expect = false;
+	EXPECT_EQ(actual, expect);;
+}
+
+TEST(TestBoundedQueue, TryDequeue_DequeueOne_ReturnFalseNullPtr)
+{
+	Bounded::BoundedQueue<int> queue{ 1 };
+
+	queue.Enqueue(2);
+	queue.Dequeue();
+
+	int* ret{};
+	auto actual = queue.TryDequeue(ret, 10ms);
+	auto expect = false;
+	EXPECT_EQ(actual, expect);;
+}
+
+TEST(TestBoundedQueue, TryEnqueue_EnqueueOne_ReturnTrueAndOneEntryInQueue)
+{
+	Bounded::BoundedQueue<int> queue{ 1 };
+
+	queue.Enqueue(2);
+
+	auto th = std::async(std::launch::async, std::bind(&Bounded::BoundedQueue<int>::TryEnqueue, &queue, 2, 100ms));
+	std::this_thread::sleep_for(80ms);
+	queue.Dequeue();
+	auto actual = th.get();
+	auto expect = true;
+	EXPECT_EQ(actual, expect);;
+}
+
+TEST(TestBoundedQueue, TryDequeue_DequeueOne_ReturnTrueAndSetRet2)
+{
+	Bounded::BoundedQueue<int> queue{ 1 };
+
+
+	int actual{};
+	int* ret = &actual;
+	auto th = std::async(std::launch::async, std::bind(&Bounded::BoundedQueue<int>::TryDequeue, &queue, ret, 100ms));
+	std::this_thread::sleep_for(80ms);
+	queue.Enqueue(2);
+	th.get();
+	auto expect = 2;
+	EXPECT_EQ(*ret, expect);;
 }
