@@ -9,11 +9,11 @@ void ReadFileContent(const char* filename, char*& pResult, size_t& size);
 void Crypto::Run(int argc, const char* argv[])
 {
 	Algorithm algo{};
-	int shiftCount = 0;
 	Puffer sourceFilename = Puffer(nullptr);
 
 	try
 	{
+		int shiftCount = 0;
 		Parse(argc, argv, algo, shiftCount, sourceFilename.SetChar());
 		ValidateInput(algo, shiftCount, sourceFilename.GetChar()); 
 
@@ -21,7 +21,8 @@ void Crypto::Run(int argc, const char* argv[])
 		size_t size = 0;
 		ReadFileContent(sourceFilename.GetChar(), buffer.SetChar(), size);
 		Datei dest = Datei("result.txt", "wb");
-		assert(dest.GetFile() != nullptr);
+		auto fres = dest.GetFile();
+		assert( fres != nullptr);
 		Process(algo, buffer.GetChar(), size, shiftCount);
 		size_t written = fwrite(buffer.GetChar(), sizeof(char), size, dest.GetFile());
 		assert(written == size);
@@ -98,7 +99,6 @@ void Crypto::Process(Algorithm algo, char* pBuffer, size_t size, int shiftCount)
 	default:
 		{
 			throw UnknownAlgorithmException();
-			break;
 		}
 	}
 }
@@ -156,7 +156,8 @@ void ReadFileContent(const char* pFilename, char*& pResult, size_t& size)
 }
 
 	Datei src = Datei(pFilename, "rb");
-	assert(src.GetFile() != nullptr);
+	auto fres = src.GetFile();
+	assert(fres != nullptr);
 
 	fseek(src.GetFile(), 0, SEEK_END);
 	size_t bytes = ftell(src.GetFile());
