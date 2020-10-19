@@ -1,0 +1,9 @@
+the solar system
+the number of planets are
+<<<<<< HEAD
+nine
+minnus one
+=======
+eight
+>>>>>> branch-a
+earth is the 3rd planet
