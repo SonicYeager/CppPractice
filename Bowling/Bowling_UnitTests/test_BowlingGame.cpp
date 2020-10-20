@@ -5,7 +5,7 @@
 class GameMock : public Bowling::Game
 {
 public:
-	void SetHistory(std::vector<Bowling::Frame> his)
+	void SetHistory(const std::vector<Bowling::Frame>& his)
 	{
 		this->history = his;
 	}

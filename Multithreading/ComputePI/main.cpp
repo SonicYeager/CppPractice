@@ -188,7 +188,7 @@ double ComputeAlgorithmParallelLocal(int numSteps, int numth = std::thread::hard
 int main()
 {
 	int numSteps = 1000000;
-	int numThreads = 1;
+	int numThreads{};
 #if 0
 	Measurment measure(numSteps);
 	measure.Start("Sequ");

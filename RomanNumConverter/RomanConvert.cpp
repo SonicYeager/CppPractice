@@ -19,7 +19,7 @@ std::string DecimalToRoman(int dec)
     return FuseRoman(mapped);
 }
 
-int RomanToDecimal(std::string rom)
+int RomanToDecimal(const std::string& rom)
 {
     auto decomposed = DecomposeRoman(rom);
     auto mapped = MapRomanToDecimal(decomposed);

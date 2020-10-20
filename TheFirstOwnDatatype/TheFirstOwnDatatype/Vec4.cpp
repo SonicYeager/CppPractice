@@ -52,6 +52,7 @@ Vec4& Vec4::operator=(const Vec4& cpy)
 	this->y = cpy.y;
 	this->z = cpy.z;
 	this->w = cpy.w;
+	return *this;
 }
 
 bool Vec4::operator==(const Vec4& vRight)

@@ -108,7 +108,6 @@ namespace Reversi
 						if (board[newPos_y][newPos_x] == player)
 						{
 							return true;
-							break;
 						}
 					}
 				}
@@ -301,10 +300,10 @@ namespace Reversi
 			}
 
 			if (index == 1) {
-				std::cout << "Player Black, its your turn!: You have " << NumberPossibleMoves(index == 0 ? P_WHITE : P_BLACK, board) << " possible moves!" << std::endl;
+				std::cout << "Player Black, its your turn!: You have " << NumberPossibleMoves(P_BLACK, board) << " possible moves!" << std::endl;
 			}
 			else
-				std::cout << "Player White, its your turn!: You have " << NumberPossibleMoves(index == 0 ? P_WHITE : P_BLACK, board) << " possible moves!" << std::endl;
+				std::cout << "Player White, its your turn!: You have " << NumberPossibleMoves(P_WHITE, board) << " possible moves!" << std::endl;
 
 			if (player == KI_PRO)
 				MakeComputerMovePro(index == 0 ? P_WHITE : P_BLACK , board);

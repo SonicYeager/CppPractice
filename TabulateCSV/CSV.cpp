@@ -3,11 +3,11 @@
 struct Table
 {
     Table() = default;
-    Table(const  std::vector<std::string>& head, const  std::vector<std::string>& seperation, std::vector<std::vector<std::string>> content) :
+    Table(const  std::vector<std::string>& head, const  std::vector<std::string>& seperation, const std::vector<std::vector<std::string>>& content) :
         head(head), seperation(seperation), content(content)
     {}
 
-    Table(const  std::vector<std::string>& head, std::vector<std::vector<std::string>> content) :
+    Table(const  std::vector<std::string>& head, const std::vector<std::vector<std::string>>& content) :
         Table(head, { head.size(), "" }, content)
     {}
 
@@ -69,7 +69,7 @@ std::vector<std::string> DecomposeLine(const std::string& line)
 }
 
 std::vector<int> GetMaxColumnLengths(const Table&);
-Lines FormatLines(std::vector<int>, const Table&);
+Lines FormatLines(const std::vector<int>&, const Table&);
 
 Lines FormatTable(const Table& table)
 {
@@ -96,9 +96,9 @@ std::vector<int> GetMaxColumnLengths(const Table& table)
     return res;
 }
 
-std::string FormatLine(std::vector<int>, const std::vector<std::string>&, std::string, std::string);
+std::string FormatLine(const std::vector<int>&, const std::vector<std::string>&, const std::string&, const std::string&);
 
-Lines FormatLines(std::vector<int> maxColumnWidth, const Table& table)
+Lines FormatLines(const std::vector<int>& maxColumnWidth, const Table& table)
 {
     Lines res{};
 
@@ -111,7 +111,7 @@ Lines FormatLines(std::vector<int> maxColumnWidth, const Table& table)
     return res;
 }
 
-std::string FormatLine(std::vector<int> maxColumnWidth, const std::vector<std::string>& line, std::string spaceFill,std::string seperator)
+std::string FormatLine(const std::vector<int>& maxColumnWidth, const std::vector<std::string>& line, const std::string& spaceFill, const std::string& seperator)
 {
     std::string res{};
     size_t index = 0;
