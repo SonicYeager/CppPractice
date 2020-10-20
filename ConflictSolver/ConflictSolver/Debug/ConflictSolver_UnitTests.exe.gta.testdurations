@@ -3,5 +3,9 @@
   <Executable>C:\Übungsprojekte\ConflictSolver\ConflictSolver\Debug\ConflictSolver_UnitTests.exe</Executable>
   <TestDurations>
     <TestDuration Test="TestConflictSolver.SetConflict_AddConflictContents_SetInternalTable" Duration="1" />
+    <TestDuration Test="TestConflictSolver.Solve_ConflictToHead_Solved" Duration="1" />
+    <TestDuration Test="TestConflictSolver.Solve_ConflictToLeft_Solved" Duration="1" />
+    <TestDuration Test="TestConflictSolver.Solve_ConflictToRight_Solved" Duration="1" />
+    <TestDuration Test="TestConflictSolver.Solve_ConflictToBoth_Solved" Duration="1" />
   </TestDurations>
 </GtaTestDurations>

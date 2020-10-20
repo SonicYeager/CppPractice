@@ -2,6 +2,7 @@
 #include <vector>
 #include <map>
 #include <string>
+#include <ostream>
 
 namespace ConflictSolver
 {
@@ -10,9 +11,8 @@ namespace ConflictSolver
 	struct Column
 	{
 		std::string header{};
-		std::multimap<int, std::string> contents{};
-		std::multimap<int, std::string> conflicts{};
-		int lasKey{};
+		std::vector<Lines> contents{};
+		std::vector<Lines> conflicts{};
 
 		bool operator==(const Column& other) const
 		{
@@ -22,25 +22,50 @@ namespace ConflictSolver
 				return false;
 			if (conflicts != other.conflicts)
 				return false;
-			if (lasKey != other.lasKey)
-				return false;
 			return true;
 		}
 	};
 
-	using Table = std::vector<Column>;
+	struct Table
+	{
+		Column left{};
+		Column right{};
+	};
+
+	std::ostream& operator<<(std::ostream& os, const Lines& lines)
+	{
+		for (auto line : lines)
+			os << line << " ";
+		return os;
+	}
+
+	std::ostream& operator<<(std::ostream& os, const Column& col)
+	{
+		os << "{ ";
+		os << col.header << " ";
+		os << "{ ";
+		for (auto line : col.contents)
+			os << line << "; ";
+		os << " }";
+		os << "{ ";
+		for (auto line : col.conflicts)
+			os << line << "; ";
+		os << " }";
+		os << " }";
+		return os;
+	}
+
+	std::ostream& operator<<(std::ostream& os, const Table& tabl)
+	{
+			os << tabl.left << tabl.right;
+		return os;
+	}
 
 	bool operator==(const Table& left, const Table& right)
 	{
-		if (left.size() != right.size())
+		if (left.left == right.left && left.right == right.right)
+			return true;
+		else
 			return false;
-		for (size_t i = 0; i < left.size(); ++i)
-		{
-			if (left[i] == right[i])
-				continue;
-			else
-				return false;
-		}
-		return true;
 	}
 }
