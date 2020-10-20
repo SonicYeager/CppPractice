@@ -5,7 +5,7 @@ using Lines = std::vector<std::string>;
 struct Table
 {
     Table() = default;
-    Table(const  std::vector<std::string>& head, const  std::vector<std::string>& seperation, std::vector<std::vector<std::string>> content) :
+    Table(const  std::vector<std::string>& head, const  std::vector<std::string>& seperation, const std::vector<std::vector<std::string>>& content) :
         head(head), seperation(seperation), content(content)
     {}
 

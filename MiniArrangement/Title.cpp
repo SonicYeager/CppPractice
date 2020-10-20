@@ -1,6 +1,6 @@
 #include "Title.h"
 
-Title::Title(std::chrono::milliseconds start, std::chrono::milliseconds length, std::string txt, int size)
+Title::Title(std::chrono::milliseconds start, std::chrono::milliseconds length, const std::string& txt, int size)
 	: Clip{start, length}
 	, text(txt)
 	, pointSize(size)

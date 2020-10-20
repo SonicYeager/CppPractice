@@ -100,7 +100,7 @@ int QuickSortPartition(int* elements, int left, int right, Operations* op)
     
     while(1)
     {
-        while(elements[i] <= pivot && i < right)
+        while(i < right && elements[i] <= pivot)
 		{
 			++op->numberComparisons;
             i++;

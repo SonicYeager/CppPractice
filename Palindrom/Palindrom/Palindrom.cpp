@@ -41,7 +41,6 @@ bool IsPalindrom(const char* text) {
 }
 
 void PrintPalindromToFile() {
-	bool bIsPalindrom;
 	std::FILE* pFileIn;
 	std::FILE* pFileOut;
 	pFileIn = std::fopen("woerter.in", "r");
@@ -50,7 +49,7 @@ void PrintPalindromToFile() {
 	char word[50];
 	while (std::fgets(word, 50, pFileIn) != nullptr)
 	{
-		bIsPalindrom = IsPalindrom(word);
+		bool bIsPalindrom = IsPalindrom(word);
 		if (bIsPalindrom) {
 			std::fputs(word, pFileOut);
 		}

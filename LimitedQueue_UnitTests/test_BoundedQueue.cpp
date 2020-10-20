@@ -12,7 +12,7 @@ TEST(TestBoundedQueue, Enqueue_OneEnqueue_SetOneEntryInQueue)
 
 	const auto actual = queue.Size();
 	constexpr auto expect = 1;
-	EXPECT_EQ(queue.Size(), expect);
+	EXPECT_EQ(actual, expect);
 }
 
 TEST(TestBoundedQueue, Dequeue_OneEnqueueOneDequeue_ReturnQueuedEntry)
@@ -25,6 +25,7 @@ TEST(TestBoundedQueue, Dequeue_OneEnqueueOneDequeue_ReturnQueuedEntry)
 	auto actual = readingThread.get();
 	constexpr auto expect = 2;
 	EXPECT_EQ(actual, expect);
+	writingThread.get();
 }
 
 TEST(TestBoundedQueue, Enqueue_EnqueueOnFullQueue_ThreadBlocked)

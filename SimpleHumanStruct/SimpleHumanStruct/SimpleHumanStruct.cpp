@@ -30,8 +30,6 @@ int main()
 
 	HumanBeing person2 = { "Bob", 34, 3000 };
 
-	HumanBeing person3 = { "Alice", 85, 1750 };
-
 	HumansEqual(person1, person2);
 
 }

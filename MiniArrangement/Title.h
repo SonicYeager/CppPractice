@@ -5,7 +5,7 @@
 class Title : public Clip, public std::enable_shared_from_this<Title>
 {
 public:
-	Title(std::chrono::milliseconds start, std::chrono::milliseconds length, std::string txt, int size);
+	Title(std::chrono::milliseconds start, std::chrono::milliseconds length, const std::string& txt, int size);
 	//Title(const Title&) = delete;
 	~Title() override = default;
 	void Visit(IOperations*) override;

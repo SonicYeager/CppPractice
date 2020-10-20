@@ -44,6 +44,7 @@ Vec4& Vec4::operator=(float scalar)
 	this->y = scalar;
 	this->z = scalar;
 	this->w = scalar;
+	return *this;
 }
 
 Vec4& Vec4::operator=(const Vec4& cpy)

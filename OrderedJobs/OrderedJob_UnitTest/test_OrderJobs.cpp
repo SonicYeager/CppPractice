@@ -90,7 +90,7 @@ TEST(TestOrderedJobs, Sort_IndirectCircularDependencyWithIndependent_ReturnExcep
 			oJobs.Register('c', 'd');
 			oJobs.Register('d', 'b');
 			oJobs.Register('e', 'a');
-			auto actual = oJobs.Sort();
+			oJobs.Sort();
 		}, IndirectCircularDependencyException
 	);
 }

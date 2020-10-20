@@ -68,11 +68,11 @@ void CheckNeighbourFunctions::CheckEnemyNeighbours(const Board& board, char play
 {
 	char enemyPlayer = player == 'W' ? 'B' : 'W';
 	for (const auto& pos :positions) {
-		if (pos.y - 1 >= 0 && board[pos.y - 1][pos.x] == enemyPlayer)
+		if (board[pos.y - 1][pos.x] == enemyPlayer)
 			onTop(board, player, pos);
 		if (pos.y + 1 < board.size() && board[pos.y + 1][pos.x] == enemyPlayer)
 			onBottom(board, player, pos);
-		if (pos.x - 1 >= 0 && board[pos.y][pos.x - 1] == enemyPlayer)
+		if (board[pos.y][pos.x - 1] == enemyPlayer)
 			onLeft(board, player, pos);
 		if (pos.x + 1 < board[pos.y].size() && board[pos.y][pos.x + 1] == enemyPlayer)
 			onRight(board, player, pos);

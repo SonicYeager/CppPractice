@@ -7,7 +7,7 @@ std::string ReplaceUmlauts(std::string);
 //std::string CleanString(std::string);
 std::string Rotate(std::string);
 
-std::string EncryptROTXIII(std::string text)
+std::string EncryptROTXIII(const std::string& text)
 {
     //both works <- thats what fu's are intended to be
 
