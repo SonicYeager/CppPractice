@@ -1,141 +1,229 @@
 #include "ConflictSolver.h"
 
+
+
 namespace ConflictSolver
 {
+#pragma region SetConflict
+
+	std::vector<Lines> ExtractContent(const Lines&);
+	std::pair<std::vector<Lines>, std::vector<Lines>> ExtractConflicts(const Lines&);
+	std::pair<std::string, std::string> ExtractHeads(const Lines&);
+	Table Merge(const std::vector<Lines>&, const std::pair<std::vector<Lines>, std::vector<Lines>>&, const std::pair<std::string, std::string>&);
+	std::vector<SOLVE> GetSolveLog(const Table&);
+
 	void ConflictSolver::SetConflict(const Lines& conflict)
 	{
-		Table res{};
-		Lines::const_iterator iter = conflict.begin();
-		while (iter != conflict.end())
-		{
-			Lines leftConflict{};
-			Lines leftContent{};
-			Lines rightConflict{};
-			Lines rightContent{};
-
-			while (iter != conflict.end() && iter->find("<<<<<<<", 0) == std::string::npos)
-			{
-				leftContent.push_back(*iter);
-				rightContent.push_back(*iter);
-				++iter;
-			}
-			if (iter != conflict.end())
-			{
-				res.left.header = iter->substr(8, iter->size() - 8);
-				++iter;
-			}
-
-			while (iter != conflict.end() && iter->find("=======", 0) == std::string::npos)
-			{
-				leftConflict.push_back(*iter);
-				++iter;
-			}
-			if (iter != conflict.end()) 
-				++iter;
-			while (iter != conflict.end() && iter->find(">>>>>>>", 0) == std::string::npos)
-			{
-				rightConflict.push_back(*iter);
-				++iter;
-			}
-			if (iter != conflict.end())
-			{
-				res.right.header = iter->substr(8, iter->size() - 8);
-				++iter;
-			}
-
-			if (leftConflict.size() != rightConflict.size())
-				if (leftConflict.size() < rightConflict.size())
-					for (size_t i{}; i < rightConflict.size() - leftConflict.size(); ++i)
-						leftConflict.push_back("");
-				else if (leftConflict.size() > rightConflict.size())
-					for (size_t i{}; i < leftConflict.size() - rightConflict.size(); ++i)
-						rightConflict.push_back("");
-
-			if(leftConflict.size() > 0)
-				res.left.conflicts.push_back(leftConflict);
-			if (leftContent.size() > 0)
-				res.left.contents.push_back(leftContent);
-			if (rightConflict.size() > 0)
-				res.right.conflicts.push_back(rightConflict);
-			if (rightContent.size() > 0)
-				res.right.contents.push_back(rightContent);
-		}				
-		conflictContent = res;
+		auto content = ExtractContent(conflict);
+		auto conflicts = ExtractConflicts(conflict);
+		auto heads = ExtractHeads(conflict);
+		conflictContent = Merge(content, conflicts, heads);
+		solveLog = GetSolveLog(conflictContent);
 	}
+
+	std::vector<SOLVE> GetSolveLog(const Table& conflicts)
+	{
+		std::vector<SOLVE> res;
+		for (size_t i{}; i < conflicts.left.conflicts.size(); ++i)
+		{
+			res.push_back(SOLVE::UNSOLVED);
+		}
+		return res;
+	}
+
+	std::vector<Lines> ExtractContent(const Lines& lines)
+	{
+		std::vector<Lines> res{};
+		Lines::const_iterator iter = lines.begin();
+		while (iter != lines.end())
+		{
+			Lines contentBlock{};
+			while (iter != lines.end() && iter->find("<<<<<<<", 0) == std::string::npos)
+			{
+				contentBlock.push_back(*iter);
+				++iter;
+			}
+			while (iter != lines.end() && iter->find(">>>>>>>", 0) == std::string::npos)
+				++iter;
+			if (iter != lines.end())
+				++iter;
+			if(contentBlock.size() > 0)
+				res.push_back(contentBlock);
+		}
+		return res;
+	}
+
+	std::pair<Lines, Lines> EqualizeWithEmptyStrings(const Lines&, const Lines&);
+
+	std::pair<std::vector<Lines>, std::vector<Lines>> ExtractConflicts(const Lines& lines)
+	{
+		std::vector<Lines> resLeft{};
+		std::vector<Lines> resRight{};
+
+		Lines::const_iterator iter = lines.begin();
+		while (iter != lines.end())
+		{
+			Lines conflictBlockLeft{};
+			Lines conflictBlockRight{};
+			while (iter != lines.end() && iter->find("<<<<<<<", 0) == std::string::npos)
+				++iter;
+			if (iter != lines.end())
+				++iter;
+			while (iter != lines.end() && iter->find("=======", 0) == std::string::npos)
+			{
+				conflictBlockLeft.push_back(*iter);
+				++iter;
+			}
+			if (iter != lines.end())
+				++iter;
+			while (iter != lines.end() && iter->find(">>>>>>>", 0) == std::string::npos)
+			{
+				conflictBlockRight.push_back(*iter);
+				++iter;
+			}
+
+			auto equalized = EqualizeWithEmptyStrings(conflictBlockLeft, conflictBlockRight);
+
+			if (equalized.first.size() > 0)
+				resLeft.push_back(equalized.first);
+			if (equalized.second.size() > 0)
+				resRight.push_back(equalized.second);
+		}
+
+
+		return std::make_pair(resLeft, resRight);
+	}
+
+	std::pair<Lines, Lines> EqualizeWithEmptyStrings(const Lines& left, const Lines& right)
+	{
+		Lines conflictBlockLeft{left};
+		Lines conflictBlockRight{right};
+
+		if (left.size() != right.size())
+			if (left.size() < right.size())
+				for (size_t i{}; i < right.size() - left.size(); ++i)
+					conflictBlockLeft.push_back("");
+			else if (left.size() > right.size())
+				for (size_t i{}; i < left.size() - right.size(); ++i)
+					conflictBlockRight.push_back("");
+
+		return std::make_pair(conflictBlockLeft, conflictBlockRight);
+	}
+
+	std::pair<std::string, std::string> ExtractHeads(const Lines& lines)
+	{
+		std::string leftHead{""};
+		std::string rightHead{""};
+
+		Lines::const_iterator iter = lines.begin();
+		while (iter != lines.end() && (leftHead == "" || rightHead == ""))
+		{
+			if (iter != lines.end() && leftHead == "" && iter->find("<<<<<<<", 0) != std::string::npos)
+			{
+				leftHead = iter->substr(8, iter->size() - 8);
+				++iter;
+			}
+			if (iter != lines.end() && rightHead == "" && iter->find(">>>>>>>", 0) != std::string::npos)
+			{
+				rightHead = iter->substr(8, iter->size() - 8);
+				++iter;
+			}
+			if (iter != lines.end())
+				++iter;
+		}
+
+		return std::make_pair(leftHead, rightHead);;
+	}
+
+	Table Merge(const std::vector<Lines>& content, const std::pair<std::vector<Lines>, std::vector<Lines>>& conflicts, const std::pair<std::string, std::string>& heads)
+	{
+		Table res{};
+
+		res.left.header = heads.first;
+		res.right.header = heads.second;
+
+		res.left.contents = content;
+		res.right.contents = content;
+
+		res.left.conflicts = conflicts.first;
+		res.right.conflicts = conflicts.second;
+
+		return res;
+	}
+
+#pragma endregion
 
 	Table ConflictSolver::GetConflict() const
 	{
 		return conflictContent;
 	}
 
-	Lines ConflictSolver::Solve(const SOLVE solveTo)
+#pragma region Solve
+
+	std::vector<SOLVE> LogSolve(const std::vector<SOLVE>&, const SOLVE&, const int&);
+	Lines SolveByLog(const std::vector<SOLVE>&, const Table&);
+
+	Lines ConflictSolver::Solve(const SOLVE solveTo, int index)
 	{
-		Lines res{};
-		Column solved{};
-		if (solveTo == SOLVE::LEFT)
-		{
-			solved = conflictContent.left;
-		}
-		else if (solveTo == SOLVE::RIGHT)
-		{
-			solved = conflictContent.right;
-		}
-		else if (solveTo == SOLVE::BOTH)
-		{
-			for (size_t i{}; i < conflictContent.left.conflicts.size(); ++i)
-				conflictContent.right.conflicts[i].insert(conflictContent.right.conflicts[i].end(), conflictContent.left.conflicts[i].begin(), conflictContent.left.conflicts[i].end());
-			solved = conflictContent.right;
-		}
-
-		if (solved.conflicts.size() == solved.contents.size())
-		{
-			for (size_t i{}; i < solved.conflicts.size(); ++i)
-			{
-				for (auto line : solved.contents[i])
-					res.push_back(line);
-				for (auto line : solved.conflicts[i])
-					res.push_back(line);
-			}
-		}
-		else
-		{
-			if (solved.conflicts.size() < solved.contents.size())
-			{
-				int diff = solved.contents.size() - solved.conflicts.size();
-				for (size_t i{}; i < solved.conflicts.size(); ++i)
-				{
-					for (auto line : solved.contents[i])
-						res.push_back(line);
-					for (auto line : solved.conflicts[i])
-						if (line != "")
-							res.push_back(line);
-				}
-				for (size_t i{ solved.conflicts.size()}; i < diff + solved.conflicts.size(); ++i)
-				{
-					for (auto line : solved.contents[i])
-						res.push_back(line);
-				}
-			}
-			else
-			{
-				int diff = solved.conflicts.size() - solved.contents.size();
-				for (size_t i{}; i < solved.contents.size(); ++i)
-				{
-					for (auto line : solved.contents[i])
-							res.push_back(line);
-					for (auto line : solved.conflicts[i])
-						if (line != "")
-							res.push_back(line);
-				}
-				for (size_t i{ solved.contents.size() }; i < diff + solved.contents.size(); ++i)
-				{
-					for (auto line : solved.conflicts[i])
-						if (line != "")
-							res.push_back(line);
-				}
-			}
-
-		}
+		solveLog = LogSolve(solveLog, solveTo, index);
+		auto res = SolveByLog(solveLog, conflictContent);
 		return res;
 	}
+
+	std::vector<SOLVE> LogSolve(const std::vector<SOLVE>& log, const SOLVE& solveTo, const int& index)
+	{
+		std::vector<SOLVE> res{log};
+		res[index] = solveTo;
+		return res;
+	}
+
+	Lines SolveByLog(const std::vector<SOLVE>& solveLog, const Table& conflicts)
+	{
+		Lines res{};
+		for (size_t i{}; i < solveLog.size(); ++i)
+		{
+			if(conflicts.left.contents.size() > i)
+				for (auto line : conflicts.left.contents[i])
+				res.push_back(line);
+			if(solveLog[i] == SOLVE::LEFT)
+			{
+				for (auto line : conflicts.left.conflicts[i])
+					if(line != "")
+						res.push_back(line);
+			}
+			if (solveLog[i] == SOLVE::RIGHT)
+			{
+				for (auto line : conflicts.right.conflicts[i])
+					if (line != "")
+						res.push_back(line);
+			}
+			if (solveLog[i] == SOLVE::BOTH)
+			{
+				for (auto line : conflicts.left.conflicts[i])
+					if (line != "")
+						res.push_back(line);
+				for (auto line : conflicts.right.conflicts[i])
+					if (line != "")
+						res.push_back(line);
+			}
+			if (solveLog[i] == SOLVE::UNSOLVED)
+			{
+				res.push_back("<<<<<<< " + conflicts.left.header);
+				for (auto line : conflicts.left.conflicts[i])
+					if (line != "")
+						res.push_back(line);
+				res.push_back("=======");
+				for (auto line : conflicts.right.conflicts[i])
+					if (line != "")
+						res.push_back(line);
+				res.push_back(">>>>>>> " + conflicts.right.header);
+			}
+		}
+		if(solveLog.size() < conflicts.left.contents.size())
+			for (auto line : conflicts.left.contents[conflicts.left.contents.size()-1])
+				res.push_back(line);
+		return res;
+	}
+
+#pragma endregion
 }

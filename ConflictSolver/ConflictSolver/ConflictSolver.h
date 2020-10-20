@@ -14,7 +14,8 @@ namespace ConflictSolver
 	{
 		RIGHT,
 		LEFT,
-		BOTH
+		BOTH,
+		UNSOLVED
 	};
 
 	class CONFLICTSOLVER_API ConflictSolver
@@ -22,9 +23,10 @@ namespace ConflictSolver
 	public:
 		void SetConflict(const Lines& conflict);
 		Table GetConflict() const;
-		Lines Solve(const SOLVE);
+		Lines Solve(const SOLVE, int);
 
 	private:
 		Table conflictContent{};
+		std::vector<SOLVE> solveLog{};
 	};
 }

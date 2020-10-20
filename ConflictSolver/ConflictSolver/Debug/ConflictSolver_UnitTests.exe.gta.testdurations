@@ -7,5 +7,15 @@
     <TestDuration Test="TestConflictSolver.Solve_ConflictToLeft_Solved" Duration="1" />
     <TestDuration Test="TestConflictSolver.Solve_ConflictToRight_Solved" Duration="1" />
     <TestDuration Test="TestConflictSolver.Solve_ConflictToBoth_Solved" Duration="1" />
+    <TestDuration Test="TestConflictSolver.Solve_ConflictToLeft_UseOnlyLeft" Duration="1" />
+    <TestDuration Test="TestConflictSolver.Solve_ConflictToRight_UseOnlyRight" Duration="1" />
+    <TestDuration Test="TestConflictSolver.Solve_ConflictToBoth_UseBothRightFirst" Duration="1" />
+    <TestDuration Test="TestConflictSolver.Solve_TwoConflictsToLeft_UseOnlyLeft" Duration="1" />
+    <TestDuration Test="TestConflictSolver.Solve_TwoConflictsToRight_UseOnlyRight" Duration="1" />
+    <TestDuration Test="TestConflictSolver.Solve_TwoConflictsToBoth_UseBothRightFirst" Duration="1" />
+    <TestDuration Test="TestConflictSolver.Solve_TwoConflicts_KeepUnsolved" Duration="1" />
+    <TestDuration Test="TestConflictSolver.Solve_TwoConflictsToLeftAndRight_UseRightFirstLeftSecond" Duration="1" />
+    <TestDuration Test="TestConflictSolver.Solve_TwoConflictsInARow_UnsolvedAndSolvedToLeft" Duration="1" />
+    <TestDuration Test="TestConflictSolver.Solve_ThreeConflictsInARow_UnsolvedAndSolvedToLeft" Duration="1" />
   </TestDurations>
 </GtaTestDurations>
