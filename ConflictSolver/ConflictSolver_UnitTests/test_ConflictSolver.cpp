@@ -79,11 +79,17 @@ TEST(TestConflictSolver, SetConflict_AddConflictContents_SetInternalTable)
 			"HEAD",
 			{
 				{
-					"the solar system",
-					"the number of planets are"
+					0,
+					{
+						"the solar system",
+						"the number of planets are"
+					}
 				},
 				{
-					"earth is the 3rd planet"
+					1,
+					{
+						"earth is the 3rd planet"
+					}
 				}
 			},
 			{
@@ -97,11 +103,17 @@ TEST(TestConflictSolver, SetConflict_AddConflictContents_SetInternalTable)
 			"branch-a",
 			{
 				{
-					"the solar system",
-					"the number of planets are"
+					0,
+					{
+						"the solar system",
+						"the number of planets are"
+					}
 				},
 				{
-					"earth is the 3rd planet"
+					1,
+					{
+						"earth is the 3rd planet"
+					}
 				}
 			},
 			{

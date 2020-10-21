@@ -1,0 +1,19 @@
+the solar system
+the number of planets are
+<<<<<<< HEAD
+nine
+minnus one
+=======
+eight
+>>>>>>> branch-a
+<<<<<<< HEAD
+but pluto isn't
+=======
+but pluto is
+>>>>>>> branch-a
+<<<<<<< HEAD
+but pluto isn't
+=======
+but pluto is
+>>>>>>> branch-a
+das bittere ende

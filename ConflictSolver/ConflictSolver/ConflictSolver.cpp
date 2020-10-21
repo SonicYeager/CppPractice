@@ -1,15 +1,14 @@
 #include "ConflictSolver.h"
 
-
-
 namespace ConflictSolver
 {
+
 #pragma region SetConflict
 
-	std::vector<Lines> ExtractContent(const Lines&);
-	std::pair<std::vector<Lines>, std::vector<Lines>> ExtractConflicts(const Lines&);
+	Contents ExtractContent(const Lines&);
+	std::pair<Conflicts, Conflicts> ExtractConflicts(const Lines&);
 	std::pair<std::string, std::string> ExtractHeads(const Lines&);
-	Table Merge(const std::vector<Lines>&, const std::pair<std::vector<Lines>, std::vector<Lines>>&, const std::pair<std::string, std::string>&);
+	Table Merge(const Contents&, const std::pair<Conflicts, Conflicts>&, const std::pair<std::string, std::string>&);
 	std::vector<SOLVE> GetSolveLog(const Table&);
 
 	void ConflictSolver::SetConflict(const Lines& conflict)
@@ -31,31 +30,44 @@ namespace ConflictSolver
 		return res;
 	}
 
-	std::vector<Lines> ExtractContent(const Lines& lines)
+	Contents ExtractContent(const Lines& lines)
 	{
-		std::vector<Lines> res{};
+		Contents res{};
 		Lines::const_iterator iter = lines.begin();
+		int index{};
 		while (iter != lines.end())
 		{
 			Lines contentBlock{};
+
+			//ceck if another conflict is immediate
+			if (iter != lines.end() && iter->find("<<<<<<<", 0) != std::string::npos)
+				++index;
+
+			//Retrieve Content until conflict
 			while (iter != lines.end() && iter->find("<<<<<<<", 0) == std::string::npos)
 			{
 				contentBlock.push_back(*iter);
 				++iter;
 			}
+
+			//surpass conflict
 			while (iter != lines.end() && iter->find(">>>>>>>", 0) == std::string::npos)
 				++iter;
 			if (iter != lines.end())
 				++iter;
-			if(contentBlock.size() > 0)
-				res.push_back(contentBlock);
+
+			if (contentBlock.size() > 0)
+			{
+				res[index] = contentBlock;
+				++index;
+			}
 		}
 		return res;
 	}
 
 	std::pair<Lines, Lines> EqualizeWithEmptyStrings(const Lines&, const Lines&);
 
-	std::pair<std::vector<Lines>, std::vector<Lines>> ExtractConflicts(const Lines& lines)
+	std::pair<Conflicts, Conflicts> ExtractConflicts(const Lines& lines)
 	{
 		std::vector<Lines> resLeft{};
 		std::vector<Lines> resRight{};
@@ -135,7 +147,7 @@ namespace ConflictSolver
 		return std::make_pair(leftHead, rightHead);;
 	}
 
-	Table Merge(const std::vector<Lines>& content, const std::pair<std::vector<Lines>, std::vector<Lines>>& conflicts, const std::pair<std::string, std::string>& heads)
+	Table Merge(const Contents& content, const std::pair<Conflicts, Conflicts>& conflicts, const std::pair<std::string, std::string>& heads)
 	{
 		Table res{};
 
@@ -182,9 +194,9 @@ namespace ConflictSolver
 		Lines res{};
 		for (size_t i{}; i < solveLog.size(); ++i)
 		{
-			if(conflicts.left.contents.size() > i)
-				for (auto line : conflicts.left.contents[i])
-				res.push_back(line);
+			if(conflicts.left.contents.size() > i && conflicts.left.contents.find(i) != conflicts.left.contents.end())
+				for (auto line : conflicts.left.contents.at(i))
+					res.push_back(line);
 			if(solveLog[i] == SOLVE::LEFT)
 			{
 				for (auto line : conflicts.left.conflicts[i])
@@ -219,8 +231,9 @@ namespace ConflictSolver
 				res.push_back(">>>>>>> " + conflicts.right.header);
 			}
 		}
-		if(solveLog.size() < conflicts.left.contents.size())
-			for (auto line : conflicts.left.contents[conflicts.left.contents.size()-1])
+		auto it = --conflicts.left.contents.end();
+		if(solveLog.size() <= it->first)
+			for (auto line : conflicts.left.contents.at(it->first))
 				res.push_back(line);
 		return res;
 	}

@@ -2,17 +2,47 @@
 #include <vector>
 #include <map>
 #include <string>
-#include <ostream>
+#include <filesystem>
+#include <functional>
+#include <iostream>
+
+#ifdef CONFLICTSOLVER_EXPORTS
+#define CONFLICTSOLVER_API __declspec(dllexport)
+#else
+#define CONFLICTSOLVER_API __declspec(dllimport)
+#endif
 
 namespace ConflictSolver
 {
 	using Lines = std::vector<std::string>;
+	using ConsoleLines = std::vector<std::pair<bool, std::string>>;
+	using Contents = std::map<size_t, Lines>;
+	using Conflicts = std::vector<Lines>;
+	using Path = std::filesystem::path;
+
+	const Path INTERNALPATHREAD{"conflict.txt"};
+	const Path INTERNALPATHWRITE{"resolved.txt"};
+
+	enum class SOLVE
+	{
+		RIGHT,
+		LEFT,
+		BOTH,
+		UNSOLVED
+	};
+
+	struct UserInput 
+	{
+		int index{};
+		SOLVE solve{};
+		bool quit = false;
+	};
 
 	struct Column
 	{
 		std::string header{};
-		std::vector<Lines> contents{};
-		std::vector<Lines> conflicts{};
+		Contents contents{};
+		Conflicts conflicts{};
 
 		bool operator==(const Column& other) const
 		{
@@ -31,41 +61,4 @@ namespace ConflictSolver
 		Column left{};
 		Column right{};
 	};
-
-	std::ostream& operator<<(std::ostream& os, const Lines& lines)
-	{
-		for (auto line : lines)
-			os << line << " ";
-		return os;
-	}
-
-	std::ostream& operator<<(std::ostream& os, const Column& col)
-	{
-		os << "{ ";
-		os << col.header << " ";
-		os << "{ ";
-		for (auto line : col.contents)
-			os << line << "; ";
-		os << " }";
-		os << "{ ";
-		for (auto line : col.conflicts)
-			os << line << "; ";
-		os << " }";
-		os << " }";
-		return os;
-	}
-
-	std::ostream& operator<<(std::ostream& os, const Table& tabl)
-	{
-			os << tabl.left << tabl.right;
-		return os;
-	}
-
-	bool operator==(const Table& left, const Table& right)
-	{
-		if (left.left == right.left && left.right == right.right)
-			return true;
-		else
-			return false;
-	}
 }
