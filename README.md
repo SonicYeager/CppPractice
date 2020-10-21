@@ -3,7 +3,6 @@ Just for practice and everywhere acces.
 Maybe this will be refurbished and a good comiled summary for C++ Practices.<br/>
 Complete Collection of all Practices on my C++ Education Adventure.
 ### Badges
-[![time tracker](https://wakatime.com/badge/github/SonicYeager/TraineeProjectsCpp.svg?style=flat-square)](https://wakatime.com/badge/github/SonicYeager/TraineeProjectsCpp?style=flat-square)
 ![GitHub issues](https://img.shields.io/github/issues/SonicYeager/TraineeProjectsCpp?style=flat-square) 
 ![GitHub milestones](https://img.shields.io/github/milestones/open/SonicYeager/TraineeProjectsCpp?color=yellow&style=flat-square)
 ![GitHub milestone](https://img.shields.io/github/milestones/progress-percent/SonicYeager/TraineeProjectsCpp/1?style=flat-square)
