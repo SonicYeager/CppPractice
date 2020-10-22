@@ -46,10 +46,11 @@ namespace ConflictSolver
 	public:
 		void SetConflict(const Lines& conflict) override;
 		Table GetConflict() const override;
+		Table GetModifiedConflict() const override;
 		Lines Solve(const SOLVE, int) override;
 
 	private:
-		Table conflictContent{};
+		Table originalConflictContent{};
 		std::vector<SOLVE> solveLog{};
 	};
 }

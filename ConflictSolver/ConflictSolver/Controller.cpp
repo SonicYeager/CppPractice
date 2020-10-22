@@ -16,7 +16,7 @@ namespace ConflictSolver
 		while (!input.quit)
 		{
 			lastSolve = logic->Solve(input.solve, input.index);
-			parsed = logic->GetConflict();
+			parsed = logic->GetModifiedConflict();
 			ui->Display(parsed);
 			input = ui->GetUserInput();
 		}

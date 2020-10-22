@@ -16,8 +16,8 @@ namespace ConflictSolver
 		auto content = ExtractContent(conflict);
 		auto conflicts = ExtractConflicts(conflict);
 		auto heads = ExtractHeads(conflict);
-		conflictContent = Merge(content, conflicts, heads);
-		solveLog = GetSolveLog(conflictContent);
+		originalConflictContent = Merge(content, conflicts, heads);
+		solveLog = GetSolveLog(originalConflictContent);
 	}
 
 	std::vector<SOLVE> GetSolveLog(const Table& conflicts)
@@ -167,7 +167,7 @@ namespace ConflictSolver
 
 	Table ConflictSolver::GetConflict() const
 	{
-		return conflictContent;
+		return originalConflictContent;
 	}
 
 #pragma region Solve
@@ -178,7 +178,7 @@ namespace ConflictSolver
 	Lines ConflictSolver::Solve(const SOLVE solveTo, int index)
 	{
 		solveLog = LogSolve(solveLog, solveTo, index);
-		auto res = SolveByLog(solveLog, conflictContent);
+		auto res = SolveByLog(solveLog, originalConflictContent);
 		return res;
 	}
 
@@ -238,5 +238,114 @@ namespace ConflictSolver
 		return res;
 	}
 
+
+
 #pragma endregion
+
+	Table ConflictSolver::GetModifiedConflict()  const
+	{
+		Table res{};
+		res.left.contents = originalConflictContent.left.contents;
+		res.right.contents = originalConflictContent.right.contents;
+		res.left.header = originalConflictContent.left.header;
+		res.right.header = originalConflictContent.right.header;
+		for (size_t i{}; i < solveLog.size(); ++i)
+		{
+			if (solveLog[i] == SOLVE::LEFT)
+			{
+				for (auto line : originalConflictContent.left.conflicts[i])
+				{
+					if (line != "")
+					{
+						if(res.right.conflicts.size() > i)
+							res.right.conflicts[i].push_back(line);
+						else
+						{
+							res.right.conflicts.emplace_back();
+							res.right.conflicts[i].push_back(line);
+						}
+						if (res.left.conflicts.size() > i)
+							res.left.conflicts[i].push_back(line);
+						else
+						{
+							res.left.conflicts.emplace_back();
+							res.left.conflicts[i].push_back(line);
+						}
+					}
+				}
+			}
+			if (solveLog[i] == SOLVE::RIGHT)
+			{
+				for (auto line : originalConflictContent.right.conflicts[i])
+				{
+					if (line != "")
+					{
+						if (res.right.conflicts.size() > i)
+							res.right.conflicts[i].push_back(line);
+						else
+						{
+							res.right.conflicts.emplace_back();
+							res.right.conflicts[i].push_back(line);
+						}
+						if (res.left.conflicts.size() > i)
+							res.left.conflicts[i].push_back(line);
+						else
+						{
+							res.left.conflicts.emplace_back();
+							res.left.conflicts[i].push_back(line);
+						}
+					}
+				}
+			}
+			if (solveLog[i] == SOLVE::BOTH)
+			{
+				for (auto line : originalConflictContent.left.conflicts[i])
+				{
+					if (line != "")
+					{
+						if (res.right.conflicts.size() > i)
+							res.right.conflicts[i].push_back(line);
+						else
+						{
+							res.right.conflicts.emplace_back();
+							res.right.conflicts[i].push_back(line);
+						}
+						if (res.left.conflicts.size() > i)
+							res.left.conflicts[i].push_back(line);
+						else
+						{
+							res.left.conflicts.emplace_back();
+							res.left.conflicts[i].push_back(line);
+						}
+					}
+				}
+				for (auto line : originalConflictContent.right.conflicts[i])
+				{
+					if (line != "")
+					{
+						if (res.right.conflicts.size() > i)
+							res.right.conflicts[i].push_back(line);
+						else
+						{
+							res.right.conflicts.emplace_back();
+							res.right.conflicts[i].push_back(line);
+						}
+						if (res.left.conflicts.size() > i)
+							res.left.conflicts[i].push_back(line);
+						else
+						{
+							res.left.conflicts.emplace_back();
+							res.left.conflicts[i].push_back(line);
+						}
+					}
+				}
+			}
+			if (solveLog[i] == SOLVE::UNSOLVED)
+			{
+				res.left.conflicts.push_back(originalConflictContent.left.conflicts[i]);
+				res.right.conflicts.push_back(originalConflictContent.right.conflicts[i]);
+			}
+		}
+		return res;
+	}
 }

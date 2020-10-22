@@ -114,6 +114,7 @@ namespace ConflictSolver
 	ConsoleLines FormatLines(size_t leftMaxWidth, size_t rightMaxWidth, const Table& table)
 	{
 		ConsoleLines res{};
+		res.push_back(std::make_pair(false, FormatLine(leftMaxWidth, rightMaxWidth, "", "", "-", "+")));
 		res.push_back(std::make_pair(false, FormatLine(leftMaxWidth, rightMaxWidth, table.left.header, table.right.header, " ", "|")));
 		res.push_back(std::make_pair(false, FormatLine(leftMaxWidth, rightMaxWidth, "", "", "-", "+")));
 		for (size_t i{}; i < table.left.conflicts.size(); ++i)
@@ -149,7 +150,7 @@ namespace ConflictSolver
 		{
 			fillRight += spaceFill;
 		}
-		res += left + fillLeft + seperator + right + fillRight + seperator;
+		res += seperator + left + fillLeft + seperator + right + fillRight + seperator;
 		return res;
 	}
 
