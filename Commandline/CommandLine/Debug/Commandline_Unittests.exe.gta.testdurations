@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GtaTestDurations xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Executable>C:\Übungsprojekte\Commandline\CommandLine\Debug\Commandline_Unittests.exe</Executable>
+  <TestDurations>
+    <TestDuration Test="TestCommandEventTrigger.Trigger_NoArg_HelpEvent" Duration="1" />
+    <TestDuration Test="TestCommandEventTrigger.Trigger_HelpArg_HelpEvent" Duration="1" />
+    <TestDuration Test="TestCommandEventTrigger.Trigger_Number5_NumberEventWithNum" Duration="1" />
+    <TestDuration Test="TestCommandEventTrigger.Trigger_TextHello_TextEvent" Duration="1" />
+    <TestDuration Test="TestCommandEventTrigger.Trigger_TextListHello_TextListEvent" Duration="1" />
+    <TestDuration Test="TestCommandEventTrigger.Trigger_Money4Dot5_MoneyEvent" Duration="1" />
+    <TestDuration Test="TestCommandEventTrigger.Trigger_Nonsense_ErrorEvent" Duration="1" />
+  </TestDurations>
+</GtaTestDurations>

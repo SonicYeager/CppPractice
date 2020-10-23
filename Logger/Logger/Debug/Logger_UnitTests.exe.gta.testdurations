@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GtaTestDurations xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Executable>C:\Übungsprojekte\Logger\Logger\Debug\Logger_UnitTests.exe</Executable>
+  <TestDurations>
+    <TestDuration Test="TestLogger.Log_CallOnceWithInfoAndMsg_OneCallVoid" Duration="1" />
+    <TestDuration Test="TestLogger.Log_CallOnceWithInfoAndMsg_WriteCalledOnceWithFormattedMsg" Duration="1" />
+    <TestDuration Test="TestLogger.Log_CallOnceWithWarningAndMsg_WriteCalledOnceWithFormattedMsg" Duration="1" />
+    <TestDuration Test="TestLogger.Log_CallOnceWithFatalAndMsg_WriteCalledOnceWithFormattedMsg" Duration="1" />
+    <TestDuration Test="TestLogger.Log_CallAllThreePrioritysWithMsg_WriteCalledThreeTimesWithFormattedMsg" Duration="1" />
+    <TestDuration Test="TestLogger.Log_CallOnceWithoutMsg_WriteCalledOnceWithFormattedMsg" Duration="1" />
+    <TestDuration Test="TestLogger.Log_WithoutMsg_EmptyMsg" Duration="1" />
+    <TestDuration Test="TestLogger.Log_DifferentLogger_DifferentLoggerName" Duration="1" />
+    <TestDuration Test="TestLogger.Log_CallAllThreePrioritysWithMsg_MsgFormat" Duration="1" />
+  </TestDurations>
+</GtaTestDurations>
