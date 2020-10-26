@@ -9,5 +9,11 @@
     <TestDuration Test="TestCommandEventTrigger.Trigger_TextListHello_TextListEvent" Duration="1" />
     <TestDuration Test="TestCommandEventTrigger.Trigger_Money4Dot5_MoneyEvent" Duration="1" />
     <TestDuration Test="TestCommandEventTrigger.Trigger_Nonsense_ErrorEvent" Duration="1" />
+    <TestDuration Test="TestCommandEventTrigger.Trigger_Number5AndNumber6_TwoCalls" Duration="1" />
+    <TestDuration Test="TestCommandEventTrigger.Trigger_TextHelloAndBye_TwoCalls" Duration="1" />
+    <TestDuration Test="TestCommandEventTrigger.Trigger_TextListHelloTwice_TwoCalls" Duration="1" />
+    <TestDuration Test="TestCommandEventTrigger.Trigger_Money4Dot5And10Dot6_TwoCalls" Duration="1" />
+    <TestDuration Test="TestCommandEventTrigger.Trigger_AllCmdsOnce_MultipleCalls" Duration="1" />
+    <TestDuration Test="TestCommandEventTrigger.Trigger_Empty_HelpEvent" Duration="1" />
   </TestDurations>
 </GtaTestDurations>

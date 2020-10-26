@@ -19,6 +19,9 @@ namespace COMMANDLINE
 		std::vector<std::string> temp{args};
 		std::vector<std::string>::iterator iter = temp.begin();
 
+		if (args.empty() == true)
+			return { {{"--h"}, {}} };
+
 		while (!IsEnd(iter, temp))
 		{
 			if (Contains("--", iter, temp))
@@ -33,11 +36,8 @@ namespace COMMANDLINE
 					if (!IsEnd(iter, temp))
 						++iter;
 				}
-				if (args.size() > 0)
-					res.push_back(std::make_pair(cmd, args));
+				res.push_back(std::make_pair(cmd, args));
 			}
-			if (!IsEnd(iter, temp))
-				++iter;
 		}
 		return res;
 	}
