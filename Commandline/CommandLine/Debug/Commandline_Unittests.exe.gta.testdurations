@@ -15,5 +15,8 @@
     <TestDuration Test="TestCommandEventTrigger.Trigger_Money4Dot5And10Dot6_TwoCalls" Duration="1" />
     <TestDuration Test="TestCommandEventTrigger.Trigger_AllCmdsOnce_MultipleCalls" Duration="1" />
     <TestDuration Test="TestCommandEventTrigger.Trigger_Empty_HelpEvent" Duration="1" />
+    <TestDuration Test="TestCommandEventTrigger.Trigger_NoCommandArgs_CallOnHelp" Duration="1" />
+    <TestDuration Test="TestCommandEventTrigger.Trigger_Number5_CallOnNumber" Duration="1" />
+    <TestDuration Test="TestCommandEventTrigger.Trigger_TextHello_CallOnText" Duration="1" />
   </TestDurations>
 </GtaTestDurations>
