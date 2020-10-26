@@ -1,0 +1,2 @@
+C:\Übungsprojekte\n-backTest\NBack\Debug\NBack.dll
+C:\Übungsprojekte\n-backTest\NBack\Debug\NBack.pdb
