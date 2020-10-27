@@ -6,6 +6,7 @@ namespace NBACK
 	class NBACK_API Logic
 	{
 	public:
+		virtual void SetData(const TestConfig&) = 0;
 		virtual void RecordStimuli(const bool&) = 0;
 		virtual Lines GetAllTestData() = 0;
 		virtual EvalData EvaluateTest() = 0;

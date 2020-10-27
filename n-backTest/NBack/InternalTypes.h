@@ -4,6 +4,7 @@
 #include <vector>
 #include <filesystem>
 #include <functional>
+#include <future>
 
 #ifdef NBACK_EXPORTS
 #define NBACK_API __declspec(dllexport)
@@ -22,14 +23,14 @@ namespace NBACK
 	
 	const Path INTERNALPATH{"testresults.txt"};
 
-	enum class REACTION
+	enum class NBACK_API REACTION
 	{
-		SPACEBAR = 0,
-		ESC,
-		NOKEY
+		NOKEY = 0,
+		SPACEBAR,
+		ESC
 	};
 
-	struct NBACK_API TestData
+	struct NBACK_API TestConfig
 	{
 		int n{};
 		int countStimuli{};
@@ -40,7 +41,7 @@ namespace NBACK
 
 	struct NBACK_API EvalData
 	{
-		TestData tdata{};
+		TestConfig tdata{};
 		std::chrono::system_clock::time_point startTime{};
 		std::vector<bool> answers{};
 		double percentCorrect{-1};

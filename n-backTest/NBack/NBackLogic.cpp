@@ -2,10 +2,10 @@
 
 namespace NBACK
 {
-	NBackLogic::NBackLogic(const TestData& tdata)
-		: tdata(tdata)
+	void NBackLogic::SetData(const TestConfig& tdata)
 	{
-		edata.tdata = tdata;
+		this->tdata = tdata;
+		this->edata.tdata = tdata;
 	}
 
 	void NBackLogic::RecordStimuli(const bool& response)
@@ -24,6 +24,7 @@ namespace NBACK
 		char c[26]{};
 		ctime_s(c, 26, &t);
 		res.push_back("Start: " + std::string(c));
+		res.back().pop_back();
 		std::string stims{};
 		for (auto stim : tdata.stimuli)
 			stims += stim;
@@ -43,7 +44,7 @@ namespace NBACK
 	{
 		int correctCount{};
 		for (int i{}; i < tdata.n; ++i)
-			if (edata.answers[i] == false)
+			if (edata.answers.size() > i && edata.answers[i] == false)
 				++correctCount;
 		for (int i{tdata.n}; i < edata.answers.size(); ++i)
 		{
@@ -51,7 +52,7 @@ namespace NBACK
 			if (res == edata.answers[i])
 				++correctCount;
 		}
-		edata.percentCorrect = ((correctCount*100) / (tdata.countStimuli));
+		edata.percentCorrect = ((correctCount*100) / (edata.answers.size()));
 		return edata;
 	}
 

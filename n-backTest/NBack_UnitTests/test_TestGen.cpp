@@ -4,15 +4,16 @@
 TEST(TestTestGen, RandChars_TenRandCharsWithThreeBack_AtLeastThreeNBack)
 {
 	//setup
+	const int N{3};
 	NBACK::TestGen gen;
 	//exe
-	auto generated = gen.GenNBackChars(10, 3);
+	auto generated = gen.GenNBackChars(10, N);
 	//eval
 	int actual{};
 	int atLeast{ 3 };
-	for (int i{ 3 }; i < 10; ++i)
+	for (int i{ N }; i < 10; ++i)
 	{
-		auto res = generated[i - 3] == generated[i];
+		auto res = generated[i - N] == generated[i];
 		if (res == true)
 			++actual;
 	}

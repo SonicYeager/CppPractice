@@ -4,8 +4,9 @@
 TEST(TestNBackLogic, EvaluateTest_AllRecordsCorrect_OneHundretPercent)
 {
 	//setup
-	NBACK::TestData tdata{3, 15, "Dummy", {'T', 'L' ,'H' ,'C' ,'H' ,'S' ,'C' ,'C' ,'Q' ,'L' ,'C' ,'K' ,'L' ,'H' ,'C'}, std::chrono::milliseconds(50)};
-	NBACK::NBackLogic nblog{tdata};
+	NBACK::TestConfig tdata{3, 15, "Dummy", {'T', 'L' ,'H' ,'C' ,'H' ,'S' ,'C' ,'C' ,'Q' ,'L' ,'C' ,'K' ,'L' ,'H' ,'C'}, std::chrono::milliseconds(50)};
+	NBACK::NBackLogic nblog{};
+	nblog.SetData(tdata);
 	nblog.RecordStimuli(false);
 	nblog.RecordStimuli(false);
 	nblog.RecordStimuli(false);
@@ -33,8 +34,9 @@ TEST(TestNBackLogic, EvaluateTest_AllRecordsCorrect_OneHundretPercent)
 TEST(TestNBackLogic, EvaluateTest_TwelveOfFifteenCorrect_EightyPercent)
 {
 	//setup
-	NBACK::TestData tdata{ 3, 15, "Dummy", {'T', 'L' ,'H' ,'C' ,'H' ,'S' ,'C' ,'C' ,'Q' ,'L' ,'C' ,'K' ,'L' ,'H' ,'C'}, std::chrono::milliseconds(50) };
-	NBACK::NBackLogic nblog{ tdata };
+	NBACK::TestConfig tdata{ 3, 15, "Dummy", {'T', 'L' ,'H' ,'C' ,'H' ,'S' ,'C' ,'C' ,'Q' ,'L' ,'C' ,'K' ,'L' ,'H' ,'C'}, std::chrono::milliseconds(50) };
+	NBACK::NBackLogic nblog{};
+	nblog.SetData(tdata);
 	nblog.RecordStimuli(false);
 	nblog.RecordStimuli(false);
 	nblog.RecordStimuli(false);
@@ -62,8 +64,9 @@ TEST(TestNBackLogic, EvaluateTest_TwelveOfFifteenCorrect_EightyPercent)
 TEST(TestNBackLogic, EvaluateTest_AllRecordsFalse_ZeroPercent)
 {
 	//setup
-	NBACK::TestData tdata{ 3, 15, "Dummy", {'T', 'L' ,'H' ,'C' ,'H' ,'S' ,'C' ,'C' ,'Q' ,'L' ,'C' ,'K' ,'L' ,'H' ,'C'}, std::chrono::milliseconds(50) };
-	NBACK::NBackLogic nblog{ tdata };
+	NBACK::TestConfig tdata{ 3, 15, "Dummy", {'T', 'L' ,'H' ,'C' ,'H' ,'S' ,'C' ,'C' ,'Q' ,'L' ,'C' ,'K' ,'L' ,'H' ,'C'}, std::chrono::milliseconds(50) };
+	NBACK::NBackLogic nblog{};
+	nblog.SetData(tdata);
 	nblog.RecordStimuli(true);
 	nblog.RecordStimuli(true);
 	nblog.RecordStimuli(true);
@@ -92,8 +95,9 @@ TEST(TestNBackLogic, EvaluateTest_AllRecordsFalse_ZeroPercent)
 TEST(TestNBackLogic, GetAllTestData_Full3BackTest_ReturnLines)
 {
 	//setup
-	NBACK::TestData tdata{ 3, 15, "Dummy", {'T', 'L' ,'H' ,'C' ,'H' ,'S' ,'C' ,'C' ,'Q' ,'L' ,'C' ,'K' ,'L' ,'H' ,'C'}, std::chrono::milliseconds(50) };
-	NBACK::NBackLogic nblog{ tdata };
+	NBACK::TestConfig tdata{ 3, 15, "Dummy", {'T', 'L' ,'H' ,'C' ,'H' ,'S' ,'C' ,'C' ,'Q' ,'L' ,'C' ,'K' ,'L' ,'H' ,'C'}, std::chrono::milliseconds(50) };
+	NBACK::NBackLogic nblog{};
+	nblog.SetData(tdata);
 	std::chrono::system_clock::time_point startTime{};
 	std::string strTime{"Thu Jan  1 01:00 : 00 1970\n"};
 	nblog.SetStartTime(startTime);

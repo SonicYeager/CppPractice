@@ -10,21 +10,26 @@ namespace NBACK
 	{
 		auto tdata = ui.GetUserInput();
 		tdata.stimuli = rgen.GenNBackChars(tdata.countStimuli, tdata.n);
-		auto start = ui.DisplayYesNoQuestion("Start the Test?");
-		if (start == true)
+		logic.SetData(tdata);
+		ui.Countdown(5);
+		logic.SetStartTime(std::chrono::system_clock::now());
+
+		auto onReactionSPACEBAR = []() {};
+		auto onReactionESC = []() {};
+		auto onReactionNOKEY = []() {};
+
+		for ( auto c : tdata.stimuli)
 		{
-			int index{};
+			ui.DisplayStimuli(c);
 			REACTION reaction;
-			logic.SetStartTime(std::chrono::system_clock::now());
-			while (index < tdata.countStimuli && (reaction = ui.GetReaction(tdata.stimuliIntervall, tdata.stimuli[index])) != REACTION::ESC)
-			{
+			if ((reaction = ui.GetReaction(tdata.stimuliIntervall)) != REACTION::ESC)
 				logic.RecordStimuli(reaction == REACTION::SPACEBAR ? true : false);
-				++index;
-			}
-			auto fdata = logic.GetAllTestData();
-			ress.WriteToFile(INTERNALPATH, fdata);
-			auto edata = logic.EvaluateTest();
-			ui.DisplayResults(edata);
+			else
+				break;
 		}
+		auto fdata = logic.GetAllTestData();
+		ress.WriteToFile(INTERNALPATH, fdata);
+		auto edata = logic.EvaluateTest();
+		ui.DisplayResults(edata);
 	}
 }

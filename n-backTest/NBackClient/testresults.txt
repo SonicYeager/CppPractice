@@ -1,0 +1,6 @@
+Subject: Dummy
+Time of Stimuli: 500
+N: 3
+Start: Tue Oct 27 11:44:48 2020
+Stimuli: QMKQMBRGJR
+Answers: N

@@ -5,9 +5,9 @@
 
 namespace NBACK
 {
-	TestData Console::GetUserInput()
+	TestConfig Console::GetUserInput() const
 	{
-		TestData res{};
+		TestConfig res{};
 
 		std::string name{};
 		std::cout << "Please enter your name: ";
@@ -33,35 +33,38 @@ namespace NBACK
 		return res;
 	}
 
-	REACTION Console::GetReaction(const std::chrono::milliseconds& ms, const char& c) //maybe be externally controlled (based on time)
+	void Console::DisplayStimuli(char c) const
+	{
+		::system("cls");
+		std::cout << c;
+	}
+
+	REACTION Console::GetReaction(const std::chrono::milliseconds& ms) const
 	{
 		REACTION reaction = REACTION::NOKEY;
-		std::cout << c;
-		auto current = std::chrono::system_clock::now();
-		do {
-			if (GetAsyncKeyState(VK_SPACE)) //maybe there is a better solution??
-			{
+		std::this_thread::sleep_for(ms);
+		if (_kbhit() == true)
+		{
+			char c = _getch();
+			if (c == VK_SPACE)
 				reaction = REACTION::SPACEBAR;
-				break;
-			}
-			if (GetAsyncKeyState(VK_ESCAPE))
-			{
+			if (c == VK_ESCAPE)
 				reaction = REACTION::ESC;
-				break;
-			}
-		} while (current.time_since_epoch().count() < ms.count());
+		}
+		::system("cls");
 		return reaction;
 	}
 
-	bool Console::DisplayYesNoQuestion(const std::string& question)
+	void Console::Countdown(int c) const
 	{
-		std::cout << question << " [y/n]";
-		std::string res{};
-		std::cin >> res;
-		return res == "y";
+		for (size_t i{c}; i > 0; --i)
+		{
+			::system("cls");
+			std::cout << i;
+		}
 	}
 
-	void Console::DisplayResults(const EvalData& edata)
+	void Console::DisplayResults(const EvalData& edata) const
 	{
 		std::cout << "Percentage of Correct Reactions: " << edata.percentCorrect;
 		//table format etc would be nice
