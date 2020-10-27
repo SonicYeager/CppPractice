@@ -33,22 +33,37 @@ namespace NBACK
 		return res;
 	}
 
-	bool Console::GetReaction(const std::chrono::milliseconds& ms, const char& c)
+	REACTION Console::GetReaction(const std::chrono::milliseconds& ms, const char& c) //maybe be externally controlled (based on time)
 	{
-		bool reaction = false;
+		REACTION reaction = REACTION::NOKEY;
 		std::cout << c;
 		auto current = std::chrono::system_clock::now();
 		do {
-			if (GetAsyncKeyState(VK_SPACE) & 0x80000000)
+			if (GetAsyncKeyState(VK_SPACE)) //maybe there is a better solution??
 			{
-				reaction = true;
+				reaction = REACTION::SPACEBAR;
+				break;
+			}
+			if (GetAsyncKeyState(VK_ESCAPE))
+			{
+				reaction = REACTION::ESC;
 				break;
 			}
 		} while (current.time_since_epoch().count() < ms.count());
 		return reaction;
 	}
 
+	bool Console::DisplayYesNoQuestion(const std::string& question)
+	{
+		std::cout << question << " [y/n]";
+		std::string res{};
+		std::cin >> res;
+		return res == "y";
+	}
+
 	void Console::DisplayResults(const EvalData& edata)
 	{
+		std::cout << "Percentage of Correct Reactions: " << edata.percentCorrect;
+		//table format etc would be nice
 	}
 }

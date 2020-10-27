@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Console.h" />
+    <ClInclude Include="Controller.h" />
     <ClInclude Include="FileHandler.h" />
     <ClInclude Include="InternalTypes.h" />
     <ClInclude Include="Logic.h" />
@@ -31,6 +32,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Console.cpp" />
+    <ClCompile Include="Controller.cpp" />
     <ClCompile Include="FileHandler.cpp" />
     <ClCompile Include="NBackLogic.cpp" />
     <ClCompile Include="TestGen.cpp" />

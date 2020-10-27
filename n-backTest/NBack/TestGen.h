@@ -6,6 +6,6 @@ namespace NBACK
 	class NBACK_API TestGen : public RandGen
 	{
 	public:
-		std::vector<char> RandChars(int count) override;
+		std::vector<char> RandChars(const int&, const int&) override;
 	};
 }

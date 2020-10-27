@@ -7,7 +7,8 @@ namespace NBACK
 	{
 	public:
 		TestData GetUserInput() override;
-		bool GetReaction(const std::chrono::milliseconds&, const char&) override;
+		REACTION GetReaction(const std::chrono::milliseconds&, const char&) override;
+		bool DisplayYesNoQuestion(const std::string&) override;
 		void DisplayResults(const EvalData&) override;
 	};
 }

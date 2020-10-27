@@ -19,6 +19,15 @@ namespace NBACK
 {
 	using Path = std::filesystem::path;
 	using Lines = std::vector<std::string>;
+	
+	const Path INTERNALPATH{"testresults.txt"};
+
+	enum class REACTION
+	{
+		SPACEBAR = 0,
+		ESC,
+		NOKEY
+	};
 
 	struct NBACK_API TestData
 	{
