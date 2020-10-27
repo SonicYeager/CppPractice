@@ -35,7 +35,7 @@ namespace NBACK
 		tdata.stimuli = rgen.GenNBackChars(tdata.countStimuli, tdata.n);
 		logic.SetStartTime(std::chrono::system_clock::now());
 		logic.SetData(tdata);
-		//ui.Countdown(5);
+		ui.Countdown(5);
 		int presented{};
 		for ( auto c : tdata.stimuli)
 		{

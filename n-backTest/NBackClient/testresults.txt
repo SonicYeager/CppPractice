@@ -1,6 +1,6 @@
-Subject: Dummy
-Time of Stimuli: 100
+Subject: d
+Time of Stimuli: 1000
 N: 3
-Start: Tue Oct 27 14:34:15 2020
-Stimuli: FEQFQQJQEV
-Answers: 
+Start: Tue Oct 27 17:10:45 2020
+Stimuli: KFSKFSKOVY
+Answers: NNNNNNNNNN

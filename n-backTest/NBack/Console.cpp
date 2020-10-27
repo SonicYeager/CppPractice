@@ -3,6 +3,7 @@
 #include <Windows.h>
 #include <conio.h>
 #include <experimental/coroutine>
+#include <sstream>
 
 namespace NBACK
 {
@@ -40,7 +41,9 @@ namespace NBACK
 		{
 			std::this_thread::sleep_for(100ms);
 			::system("cls");
-			std::cout << c << "\n\n" << count << "\t" << i.count();
+			std::ostringstream ostr;
+			ostr << c << "\n\n" << count << "\t" << i.count();
+			std::cout << ostr.str();
 		}
 	}
 
@@ -51,7 +54,7 @@ namespace NBACK
 
 	void Console::GetReaction(const std::chrono::milliseconds& ms, Event onSpacebar, Event onNokey, Event onEscape) const
 	{
-		std::this_thread::sleep_for(ms);
+		std::this_thread::sleep_for(ms + 300ms);
 		if (_kbhit() == true)
 		{
 			char c = _getch();
