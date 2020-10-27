@@ -14,18 +14,21 @@ namespace NBACK
 		ui.Countdown(5);
 		logic.SetStartTime(std::chrono::system_clock::now());
 
-		auto onReactionSPACEBAR = []() {};
-		auto onReactionESC = []() {};
-		auto onReactionNOKEY = []() {};
+		auto onReactionSPACEBAR = [&]{logic.RecordStimuli(true); };
+		auto onReactionNOKEY = [&]() {logic.RecordStimuli(false); };
+		auto onReactionESC = [&]() 
+		{
+			auto fdata = logic.GetAllTestData();
+			ress.WriteToFile(INTERNALPATH, fdata);
+			auto edata = logic.EvaluateTest();
+			ui.DisplayResults(edata);
+			std::exit(0);
+		};
 
 		for ( auto c : tdata.stimuli)
 		{
 			ui.DisplayStimuli(c);
-			REACTION reaction;
-			if ((reaction = ui.GetReaction(tdata.stimuliIntervall)) != REACTION::ESC)
-				logic.RecordStimuli(reaction == REACTION::SPACEBAR ? true : false);
-			else
-				break;
+			ui.GetReaction(tdata.stimuliIntervall, onReactionSPACEBAR, onReactionNOKEY, onReactionESC);
 		}
 		auto fdata = logic.GetAllTestData();
 		ress.WriteToFile(INTERNALPATH, fdata);

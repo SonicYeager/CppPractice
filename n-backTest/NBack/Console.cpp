@@ -39,25 +39,24 @@ namespace NBACK
 		std::cout << c;
 	}
 
-	REACTION Console::GetReaction(const std::chrono::milliseconds& ms) const
+	void Console::GetReaction(const std::chrono::milliseconds& ms, Event onSpacebar, Event onNokey, Event onEscape) const
 	{
-		REACTION reaction = REACTION::NOKEY;
 		std::this_thread::sleep_for(ms);
 		if (_kbhit() == true)
 		{
 			char c = _getch();
 			if (c == VK_SPACE)
-				reaction = REACTION::SPACEBAR;
+				onSpacebar();
 			if (c == VK_ESCAPE)
-				reaction = REACTION::ESC;
+				onEscape();
 		}
 		::system("cls");
-		return reaction;
+		onNokey();
 	}
 
 	void Console::Countdown(int c) const
 	{
-		for (size_t i{c}; i > 0; --i)
+		for (int i{c}; i > 0; --i)
 		{
 			::system("cls");
 			std::cout << i;

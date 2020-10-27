@@ -12,7 +12,6 @@ namespace NBACK
 		EvalData EvaluateTest() override;
 		void SetStartTime(const std::chrono::system_clock::time_point&) override;
 	private:
-		TestConfig tdata{};
 		EvalData edata{};
 	};
 }

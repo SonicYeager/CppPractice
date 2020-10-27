@@ -20,6 +20,7 @@ namespace NBACK
 {
 	using Path = std::filesystem::path;
 	using Lines = std::vector<std::string>;
+	using Event = std::function<void()>;
 	
 	const Path INTERNALPATH{"testresults.txt"};
 
