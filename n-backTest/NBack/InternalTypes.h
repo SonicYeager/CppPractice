@@ -21,6 +21,8 @@ namespace NBACK
 	using Path = std::filesystem::path;
 	using Lines = std::vector<std::string>;
 	using Event = std::function<void()>;
+
+	using namespace std::chrono_literals;
 	
 	const Path INTERNALPATH{"testresults.txt"};
 

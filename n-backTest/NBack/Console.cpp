@@ -2,6 +2,7 @@
 #include <iostream>
 #include <Windows.h>
 #include <conio.h>
+#include <experimental/coroutine>
 
 namespace NBACK
 {
@@ -33,10 +34,19 @@ namespace NBACK
 		return res;
 	}
 
-	void Console::DisplayStimuli(char c) const
+	void AsyncDisplayStimuli(char c, int count, const std::chrono::milliseconds& ms)
 	{
-		::system("cls");
-		std::cout << c;
+		for (std::chrono::milliseconds i{ms}; i > 0ms; i -= 100ms)
+		{
+			std::this_thread::sleep_for(100ms);
+			::system("cls");
+			std::cout << c << "\n\n" << count << "\t" << i.count();
+		}
+	}
+
+	std::future<void> Console::DisplayStimuli(char c, int count, const std::chrono::milliseconds& ms)
+	{
+		co_await std::async(std::launch::async, AsyncDisplayStimuli, c, count, ms);
 	}
 
 	void Console::GetReaction(const std::chrono::milliseconds& ms, Event onSpacebar, Event onNokey, Event onEscape) const
@@ -47,11 +57,12 @@ namespace NBACK
 			char c = _getch();
 			if (c == VK_SPACE)
 				onSpacebar();
-			if (c == VK_ESCAPE)
+			else if (c == VK_ESCAPE)
 				onEscape();
 		}
+		else
+			onNokey();
 		::system("cls");
-		onNokey();
 	}
 
 	void Console::Countdown(int c) const
@@ -60,6 +71,7 @@ namespace NBACK
 		{
 			::system("cls");
 			std::cout << i;
+			std::this_thread::sleep_for(1s);
 		}
 	}
 
