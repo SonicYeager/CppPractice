@@ -6,5 +6,6 @@
     <TestDuration Test="TestNBackLogic.EvaluateTest_AllRecordsFalse_ZeroPercent" Duration="1" />
     <TestDuration Test="TestNBackLogic.GetAllTestData_Full3BackTest_ReturnLines" Duration="1" />
     <TestDuration Test="TestNBackLogic.EvaluateTest_TwelveOfFifteenCorrect_EightyPercent" Duration="1" />
+    <TestDuration Test="TestTestGen.RandChars_TenRandCharsWithThreeBack_AtLeastThreeNBack" Duration="2" />
   </TestDurations>
 </GtaTestDurations>

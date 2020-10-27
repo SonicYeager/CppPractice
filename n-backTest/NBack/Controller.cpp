@@ -9,7 +9,7 @@ namespace NBACK
 	void Controller::Run()
 	{
 		auto tdata = ui.GetUserInput();
-		tdata.stimuli = rgen.RandChars(tdata.countStimuli, tdata.n);
+		tdata.stimuli = rgen.GenNBackChars(tdata.countStimuli, tdata.n);
 		auto start = ui.DisplayYesNoQuestion("Start the Test?");
 		if (start == true)
 		{
