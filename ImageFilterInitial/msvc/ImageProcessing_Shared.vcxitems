@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{43131fd8-c6a3-4b9e-90e7-f09c35f7b9ed}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Configure.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\FilterImage.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\ImageUtils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\LoadSaveImage.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Matrix3x3.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Output.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\ParseCmdLine.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\ProcessImage.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Configure.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Event.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\FilterImage.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Image.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\ImageUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\LoadSaveImage.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Matrix3x3.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Output.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\ParseCmdLine.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\ProcessImage.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Vector3.h" />
+  </ItemGroup>
+</Project>
