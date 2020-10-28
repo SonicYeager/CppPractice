@@ -1,6 +1,6 @@
 Subject: d
 Time of Stimuli: 1000
 N: 3
-Start: Tue Oct 27 17:10:45 2020
-Stimuli: KFSKFSKOVY
+Start: Wed Oct 28 09:27:31 2020
+Stimuli: UKKUXKHNKH
 Answers: NNNNNNNNNN

@@ -5,6 +5,11 @@
 #include <filesystem>
 #include <functional>
 #include <future>
+#include <iostream>
+#include <Windows.h>
+#include <conio.h>
+#include <sstream>
+#include <experimental/coroutine>
 
 #ifdef NBACK_EXPORTS
 #define NBACK_API __declspec(dllexport)

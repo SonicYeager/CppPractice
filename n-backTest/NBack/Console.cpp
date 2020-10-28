@@ -1,9 +1,4 @@
 #include "Console.h"
-#include <iostream>
-#include <Windows.h>
-#include <conio.h>
-#include <experimental/coroutine>
-#include <sstream>
 
 namespace NBACK
 {
@@ -35,26 +30,16 @@ namespace NBACK
 		return res;
 	}
 
-	void AsyncDisplayStimuli(char c, int count, const std::chrono::milliseconds& ms)
+	void Console::DisplayStimuli(char stimuli, int count, const std::chrono::milliseconds& ms)
 	{
-		for (std::chrono::milliseconds i{ms}; i > 0ms; i -= 100ms)
-		{
-			std::this_thread::sleep_for(100ms);
-			::system("cls");
-			std::ostringstream ostr;
-			ostr << c << "\n\n" << count << "\t" << i.count();
-			std::cout << ostr.str();
-		}
+		::system("cls");
+		std::ostringstream ostr;
+		ostr << stimuli << "\n\n" << count << "\t" << ms.count() << " ms";
+		std::cout << ostr.str();
 	}
 
-	std::future<void> Console::DisplayStimuli(char c, int count, const std::chrono::milliseconds& ms)
+	void Console::GetReaction(Event onSpacebar, Event onNokey, Event onEscape) const
 	{
-		co_await std::async(std::launch::async, AsyncDisplayStimuli, c, count, ms);
-	}
-
-	void Console::GetReaction(const std::chrono::milliseconds& ms, Event onSpacebar, Event onNokey, Event onEscape) const
-	{
-		std::this_thread::sleep_for(ms + 300ms);
 		if (_kbhit() == true)
 		{
 			char c = _getch();

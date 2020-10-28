@@ -31,17 +31,16 @@ namespace NBACK
 		auto space = std::bind(onReactionSPACEBAR, std::ref(logic));
 		auto nokey = std::bind(onReactionNOKEY, std::ref(logic));
 		auto escape = std::bind(onReactionESC, std::ref(logic), std::ref(ress), std::ref(ui));
+		auto displayStimuli = std::bind(&UI::DisplayStimuli, std::ref(ui), std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 		auto tdata = ui.GetUserInput();
 		tdata.stimuli = rgen.GenNBackChars(tdata.countStimuli, tdata.n);
 		logic.SetStartTime(std::chrono::system_clock::now());
 		logic.SetData(tdata);
 		ui.Countdown(5);
-		int presented{};
 		for ( auto c : tdata.stimuli)
 		{
-			ui.DisplayStimuli(c, presented, tdata.stimuliIntervall);
-			ui.GetReaction(tdata.stimuliIntervall, space, nokey, escape);
-			++presented;
+			logic.UpdateDisplay(displayStimuli, c);
+			ui.GetReaction(space, nokey, escape);
 		}
 		auto fdata = logic.GetAllTestData();
 		ress.WriteToFile(INTERNALPATH, fdata);

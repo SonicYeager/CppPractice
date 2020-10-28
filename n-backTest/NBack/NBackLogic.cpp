@@ -7,6 +7,11 @@ namespace NBACK
 		this->edata.tdata = tdata;
 	}
 
+	void NBackLogic::SetUpdateInterval(const std::chrono::milliseconds& interv)
+	{
+		interval = interv;
+	}
+
 	void NBackLogic::RecordStimuli(const bool& response)
 	{
 		edata.answers.push_back(response);
@@ -53,6 +58,20 @@ namespace NBACK
 		}
 		edata.percentCorrect = ((correctCount*100) / (edata.answers.size()));
 		return edata;
+	}
+
+	void NBackLogic::UpdateDisplay(std::function<void(char, int, const std::chrono::milliseconds&)> dpstim, char stim)
+	{
+		auto now = std::chrono::high_resolution_clock::now();
+		for (auto i{ edata.tdata.stimuliIntervall }; i > 0ms; i -= interval)
+		{
+			while(std::chrono::high_resolution_clock::now() - now < interval)
+			{
+				std::this_thread::yield();
+			}
+			dpstim(stim, presented, i);
+		}
+		++presented;
 	}
 
 	void NBackLogic::SetStartTime(const std::chrono::system_clock::time_point& startTime)
