@@ -1,0 +1,17 @@
+<VSTemplate Version="2.0.0" Type="ProjectGroup"
+    xmlns="http://schemas.microsoft.com/developer/vstemplate/2005">
+    <TemplateData>
+        <Name>Multi-Project Template Sample</Name>
+        <Description>An example of a multi-project template</Description>
+        <ProjectType>Cpp</ProjectType>
+    </TemplateData>
+<TemplateContent>
+    <ProjectCollection>
+        <ProjectTemplateLink CopyParameters="true">
+            ProjectDLL\MyTemplate.vstemplate
+        </ProjectTemplateLink>
+        <ProjectTemplateLink CopyParameters="true">
+            Projectname_UnitTests\MyTemplate.vstemplate
+        </ProjectTemplateLink>
+    </ProjectCollection>
+</TemplateContent>
