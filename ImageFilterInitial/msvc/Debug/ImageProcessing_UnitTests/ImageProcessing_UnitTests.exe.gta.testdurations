@@ -19,7 +19,7 @@
     <TestDuration Test="TestImageUtils.Normalize_MaxAboveLimit_DecreaseAll" Duration="1" />
     <TestDuration Test="TestImageUtils.Normalize_MaxBelowLimit_IncreaseAll" Duration="1" />
     <TestDuration Test="TestImageUtils.Gradient_WithLine_" Duration="1" />
-    <TestDuration Test="TestLoadSave.Acceptance_LoadedIsSameAsSaved" Duration="1" />
+    <TestDuration Test="TestLoadSave.Acceptance_LoadedIsSameAsSaved" Duration="2" />
     <TestDuration Test="TestMatrix3x3.Constructor_Scalar_ReturnDiagonalMatrix" Duration="1" />
     <TestDuration Test="TestMatrix3x3.Access_NonConstantScalar_ChangesMatrix" Duration="1" />
     <TestDuration Test="TestMatrix3x3.Access_ConstantVector_ReturnLine" Duration="1" />
@@ -42,5 +42,7 @@
     <TestDuration Test="TestVector3.Assignment_Scalar_ReturnFilledWithScalar" Duration="1" />
     <TestDuration Test="TestVector3.Scale_ValueBetweenZeroAndOne_DecreasedElementsValue" Duration="1" />
     <TestDuration Test="TestVector3.Scale_GreaterOne_IncreaseElementsValue" Duration="1" />
+    <TestDuration Test="TestFilterImage.ApplyBothDirection_CrossLineSobelWithScale_ImproveEdge" Duration="1" />
+    <TestDuration Test="TestFilterImage.ApplyBothDirection_VerticalLinePrewittNoOptions_ImproveEdge" Duration="1" />
   </TestDurations>
 </GtaTestDurations>

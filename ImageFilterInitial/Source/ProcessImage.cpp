@@ -18,15 +18,14 @@ int ProcessImage::Run(const std::vector<std::string>& args)
 	Configure config;
 	Output console;
 
-	cmd.onChooseKernel = [&config](const std::string& filter) {};
+	cmd.onChooseKernel = [&config](const std::string& filter) { config.ChooseKernel(filter); };
 	cmd.onDestinationFile = [&config](const std::string& path) { config.SetDestinationFilePath(path); };
 	cmd.onSourceFile = [&config](const std::string& path) { config.SetSourceFilePath(path); };
 	cmd.onOrientation = [&config](const std::string& orientation) { config.SetOrientation(orientation); };
 	cmd.onHelp = [&console] { console.ShowHelp(); };
-	cmd.onUnsupportedCmd = [&console](const std::string& cmd, const std::string& arg) {
-		console.UnsupportedCmd(cmd, arg);
-	};
+	cmd.onUnsupportedCmd = [&console](const std::string& cmd, const std::string& arg) {	console.UnsupportedCmd(cmd, arg);};
 	cmd.onScaleFactor = [&config](float scale) { config.SetScaleFactor(scale); };
+	cmd.onNormalize = [&config] { config.UseNormalization(); };
 	config.onValid = Process;
 
 	cmd.Process(args);

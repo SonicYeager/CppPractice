@@ -40,11 +40,12 @@ template<typename T>
 std::ostream& operator<<(std::ostream& out, const Image<T>& img)
 {
 	out << img.Resolution() << '\n';
-	auto current = img.GetRaw();
-	for(int row = 0; row < img.Resolution().height; ++row)
+	auto start = img.GetRaw();
+	for(int row = 0; row < std::min(20, img.Resolution().height); ++row)
 	{
 		out << '[';
-		for(int col = 0; col < img.Resolution().width; ++col)
+		auto current = start + row * img.Resolution().width;
+		for(int col = 0; col < std::min(20, img.Resolution().width); ++col)
 			out << *current++ << ", ";
 		out << "]\n";
 	}

@@ -2,6 +2,17 @@
 <GtaTestDurations xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Executable>C:\Uebungsprojekte\ImageFilterInitial\msvc\Debug\ImageProcessing_IntegrationTests.exe</Executable>
   <TestDurations>
-    <TestDuration Test="TestProcessImages.Run_PrewittBothDirections_ExcactCongruent" Duration="58" />
+    <TestDuration Test="TestProcessImages.Run_PrewittBothDirections_ExcactCongruent" Duration="166" />
+    <TestDuration Test="TestProcessImages.Run_PrewittBothDirections_ExcactCongruentWithReference" Duration="162" />
+    <TestDuration Test="TestProcessImages.Run_PrewittHorizontal_ExcactCongruentWithReference" Duration="282" />
+    <TestDuration Test="TestProcessImages.Run_PrewittNormalizedBoth_ExcactCongruentWithReference" Duration="137" />
+    <TestDuration Test="TestProcessImages.Run_PrewittNormalizedVertical_ExcactCongruentWithReference" Duration="273" />
+    <TestDuration Test="TestProcessImages.Run_PrewittScaledTwoPointFiveNormalizedVertical_ExcactCongruentWithReference" Duration="280" />
+    <TestDuration Test="TestProcessImages.Run_PrewittScaledTwoPointFiveVertical_ExcactCongruentWithReference" Duration="293" />
+    <TestDuration Test="TestProcessImages.Run_PrewittVertical_ExcactCongruentWithReference" Duration="281" />
+    <TestDuration Test="TestProcessImages.Run_SobelBoth_ExcactCongruentWithReference" Duration="142" />
+    <TestDuration Test="TestProcessImages.Run_SobelBothNormalized_ExcactCongruentWithReference" Duration="146" />
+    <TestDuration Test="TestProcessImages.Run_SobelScaledTwoPointFiveVertical_ExcactCongruentWithReference" Duration="290" />
+    <TestDuration Test="TestProcessImages.Run_SobelVertical_ExcactCongruentWithReference" Duration="285" />
   </TestDurations>
 </GtaTestDurations>

@@ -1,0 +1,2 @@
+C:\Uebungsprojekte\ImageFilterInitial\msvc\Debug\ImageProcessing_IntegrationTests\ImageProcessing_IntegrationTests.exe
+C:\Uebungsprojekte\ImageFilterInitial\msvc\Debug\ImageProcessing_IntegrationTests\ImageProcessing_IntegrationTests.pdb

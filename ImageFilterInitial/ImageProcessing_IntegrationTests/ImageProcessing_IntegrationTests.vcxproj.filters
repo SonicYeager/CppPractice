@@ -13,10 +13,51 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="IMG">
+      <UniqueIdentifier>{6750c4fe-17c9-4f2e-a8df-91c219ec4834}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="test_ProcessImage.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="..\References\Haus(Prewitt,normiert,beide Richtungen).bmp">
+      <Filter>IMG</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\References\Haus(Prewitt,normiert,vertikal).bmp">
+      <Filter>IMG</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\References\Haus(Prewitt,skaliert2.5,normiert,vertikal).bmp">
+      <Filter>IMG</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\References\Haus(Prewitt,skaliert2.5,vertikal).bmp">
+      <Filter>IMG</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\References\Haus(Prewitt,vertikal).bmp">
+      <Filter>IMG</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\References\Haus(Sobel,beide Richtungen).bmp">
+      <Filter>IMG</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\References\Haus(Sobel,normiert,beide Richtungen).bmp">
+      <Filter>IMG</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\References\Haus(Sobel,skaliert2.5,vertikal).bmp">
+      <Filter>IMG</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\References\Haus(Sobel,vertikal).bmp">
+      <Filter>IMG</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Images\Haus.bmp">
+      <Filter>IMG</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\References\Haus(Prewitt,beide Richtungen).bmp">
+      <Filter>Ressourcendateien</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\References\Haus(Prewitt,horizontal).bmp">
+      <Filter>Ressourcendateien</Filter>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>

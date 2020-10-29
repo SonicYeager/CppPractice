@@ -14,7 +14,7 @@ public:
 				Pixel{17}, Pixel{91},  Pixel{11}, Pixel{12}, //
 				Pixel{15}, Pixel{88},  Pixel{5},  Pixel{5},  //
 				Pixel{5},  Pixel{107}, Pixel{8},  Pixel{18}, //
-				Pixel{18}, Pixel{92},  Pixel{15}, Pixel{30}, //
+				Pixel{18}, Pixel{92},  Pixel{15}, Pixel{30} //
 			},
 			{4, 5});
 		return img;
@@ -160,3 +160,59 @@ TEST_F(TestFilterImage, ApplyOneDirection_VerticalLineSobelWithScale_ImproveEdge
 		original.Resolution());
 	EXPECT_EQ(expected, actual);
 }
+
+TEST_F(TestFilterImage, ApplyBothDirection_CrossLineSobelWithScale_ImproveEdge)
+{
+	const RGBImage original = GenerateImageWithVerticalLine();
+	RGBImage actual(original.Resolution());
+
+	FilterImage filter;
+	filter.kernel = FilterKernel::SOBEL * 0.5;
+	filter.rectifyValues = Utils::ClipTo255;
+	filter.ApplyBothDirection(original, actual);
+
+
+	const RGBImage expected(
+		{
+			Pixel{0}, Pixel{0},  Pixel{0},   Pixel{0}, //
+			Pixel{0}, Pixel{9},  Pixel{163}, Pixel{0}, //
+			Pixel{0}, Pixel{12}, Pixel{166}, Pixel{0}, //
+			Pixel{0}, Pixel{10},  Pixel{162}, Pixel{0}, //
+			Pixel{0}, Pixel{0},  Pixel{0},   Pixel{0} //
+		},
+		original.Resolution());
+	EXPECT_EQ(expected, actual);
+}
+
+TEST_F(TestFilterImage, ApplyBothDirection_VerticalLinePrewittNoOptions_ImproveEdge)
+{
+	const RGBImage original = GenerateImageWithVerticalLine();
+	RGBImage actual(original.Resolution());
+
+	FilterImage filter;
+	filter.kernel = FilterKernel::PREWITT;
+	filter.rectifyValues = Utils::ClipTo255;
+	filter.ApplyBothDirection(original, actual);
+
+	const RGBImage expected(
+		{
+			Pixel{0}, Pixel{0},  Pixel{0},   Pixel{0}, //
+			Pixel{0}, Pixel{13}, Pixel{247}, Pixel{0}, //
+			Pixel{0}, Pixel{12}, Pixel{250}, Pixel{0}, //
+			Pixel{0}, Pixel{19}, Pixel{236}, Pixel{0}, //
+			Pixel{0}, Pixel{0},  Pixel{0},   Pixel{0}  //
+		},
+		original.Resolution());
+	EXPECT_EQ(expected, actual);
+}
+
+
+//	{
+//	const GrayscaleImage grayscale = Utils::ToGrayscale(original);
+//	GrayscaleImage resultVert = Utils::Convolute(grayscale, filter.kernel);
+//	auto kernelHori = Transpose(filter.kernel);
+//	GrayscaleImage resultHori = Utils::Convolute(grayscale, kernelHori);
+//	auto result = Utils::Gradient(resultVert, resultHori);
+//	auto resss = Utils::Gradient(resultVert, resultHori);
+//	;
+//}

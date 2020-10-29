@@ -1,0 +1,1 @@
+C:\Uebungsprojekte\ImageFilterInitial\msvc\Release\ImageProcessing_UnitTests\ImageProcessing_UnitTests.exe
