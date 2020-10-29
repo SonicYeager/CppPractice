@@ -1,2 +1,0 @@
-C:\Übungsprojekte\Commandline\CommandLine\Debug\CommandLine.dll
-C:\Übungsprojekte\Commandline\CommandLine\Debug\CommandLine.pdb

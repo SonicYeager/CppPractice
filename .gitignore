@@ -9,3 +9,5 @@
 *.recipe
 *.tlog
 *.lastbuildstate
+Debug
+Release

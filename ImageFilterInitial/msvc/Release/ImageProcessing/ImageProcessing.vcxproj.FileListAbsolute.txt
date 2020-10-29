@@ -1,1 +1,0 @@
-C:\Uebungsprojekte\ImageFilterInitial\msvc\Release\ImageProcessing\ImageProcessing.exe

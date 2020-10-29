@@ -1,2 +1,0 @@
-C:\Übungsprojekte\UnitTestsBasics\ParseAndSumDLL\Debug\ParseAndSumDLL.dll
-C:\Übungsprojekte\UnitTestsBasics\ParseAndSumDLL\Debug\ParseAndSumDLL.pdb

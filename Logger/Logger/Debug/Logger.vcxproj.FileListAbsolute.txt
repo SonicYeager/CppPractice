@@ -1,2 +1,0 @@
-C:\Übungsprojekte\Logger\Logger\Debug\Logger.dll
-C:\Übungsprojekte\Logger\Logger\Debug\Logger.pdb

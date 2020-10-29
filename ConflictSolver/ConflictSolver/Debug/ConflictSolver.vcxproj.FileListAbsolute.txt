@@ -1,2 +1,0 @@
-C:\Übungsprojekte\ConflictSolver\ConflictSolver\Debug\ConflictSolver.dll
-C:\Übungsprojekte\ConflictSolver\ConflictSolver\Debug\ConflictSolver.pdb

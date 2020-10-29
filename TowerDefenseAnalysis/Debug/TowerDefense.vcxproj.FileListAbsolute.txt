@@ -1,2 +1,0 @@
-C:\Übungsprojekte\TowerDefenseAnalysis\Debug\TowerDefense.exe
-C:\Übungsprojekte\TowerDefenseAnalysis\Debug\TowerDefense.pdb

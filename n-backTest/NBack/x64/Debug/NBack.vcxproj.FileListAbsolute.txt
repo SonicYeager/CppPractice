@@ -1,2 +1,0 @@
-H:\TraineeProjectsCpp\n-backTest\NBack\x64\Debug\NBack.dll
-H:\TraineeProjectsCpp\n-backTest\NBack\x64\Debug\NBack.pdb

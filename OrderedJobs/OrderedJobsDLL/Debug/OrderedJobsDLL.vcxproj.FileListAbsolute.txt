@@ -1,2 +1,0 @@
-C:\Übungsprojekte\OrderedJobs\OrderedJobsDLL\Debug\OrderedJobsDLL.dll
-C:\Übungsprojekte\OrderedJobs\OrderedJobsDLL\Debug\OrderedJobsDLL.pdb

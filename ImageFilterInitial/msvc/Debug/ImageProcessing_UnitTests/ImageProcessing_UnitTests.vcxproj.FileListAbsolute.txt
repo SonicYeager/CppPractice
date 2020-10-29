@@ -1,4 +1,0 @@
-C:\Übungsprojekte\ImageFilterInitial\msvc\Debug\ImageProcessing_UnitTests\ImageProcessing_UnitTests.exe
-C:\Übungsprojekte\ImageFilterInitial\msvc\Debug\ImageProcessing_UnitTests\ImageProcessing_UnitTests.pdb
-C:\Uebungsprojekte\ImageFilterInitial\msvc\Debug\ImageProcessing_UnitTests\ImageProcessing_UnitTests.exe
-C:\Uebungsprojekte\ImageFilterInitial\msvc\Debug\ImageProcessing_UnitTests\ImageProcessing_UnitTests.pdb

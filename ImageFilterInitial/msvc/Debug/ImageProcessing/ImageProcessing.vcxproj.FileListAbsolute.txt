@@ -1,4 +1,0 @@
-C:\Übungsprojekte\ImageFilterInitial\msvc\Debug\ImageProcessing\ImageProcessing.exe
-C:\Übungsprojekte\ImageFilterInitial\msvc\Debug\ImageProcessing\ImageProcessing.pdb
-C:\Uebungsprojekte\ImageFilterInitial\msvc\Debug\ImageProcessing\ImageProcessing.exe
-C:\Uebungsprojekte\ImageFilterInitial\msvc\Debug\ImageProcessing\ImageProcessing.pdb
