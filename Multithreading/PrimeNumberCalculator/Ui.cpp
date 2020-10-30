@@ -2,6 +2,7 @@
 #include <iostream>
 #include <sstream>
 #include <conio.h>
+#include <chrono>
 #include "windows.h"
 
 void Ui::Run()
@@ -9,6 +10,16 @@ void Ui::Run()
 	Display();
 	while(auto range = GetInput())
 		onRange(range);
+}
+
+void Ui::RunStandalone(const Range& range)
+{
+	//Display();
+	for(int i{range.begin}; i < range.end; ++i)
+	{
+		onRange(Range(0, 1000));
+		std::this_thread::sleep_for(std::chrono::milliseconds(50));
+	}
 }
 
 size_t Ui::AddProgress() //unused yet
@@ -26,6 +37,7 @@ void Ui::UpdateProgress(size_t id, PrimeNumber p) //unused yet
 
 void Ui::Finished(size_t id, Range range) //unused yet
 {
+	std::lock_guard<std::mutex> g(this->mtx);
 	std::ostringstream out;
 	out << "for scope [" << range.begin << ", " << range.end << ']';
 	progess[id].append(out.str());
@@ -34,6 +46,7 @@ void Ui::Finished(size_t id, Range range) //unused yet
 
 void Ui::ShowResult(Range range, PrimeNumbers primes)
 {
+	std::lock_guard<std::mutex> g(this->mtx);
 	std::cout << "Primes are ";
 	for(auto p : primes)
 		std::cout << p << ' ';
@@ -42,6 +55,7 @@ void Ui::ShowResult(Range range, PrimeNumbers primes)
 
 void Ui::Display()
 {
+	std::lock_guard<std::mutex> g(this->mtx);
 	::system("cls");
 	std::ostringstream ostr;
 	for(auto p : progess)

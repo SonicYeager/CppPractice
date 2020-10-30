@@ -2,6 +2,7 @@
 #include "ComputePrimeNumbers.h"
 #include "Contracts.h"
 #include <vector>
+#include <chrono>
 
 //void StartNewComputation(Range range, Ui& ui)
 //{
@@ -46,6 +47,7 @@ int main()
 	//ui.onRange = std::bind(StartNewComputation, std::placeholders::_1, std::ref(ui));
 	ui.onRange = std::bind(StartNewAsyncGeneratedComputation, std::placeholders::_1, std::ref(ui));
 
-	ui.Run();
+	ui.RunStandalone({0, 15});
+	std::this_thread::sleep_for(std::chrono::milliseconds(30000));
 	return 0;
 }

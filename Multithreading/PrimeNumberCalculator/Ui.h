@@ -1,6 +1,8 @@
 #pragma once
 #include <experimental/generator>
 #include "Contracts.h"
+#include <mutex>
+#include <thread>
 
 namespace std
 {
@@ -12,6 +14,7 @@ class Ui
 {
 public:
 	void Run();
+	void RunStandalone(const Range& range);
 	void ShowResult(Range, PrimeNumbers);
 
 	size_t AddProgress();
@@ -27,4 +30,5 @@ private:
 
 	std::vector<std::string> progess;
 	std::string input;
+	std::mutex mtx;
 };
