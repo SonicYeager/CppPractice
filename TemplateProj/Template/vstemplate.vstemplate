@@ -7,7 +7,7 @@
     </TemplateData>
 <TemplateContent>
     <ProjectCollection>
-        <ProjectTemplateLink CopyParameters="true">
+        <ProjectTemplateLink ProjectName="App With UTests" CopyParameters="true">
             ProjectDLL\MyTemplate.vstemplate
         </ProjectTemplateLink>
         <ProjectTemplateLink CopyParameters="true">
@@ -15,3 +15,4 @@
         </ProjectTemplateLink>
     </ProjectCollection>
 </TemplateContent>
+</VSTemplate>
