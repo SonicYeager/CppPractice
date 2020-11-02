@@ -3,7 +3,7 @@
   <PropertyGroup Label="Globals">
     <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
     <HasSharedItems>true</HasSharedItems>
-    <ItemsProjectGuid>{aac85e24-c2bd-4a83-9dd9-48c57441c065}</ItemsProjectGuid>
+    <ItemsProjectGuid>{566f2816-d3a9-43a3-8807-29a7d1b3aff1}</ItemsProjectGuid>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -14,10 +14,10 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)gmock\gmock.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)gtest\gtest.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)gmock-gtest-all.cc" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Concepts.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Console.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Contracts.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)FileHandler.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)InternalTypes.h" />
   </ItemGroup>
 </Project>

@@ -4,7 +4,7 @@
 namespace TOOLBOX
 {
 	template<typename Type>
-	class TOOLBOX_API Console : public UI<Type>
+	class Console : public UI<Type>
 	{
 	public:
 	};

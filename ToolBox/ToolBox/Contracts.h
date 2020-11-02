@@ -4,7 +4,7 @@
 namespace TOOLBOX
 {
 	template<typename Type>
-	class TOOLBOX_API Ressource
+	class Ressource
 	{
 	public:
 		virtual Type Read(const Path&) = 0;
@@ -13,7 +13,7 @@ namespace TOOLBOX
 	};
 
 	template<typename Type>
-	class TOOLBOX_API UI
+	class UI
 	{
 	public:
 		virtual ~UI() = default;
