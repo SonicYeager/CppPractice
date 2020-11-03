@@ -1,5 +1,6 @@
 #pragma once
 #include "Contracts.h"
+#include "Concepts.h"
 
 namespace TOOLBOX
 {
@@ -10,15 +11,6 @@ namespace TOOLBOX
 
 		namespace READER
 		{
-			template<typename Type>
-			struct Reader
-			{
-				virtual void Open(const Path&) = 0;
-				virtual Type Read() = 0;
-				virtual bool IsNotEOF() = 0;
-				~Reader() = default;
-			};
-
 			struct LinesReader : public Reader<Lines>
 			{
 				void Open(const Path&) override;
@@ -76,7 +68,7 @@ namespace TOOLBOX
 			Type ObjectReader<Type>::Read()	//TODO
 			{
 				Type res;
-				input.read(static_cast<char*>(&res), sizeof(res));
+				input.read((char*)&res, sizeof(res));
 
 				return res;
 			}
@@ -102,18 +94,10 @@ namespace TOOLBOX
 				bool eof = input.eof();
 				return !eof;
 			}
-		}
+		} //export pls
 
 		namespace WRITER
 		{
-			template<typename Type>
-			struct Writer
-			{
-				virtual void Open(const Path&) = 0;
-				virtual void Write(const Type&) = 0;
-				~Writer() = default;
-			};
-
 			struct LinesWriter : public Writer<Lines>
 			{
 
@@ -157,9 +141,10 @@ namespace TOOLBOX
 			//ObjRdr
 			template<typename Type>
 			requires serializeable<Type>
-				void ObjectWriter<Type>::Write(const Type& obj)
+			void ObjectWriter<Type>::Write(const Type& obj)
 			{
-				output.write(static_cast<char*>(obj), sizeof(obj));
+				auto size = sizeof(obj);
+				output.write((char*)&obj, size);
 				output << std::endl;
 			}
 
@@ -176,15 +161,15 @@ namespace TOOLBOX
 			{
 				output.close();
 			}
-		}
+		} //export pls
 
 		template<typename Type>
 		class File : public Ressource<Type>
 		{
 		public:
 			File(READER::Reader<Type>&, WRITER::Writer<Type>&);
-			Type Read(const Path& filename) override;
-			void Write(const Path& filename, const Type& table) override;
+			Type Read(const Path&) override;
+			void Write(const Path&, const Type&) override;
 
 		private:
 			READER::Reader<Type>& reader{};

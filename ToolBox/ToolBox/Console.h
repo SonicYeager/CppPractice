@@ -1,10 +1,13 @@
 #pragma once
 #include "Contracts.h"
+#include "InternalTypes.h"
+#include "Concepts.h"
 
 namespace TOOLBOX
 {
 	template<typename Type>
-	class Console : public UI<Type>
+	requires streamable<Type>
+	class CommandLine : public Console<Type>
 	{
 	public:
 	};

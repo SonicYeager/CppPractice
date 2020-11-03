@@ -17,6 +17,13 @@ namespace TOOLBOX
 		!std::is_empty_v<Type> &&
 		std::is_object_v<std::remove_reference_t<Type>>;
 
+	template<typename Type>
+	concept streamable =
+		requires (Type t)
+	{
+		t.operator<<();	//TODO
+	};
+
 	using std::begin;
 	using std::end;
 
