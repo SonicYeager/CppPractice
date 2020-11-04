@@ -21,8 +21,11 @@ namespace TOOLBOX
 	concept streamable =
 		requires (Type t)
 	{
-		t.operator<<();	//TODO
+		t.operator<<();	//TODO stream op check
+		t.operator>>();
 	};
+
+	//TODO standart constructor concept
 
 	using std::begin;
 	using std::end;
