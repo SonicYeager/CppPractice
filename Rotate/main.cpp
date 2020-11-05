@@ -17,7 +17,7 @@ int main()
 	double y = -2.0;
 	double z = 1.0;
 
-	RotateVectorByDegreeOnAxisAroundOrigin(x, y, z, originx, originy, originz, 45.0, 1); // !x
+	RotateVectorByDegreeOnAxisAroundOrigin(x, y, z, originx, originy, originz, 45.0, XAXIS); // !x
 
 	assert(AreEqualToFourDecimals(x, 2.0));
 	assert(AreEqualToFourDecimals(y, -2.24264));
@@ -26,7 +26,7 @@ int main()
 	x = 2.0;
 	y = -2.0;
 	z = 1.0;
-	RotateVectorByDegreeOnAxisAroundOrigin(x, y, z, originx, originy, originz, 45.0, 2); // !y
+	RotateVectorByDegreeOnAxisAroundOrigin(x, y, z, originx, originy, originz, 45.0, YAXIS); // !y
 
 	assert(AreEqualToFourDecimals(x, 1.7071));
 	assert(AreEqualToFourDecimals(y, -2.0));
@@ -35,7 +35,7 @@ int main()
 	x = 2.0;
 	y = -2.0;
 	z = 1.0;
-	RotateVectorByDegreeOnAxisAroundOrigin(x, y, z, originx, originy, originz, 45.0, 3); // !z
+	RotateVectorByDegreeOnAxisAroundOrigin(x, y, z, originx, originy, originz, 45.0, ZAXIS); // !z
 
 	assert(AreEqualToFourDecimals(x, 4.5355));
 	assert(AreEqualToFourDecimals(y, -0.1213));
@@ -44,7 +44,7 @@ int main()
 	x = 2.0;
 	y = -2.0;
 	z = 1.0;
-	RotateVectorByDegreeOnAxisAroundOrigin(x, y, z, originx, originy, originz, 45.0, 4); //all
+	RotateVectorByDegreeOnAxisAroundOrigin(x, y, z, originx, originy, originz, 45.0, ALLAXIS); //all
 
 	assert(AreEqualToFourDecimals(x, 0.0));
 	assert(AreEqualToFourDecimals(y, 6.0));

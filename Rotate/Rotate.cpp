@@ -4,6 +4,7 @@
 void RotateVectorByDegreeOnAxisAroundOrigin(double& x, double& y, double& z, double originx, double originy, double originz, double degree, int axis)
 {
 	const double DEGTORADCONSTANT = 0.01745329251994329576923690768489;
+	const int MOVEFAC = 2;
 	double radiants = degree * DEGTORADCONSTANT;
 	auto cos = std::cos(radiants);
 	auto sin = std::sin(radiants);
@@ -36,9 +37,9 @@ void RotateVectorByDegreeOnAxisAroundOrigin(double& x, double& y, double& z, dou
 	}
 	case 4: //clear out the magic number!!
 	{
-		x += 2 * (originx - x);
-		y += 2 * (originy - y);
-		z += 2 * (originz - z);
+		x += MOVEFAC * (originx - x);
+		y += MOVEFAC * (originy - y);
+		z += MOVEFAC * (originz - z);
 		break;
 	}
 	}
