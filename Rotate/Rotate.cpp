@@ -1,7 +1,7 @@
 #include "Rotate.h"
 #include <cmath>
 
-void RotateVectorByDegreeOnAxisAroundOrigin(double& x, double& y, double& z, double originx, double originy, double originz, double degree, int axis)
+void RotateVectorByDegreeOnAxisAroundOrigin(ThreeDPoint& point, ThreeDPoint origin, double degree, int axis)
 {
 	const double DEGTORADCONSTANT = 0.01745329251994329576923690768489;
 	const int MOVEFAC = 2;
@@ -13,33 +13,33 @@ void RotateVectorByDegreeOnAxisAroundOrigin(double& x, double& y, double& z, dou
 	{
 	case 1:	//x
 	{
-		auto combinedy = y - originy;
-		auto combinedz = z - originz;
-		y = combinedy * cos - combinedz * sin + originy;
-		z = combinedy * sin + combinedz * cos + originz;
+		auto combinedy = point.y - origin.y;
+		auto combinedz = point.z - origin.z;
+		point.y = combinedy * cos - combinedz * sin + origin.y;
+		point.z = combinedy * sin + combinedz * cos + origin.z;
 		break;
 	}
 	case 2:	//y
 	{
-		auto vectorx = x - originx;
-		auto vectorz = z - originz;
-		x = vectorz * cos - vectorx * sin + originx;
-		z = vectorz * sin + vectorx * cos + originz;
+		auto vectorx = point.x - origin.x;
+		auto vectorz = point.z - origin.z;
+		point.x = vectorz * cos - vectorx * sin + origin.x;
+		point.z = vectorz * sin + vectorx * cos + origin.z;
 		break;
 	}
 	case 3:	//z
 	{
-		auto vectorx = x - originx;
-		auto vectory = y - originy;
-		x = vectorx * cos - vectory * sin + originx;
-		y = vectorx * sin + vectory * cos + originy;
+		auto vectorx = point.x - origin.x;
+		auto vectory = point.y - origin.y;
+		point.x = vectorx * cos - vectory * sin + origin.x;
+		point.y = vectorx * sin + vectory * cos + origin.y;
 		break;
 	}
 	case 4: //clear out the magic number!!
 	{
-		x += MOVEFAC * (originx - x);
-		y += MOVEFAC * (originy - y);
-		z += MOVEFAC * (originz - z);
+		point.x += MOVEFAC * (origin.x - point.x);
+		point.y += MOVEFAC * (origin.y - point.y);
+		point.z += MOVEFAC * (origin.z - point.z);
 		break;
 	}
 	}
