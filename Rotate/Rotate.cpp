@@ -5,36 +5,36 @@ void RotateVectorByDegreeOnAxisAroundOrigin(double& x, double& y, double& z, dou
 {
 	const double DEGTORADCONSTANT = 0.01745329251994329576923690768489;
 	double radiants = degree * DEGTORADCONSTANT;
+	auto cos = std::cos(radiants);
+	auto sin = std::sin(radiants);
 
 	switch(axis)
 	{
 	case 1:	//x
 	{
-
-
-		auto tempy = (y - originy) * std::cos(radiants) - (z - originz) * std::sin(radiants) + originy;
-		auto tempz = (y - originy) * std::sin(radiants) + (z - originz) * std::cos(radiants) + originz;
-		y = tempy;
-		z = tempz;
+		auto combinedy = y - originy;
+		auto combinedz = z - originz;
+		y = combinedy * cos - combinedz * sin + originy;
+		z = combinedy * sin + combinedz * cos + originz;
 		break;
 	}
 	case 2:	//y
 	{
-		auto tempx = (z - originz) * std::cos(radiants) - (x - originx) * std::sin(radiants) + originx;
-		auto tempz = (z - originz) * std::sin(radiants) + (x - originx) * std::cos(radiants) + originz;
-		x = tempx;
-		z = tempz;
+		auto vectorx = x - originx;
+		auto vectorz = z - originz;
+		x = vectorz * cos - vectorx * sin + originx;
+		z = vectorz * sin + vectorx * cos + originz;
 		break;
 	}
 	case 3:	//z
 	{
-		auto tempx = (x - originx) * std::cos(radiants) - (y - originy) * std::sin(radiants) + originx;
-		auto tempy = (x - originx) * std::sin(radiants) + (y - originy) * std::cos(radiants) + originy;
-		x = tempx;
-		y = tempy;
+		auto vectorx = x - originx;
+		auto vectory = y - originy;
+		x = vectorx * cos - vectory * sin + originx;
+		y = vectorx * sin + vectory * cos + originy;
 		break;
 	}
-	case 4:
+	case 4: //clear out the magic number!!
 	{
 		x += 2 * (originx - x);
 		y += 2 * (originy - y);
