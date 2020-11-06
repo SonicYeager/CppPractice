@@ -13,6 +13,7 @@ public:
 	void AddRental(const Rental&);
 	std::string GetName() const;
 	std::string Statement() const;
+	std::vector<Rental> GetRentals() const;
 
 private:
 	std::string name;

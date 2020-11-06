@@ -18,11 +18,16 @@ std::string Customer::GetName() const
 	return name;
 }
 
+std::vector<Rental> Customer::GetRentals()const
+{
+	return rentals;
+}
+
 std::string Customer::Statement() const
 {
 	double totalAmount{};
 	int frequentRenterPoints{};
-	for(const Rental& each : rentals)
+	for(const Rental& each : GetRentals())
 	{
 		double thisAmount = each.CalculateMovieRentCosts();
 		totalAmount += thisAmount;
@@ -30,8 +35,8 @@ std::string Customer::Statement() const
 	}
 
 	std::ostringstream result{};
-	result << "Rental Record for " << name << '\n';
-	for(const Rental& each : rentals)
+	result << "Rental Record for " << GetName() << '\n';
+	for(const Rental& each : GetRentals())
 	{
 		result << '\t' << each.GetMovie().GetTitle() << '\t' << each.CalculateMovieRentCosts() << '\n';
 	}
