@@ -10,33 +10,32 @@ Customer::~Customer() {}
 
 void Customer::AddRental(const Rental& r)
 {
-	this->rentals.push_back(r);
+	rentals.push_back(r);
 }
 
 std::string Customer::GetName() const
 {
-	return this->name;
+	return name;
 }
 
 std::string Customer::Statement() const
 {
-	double totalAmount = 0.0;
-	int frequentRenterPoints = 0;
-	std::ostringstream result;
-	result << "Rental Record for " << this->name << '\n'; //head
-
-	//body
-	for(const Rental& each : this->rentals)
+	double totalAmount{};
+	int frequentRenterPoints{};
+	for(const Rental& each : rentals)
 	{
 		double thisAmount = each.CalculateMovieRentCosts();
-
-		frequentRenterPoints += each.GetAvailableFrequentRenterPoints();
-
-		result << '\t' << each.GetMovie().GetTitle() << '\t' << thisAmount << '\n';
 		totalAmount += thisAmount;
+		frequentRenterPoints += each.GetAvailableFrequentRenterPoints();
 	}
 
+	std::ostringstream result{};
+	result << "Rental Record for " << name << '\n';
+	for(const Rental& each : rentals)
+	{
+		result << '\t' << each.GetMovie().GetTitle() << '\t' << each.CalculateMovieRentCosts() << '\n';
+	}
 	result << "Amount owed is " << totalAmount << '\n'
-		   << "You earned " << frequentRenterPoints << " frequent renter points"; //footer
+		   << "You earned " << frequentRenterPoints << " frequent renter points";
 	return result.str();
 }

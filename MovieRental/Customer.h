@@ -17,4 +17,5 @@ public:
 private:
 	std::string name;
 	std::vector<Rental> rentals;
+
 };
