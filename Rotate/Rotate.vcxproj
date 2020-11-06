@@ -72,6 +72,7 @@
     <ClCompile Include="Rotate.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="3DPoint.h" />
     <ClInclude Include="Rotate.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
