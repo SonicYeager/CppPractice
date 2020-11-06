@@ -30,9 +30,7 @@ std::string Customer::Statement() const
 	{
 		double thisAmount = each.CalculateMovieRentCosts();
 
-		if((each.GetMovie().GetPriceCode() == Movie::NEW_RELEASE) && (each.GetDaysRent() > 1))
-			++frequentRenterPoints;
-		++frequentRenterPoints;
+		frequentRenterPoints += each.GetAvailableFrequentRenterPoints();
 
 		result << '\t' << each.GetMovie().GetTitle() << '\t' << thisAmount << '\n';
 		totalAmount += thisAmount;

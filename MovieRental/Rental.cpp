@@ -40,3 +40,12 @@ double Rental::CalculateMovieRentCosts() const
 	}
 	return res;
 }
+
+int Rental::GetAvailableFrequentRenterPoints() const
+{
+	int points{};
+	if((movie.GetPriceCode() == Movie::NEW_RELEASE) && (GetDaysRent() > 1))
+		++points;
+	++points;
+	return points;
+}
