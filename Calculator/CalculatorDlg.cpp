@@ -85,7 +85,8 @@ void CalculatorDlg::OnAdd()
 void CalculatorDlg::OnSub()
 {
 	UpdateData();
-	result.Format(L"%g", num1 - num2);
+	auto res = calc.Sub(num1, num2);
+	result.SetString(CString(res.str().c_str()));
 	operation = '-';
 	CString txt;
 	txt.Format(L"%g - %g = %s", num1, num2, result);

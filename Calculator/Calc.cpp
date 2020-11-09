@@ -7,12 +7,12 @@ std::stringstream Calc::Add(double numLeft, double numRight) const
 	return res;
 }
 
-//std::stringstream Calc::Sub(double numLeft, double numRight) const
-//{
-//	std::stringstream res;
-//	//res << numLeft - numRight;
-//	return res;
-//}
+std::stringstream Calc::Sub(double numLeft, double numRight) const
+{
+	std::stringstream res;
+	res << numLeft - numRight;
+	return res;
+}
 //
 //std::stringstream Calc::Mul(double numLeft, double numRight) const
 //{
