@@ -10,7 +10,7 @@ public:
 	void Sub();
 	void Mul();
 	void Div();
-	//void Mod();
+	void Mod();
 	//void Exp();
 
 private:

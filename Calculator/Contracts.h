@@ -27,7 +27,7 @@ public:
 	CalcEvent onSub = {};
 	CalcEvent onMul = {};
 	CalcEvent onDiv = {};
-	//CalcEvent onMod = {};
+	CalcEvent onMod = {};
 	//CalcEvent onExp = {};
 	//std::function<void(char)> onNum = {};
 };
