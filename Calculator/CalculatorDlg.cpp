@@ -96,11 +96,7 @@ void CalculatorDlg::OnMul()
 void CalculatorDlg::OnDiv()
 {
 	operation = '/';
-	UpdateData();
-	auto res = calc.Div(num1, num2);
-	SetResult(res.str());
-	auto his = ComposeHistory(num1, num2, operation, res);
-	AddHistory(his);
+	onDiv();
 }
 
 void CalculatorDlg::OnMod()

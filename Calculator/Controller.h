@@ -9,7 +9,7 @@ public:
 	void Add();
 	void Sub();
 	void Mul();
-	//void Div();
+	void Div();
 	//void Mod();
 	//void Exp();
 
