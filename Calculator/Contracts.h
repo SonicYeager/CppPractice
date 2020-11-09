@@ -2,7 +2,7 @@
 #include <sstream>
 #include <functional>
 
-using CalcEvent = std::function<std::stringstream()>;
+using CalcEvent = std::function<void()>;
 
 class Logic
 {
