@@ -4,12 +4,12 @@ Controller::Controller(Ui& ui, Logic& logic)
 	: ui(ui)
 	, logic(logic)
 {
-	ui.onAdd = std::bind(&Controller::Add, this);
-	ui.onSub = std::bind(&Controller::Sub, this);
-	ui.onMul = std::bind(&Controller::Mul, this);
-	ui.onDiv = std::bind(&Controller::Div, this);
-	ui.onMod = std::bind(&Controller::Mod, this);
-	ui.onExp = std::bind(&Controller::Exp, this);
+	ui.onAdd = {};
+	ui.onSub = {};
+	ui.onMul = {};
+	ui.onDiv = {};
+	ui.onMod = {};
+	ui.onExp = {};
 
 	ui.Init();
 }
