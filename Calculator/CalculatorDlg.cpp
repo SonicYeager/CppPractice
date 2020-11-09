@@ -52,6 +52,13 @@ CalculatorDlg::CalculatorDlg() noexcept //standalone
 //	return std::make_pair(num1, num2);
 //}
 
+std::string ComposeHistory(double left, double right, char op, const std::stringstream& result)
+{
+	std::stringstream res;
+	res << left << " " << op << " " << right << " = " << result.str();
+	return res.str();
+}
+
 void CalculatorDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
@@ -75,8 +82,8 @@ void CalculatorDlg::OnAdd()
 	auto res = calc.Add(num1, num2);
 	result.SetString(CString(res.str().c_str()));
 	operation = '+';
-	CString txt;
-	txt.Format(L"%g + %g = %s", num1, num2, result);
+	auto his = ComposeHistory(num1, num2, operation, res);
+	CString txt{his.c_str()};
 	int count = history.AddString(txt);
 	history.SetCurSel(count);
 	UpdateData(FALSE);
@@ -88,8 +95,8 @@ void CalculatorDlg::OnSub()
 	auto res = calc.Sub(num1, num2);
 	result.SetString(CString(res.str().c_str()));
 	operation = '-';
-	CString txt;
-	txt.Format(L"%g - %g = %s", num1, num2, result);
+	auto his = ComposeHistory(num1, num2, operation, res);
+	CString txt{his.c_str()};
 	int count = history.AddString(txt);
 	history.SetCurSel(count);
 	UpdateData(FALSE);
@@ -101,8 +108,8 @@ void CalculatorDlg::OnMul()
 	auto res = calc.Mul(num1, num2);
 	result.SetString(CString(res.str().c_str()));
 	operation = '*';
-	CString txt;
-	txt.Format(L"%g * %g = %s", num1, num2, result);
+	auto his = ComposeHistory(num1, num2, operation, res);
+	CString txt{his.c_str()};
 	int count = history.AddString(txt);
 	history.SetCurSel(count);
 	UpdateData(FALSE);
@@ -114,8 +121,8 @@ void CalculatorDlg::OnDiv()
 	auto res = calc.Div(num1, num2);
 	result.SetString(CString(res.str().c_str()));
 	operation = '/';
-	CString txt;
-	txt.Format(L"%g / %g = %s", num1, num2, result);
+	auto his = ComposeHistory(num1, num2, operation, res);
+	CString txt{his.c_str()};
 	int count = history.AddString(txt);
 	history.SetCurSel(count);
 	UpdateData(FALSE);
@@ -127,8 +134,8 @@ void CalculatorDlg::OnMod()
 	auto res = calc.Mod(num1, num2);
 	result.SetString(CString(res.str().c_str()));
 	operation = '%';
-	CString txt;
-	txt.Format(L"%g mod %g = %s", num1, num2, result);
+	auto his = ComposeHistory(num1, num2, operation, res);
+	CString txt{his.c_str()};
 	int count = history.AddString(txt);
 	history.SetCurSel(count);
 	UpdateData(FALSE);
@@ -140,8 +147,8 @@ void CalculatorDlg::OnExp()
 	auto res = calc.Exp(num1, num2);
 	result.SetString(CString(res.str().c_str()));
 	operation = '^';
-	CString txt;
-	txt.Format(L"%g ^ %g = %s", num1, num2, result);
+	auto his = ComposeHistory(num1, num2, operation, res);
+	CString txt{his.c_str()};
 	int count = history.AddString(txt);
 	history.SetCurSel(count);
 	UpdateData(FALSE);
