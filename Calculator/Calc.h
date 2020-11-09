@@ -8,6 +8,6 @@ public:
 	std::stringstream Sub(double, double) const override;
 	std::stringstream Mul(double, double) const override;
 	std::stringstream Div(double, double) const override;
-	//std::stringstream Mod(double, double) const override;
+	std::stringstream Mod(double, double) const override;
 	//std::stringstream Exp(double, double) const override;
 };

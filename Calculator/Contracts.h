@@ -11,7 +11,7 @@ public:
 	virtual std::stringstream Sub(double, double) const = 0;
 	virtual std::stringstream Mul(double, double) const = 0;
 	virtual std::stringstream Div(double, double) const = 0;
-	//virtual std::stringstream Mod(double, double) const = 0;
+	virtual std::stringstream Mod(double, double) const = 0;
 	//virtual std::stringstream Exp(double, double) const = 0;
 };
 

@@ -124,16 +124,8 @@ void CalculatorDlg::OnDiv()
 void CalculatorDlg::OnMod()
 {
 	UpdateData();
-	auto divis = static_cast<int>(std::abs(num2));
-	if(divis == 0)
-		result.Format(L"%g", 0.0);
-	else {
-		auto divid = static_cast<int>(std::abs(num1));
-		if((num1 < 0 && num2 > 0) || (num1 > 0 && num2 < 0))
-			result.Format(L"%i", -divid % divis);
-		else
-			result.Format(L"%i", divid % divis);
-	}
+	auto res = calc.Mod(num1, num2);
+	result.SetString(CString(res.str().c_str()));
 	operation = '%';
 	CString txt;
 	txt.Format(L"%g mod %g = %s", num1, num2, result);
