@@ -113,27 +113,7 @@ void CalculatorDlg::OnExp()
 
 void CalculatorDlg::OnNum()
 {
-	switch(operation)
-	{
-	case '+':
-		OnAdd();
-		break;
-	case '-':
-		OnSub();
-		break;
-	case '*':
-		OnMul();
-		break;
-	case '/':
-		OnDiv();
-		break;
-	case '%':
-		OnMod();
-		break;
-	case '^':
-		OnExp();
-		break;
-	}
+	onNum(operation);
 }
 
 void CalculatorDlg::OnOK()

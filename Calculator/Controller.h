@@ -12,6 +12,7 @@ public:
 	void Div();
 	void Mod();
 	void Exp();
+	void Num(char);
 
 private:
 	Ui& ui;

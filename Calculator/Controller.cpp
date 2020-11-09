@@ -7,9 +7,10 @@ Controller::Controller(Ui& ui, Logic& logic)
 	ui.onAdd = std::bind(&Controller::Add, this);
 	ui.onSub = std::bind(&Controller::Sub, this);
 	ui.onMul = std::bind(&Controller::Mul, this);
-	//ui.onDiv = std::bind(&Controller::Div, this);
-	//ui.onMod = std::bind(&Controller::Mod, this);
-	//ui.onExp = std::bind(&Controller::Exp, this);
+	ui.onDiv = std::bind(&Controller::Div, this);
+	ui.onMod = std::bind(&Controller::Mod, this);
+	ui.onExp = std::bind(&Controller::Exp, this);
+	ui.onNum = std::bind(&Controller::Num, this, std::placeholders::_1);
 
 	ui.Init();
 }
@@ -85,4 +86,29 @@ void Controller::Exp()
 	auto his = ComposeHistoryCntr(input.first, input.second, '^', res);
 	//history.push_back(his);
 	ui.AddHistory(his);
+}
+
+void Controller::Num(char op)
+{
+	switch(op)
+	{
+	case '+':
+		Add();
+		break;
+	case '-':
+		Sub();
+		break;
+	case '*':
+		Mul();
+		break;
+	case '/':
+		Div();
+		break;
+	case '%':
+		Mod();
+		break;
+	case '^':
+		Exp();
+		break;
+	}
 }
