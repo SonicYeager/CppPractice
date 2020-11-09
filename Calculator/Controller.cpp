@@ -10,7 +10,7 @@ Controller::Controller(Ui& ui, Logic& logic)
 	ui.onDiv = std::bind(&Controller::Div, this);
 	ui.onMod = std::bind(&Controller::Mod, this);
 	ui.onExp = std::bind(&Controller::Exp, this);
-	ui.onNum = std::bind(&Controller::Num, this, std::placeholders::_1);
+	ui.onNum = std::bind(&Controller::Num, this);
 
 	ui.Init();
 }
@@ -24,7 +24,7 @@ std::string ComposeHistoryCntr(double left, double right, char op, const std::st
 
 void Controller::Add()
 {
-	//operation = '+';
+	operation = '+';
 	auto input = ui.GetValues();
 	auto res = logic.Add(input.first, input.second);
 	ui.SetResult(res.str());
@@ -35,7 +35,7 @@ void Controller::Add()
 
 void Controller::Sub()
 {
-	//operation = '-';
+	operation = '-';
 	auto input = ui.GetValues();
 	auto res = logic.Sub(input.first, input.second);
 	ui.SetResult(res.str());
@@ -46,7 +46,7 @@ void Controller::Sub()
 
 void Controller::Mul()
 {
-	//operation = '*';
+	operation = '*';
 	auto input = ui.GetValues();
 	auto res = logic.Mul(input.first, input.second);
 	ui.SetResult(res.str());
@@ -57,7 +57,7 @@ void Controller::Mul()
 
 void Controller::Div()
 {
-	//operation = '/';
+	operation = '/';
 	auto input = ui.GetValues();
 	auto res = logic.Div(input.first, input.second);
 	ui.SetResult(res.str());
@@ -68,7 +68,7 @@ void Controller::Div()
 
 void Controller::Mod()
 {
-	//operation = '%';
+	operation = '%';
 	auto input = ui.GetValues();
 	auto res = logic.Mod(input.first, input.second);
 	ui.SetResult(res.str());
@@ -79,7 +79,7 @@ void Controller::Mod()
 
 void Controller::Exp()
 {
-	//operation = '^';
+	operation = '^';
 	auto input = ui.GetValues();
 	auto res = logic.Exp(input.first, input.second);
 	ui.SetResult(res.str());
@@ -88,9 +88,9 @@ void Controller::Exp()
 	ui.AddHistory(his);
 }
 
-void Controller::Num(char op)
+void Controller::Num()
 {
-	switch(op)
+	switch(operation)
 	{
 	case '+':
 		Add();

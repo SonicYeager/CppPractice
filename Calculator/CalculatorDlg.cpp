@@ -21,7 +21,6 @@ CalculatorDlg::CalculatorDlg() noexcept //standalone
 	, num1(0)
 	, num2(0)
 	, result("0")
-	, operation(' ')
 	, history{}
 {}
 
@@ -77,43 +76,37 @@ BOOL CalculatorDlg::OnInitDialog()
 
 void CalculatorDlg::OnAdd()
 {
-	operation = '+';
 	onAdd();
 }
 
 void CalculatorDlg::OnSub()
 {
-	operation = '-';
 	onSub();
 }
 
 void CalculatorDlg::OnMul()
 {
-	operation = '*';
 	onMul();
 }
 
 void CalculatorDlg::OnDiv()
 {
-	operation = '/';
 	onDiv();
 }
 
 void CalculatorDlg::OnMod()
 {
-	operation = '%';
 	onMod();
 }
 
 void CalculatorDlg::OnExp()
 {
-	operation = '^';
 	onExp();
 }
 
 void CalculatorDlg::OnNum()
 {
-	onNum(operation);
+	onNum();
 }
 
 void CalculatorDlg::OnOK()

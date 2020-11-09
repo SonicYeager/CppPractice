@@ -1,5 +1,4 @@
 #pragma once
-#include "Calc.h"
 #include "Contracts.h"
 
 
@@ -31,7 +30,5 @@ private:
 	double num1;
 	double num2;
 	CString result;
-	char operation;
 	CListBox history;
-	Calc calc{};
 };

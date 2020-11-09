@@ -12,11 +12,11 @@ public:
 	void Div();
 	void Mod();
 	void Exp();
-	void Num(char);
+	void Num();
 
 private:
 	Ui& ui;
 	Logic& logic;
-	//char operation{};
+	char operation{};
 	//std::vector<std::string> history;
 };
