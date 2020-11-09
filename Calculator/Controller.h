@@ -16,4 +16,6 @@ public:
 private:
 	Ui& ui;
 	Logic& logic;
+	char operation{};
+	std::vector<std::string> history;
 };

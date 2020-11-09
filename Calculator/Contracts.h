@@ -19,7 +19,8 @@ class Ui
 {
 public:
 	virtual void Init() = 0;
-	virtual void Update(const std::string&) = 0;
+	virtual void SetResult(const std::string&) = 0;
+	virtual void AddHistory(const std::string&) = 0;
 	virtual std::pair<double, double> GetValues() = 0;
 
 	CalcEvent onAdd = {};
@@ -28,4 +29,5 @@ public:
 	CalcEvent onDiv = {};
 	CalcEvent onMod = {};
 	CalcEvent onExp = {};
+	std::function<void(char)> onNum = {};
 };

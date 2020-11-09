@@ -14,44 +14,75 @@ Controller::Controller(Ui& ui, Logic& logic)
 	ui.Init();
 }
 
+std::string ComposeHistory(double left, double right, char op, const std::stringstream& result)
+{
+	std::stringstream res;
+	res << left << " " << op << " " << right << " = " << result.str();
+	return res.str();
+}
+
 void Controller::Add()
 {
+	operation = '+';
 	auto input = ui.GetValues();
 	auto res = logic.Add(input.first, input.second);
-	ui.Update(res.str());
+	ui.SetResult(res.str());
+	auto his = ComposeHistory(input.first, input.second, operation, res);
+	history.push_back(his);
+	ui.AddHistory(his);
 }
 
 void Controller::Sub()
 {
+	operation = '-';
 	auto input = ui.GetValues();
 	auto res = logic.Sub(input.first, input.second);
-	ui.Update(res.str());
+	ui.SetResult(res.str());
+	auto his = ComposeHistory(input.first, input.second, operation, res);
+	history.push_back(his);
+	ui.AddHistory(his);
 }
 
 void Controller::Mul()
 {
+	operation = '*';
 	auto input = ui.GetValues();
 	auto res = logic.Mul(input.first, input.second);
-	ui.Update(res.str());
+	ui.SetResult(res.str());
+	auto his = ComposeHistory(input.first, input.second, operation, res);
+	history.push_back(his);
+	ui.AddHistory(his);
 }
 
 void Controller::Div()
 {
+	operation = '/';
 	auto input = ui.GetValues();
 	auto res = logic.Div(input.first, input.second);
-	ui.Update(res.str());
+	ui.SetResult(res.str());
+	auto his = ComposeHistory(input.first, input.second, operation, res);
+	history.push_back(his);
+	ui.AddHistory(his);
 }
 
 void Controller::Mod()
 {
+	operation = '%';
 	auto input = ui.GetValues();
 	auto res = logic.Mod(input.first, input.second);
-	ui.Update(res.str());
+	ui.SetResult(res.str());
+	auto his = ComposeHistory(input.first, input.second, operation, res);
+	history.push_back(his);
+	ui.AddHistory(his);
 }
 
 void Controller::Exp()
 {
+	operation = '^';
 	auto input = ui.GetValues();
 	auto res = logic.Exp(input.first, input.second);
-	ui.Update(res.str());
+	ui.SetResult(res.str());
+	auto his = ComposeHistory(input.first, input.second, operation, res);
+	history.push_back(his);
+	ui.AddHistory(his);
 }

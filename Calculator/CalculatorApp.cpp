@@ -24,12 +24,12 @@ CalculatorApp theApp;
 BOOL CalculatorApp::InitInstance()
 {
 	CWinApp::InitInstance();
-	//CalculatorDlg dlg;
-	//dlg.DoModal();
-
-	//new
 	CalculatorDlg dlg;
-	Calc calc;
-	Controller cntr{dlg, calc};
+	dlg.DoModal();
+
+	////new
+	//CalculatorDlg dlg;
+	//Calc calc;
+	//Controller cntr{dlg, calc};
 	return TRUE;
 }
