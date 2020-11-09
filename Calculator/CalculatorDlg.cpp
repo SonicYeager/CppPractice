@@ -31,12 +31,12 @@ CalculatorDlg::CalculatorDlg() noexcept //standalone
 //	DoModal();
 //}
 //
-//void CalculatorDlg::SetResult(const std::string& strRes)
-//{
-//	CString c{strRes.c_str()};
-//	result.SetString(c);
-//	UpdateData(FALSE);
-//}
+void CalculatorDlg::SetResult(const std::string& strRes)
+{
+	CString c{strRes.c_str()};
+	result.SetString(c);
+	UpdateData(FALSE);
+}
 //
 void CalculatorDlg::AddHistory(const std::string& his)
 {
@@ -80,7 +80,7 @@ void CalculatorDlg::OnAdd()
 {
 	UpdateData();
 	auto res = calc.Add(num1, num2);
-	result.SetString(CString(res.str().c_str()));
+	SetResult(res.str());
 	operation = '+';
 	auto his = ComposeHistory(num1, num2, operation, res);
 	AddHistory(his);
@@ -90,7 +90,7 @@ void CalculatorDlg::OnSub()
 {
 	UpdateData();
 	auto res = calc.Sub(num1, num2);
-	result.SetString(CString(res.str().c_str()));
+	SetResult(res.str());
 	operation = '-';
 	auto his = ComposeHistory(num1, num2, operation, res);
 	AddHistory(his);
@@ -100,7 +100,7 @@ void CalculatorDlg::OnMul()
 {
 	UpdateData();
 	auto res = calc.Mul(num1, num2);
-	result.SetString(CString(res.str().c_str()));
+	SetResult(res.str());
 	operation = '*';
 	auto his = ComposeHistory(num1, num2, operation, res);
 	AddHistory(his);
@@ -110,7 +110,7 @@ void CalculatorDlg::OnDiv()
 {
 	UpdateData();
 	auto res = calc.Div(num1, num2);
-	result.SetString(CString(res.str().c_str()));
+	SetResult(res.str());
 	operation = '/';
 	auto his = ComposeHistory(num1, num2, operation, res);
 	AddHistory(his);
@@ -120,7 +120,7 @@ void CalculatorDlg::OnMod()
 {
 	UpdateData();
 	auto res = calc.Mod(num1, num2);
-	result.SetString(CString(res.str().c_str()));
+	SetResult(res.str());
 	operation = '%';
 	auto his = ComposeHistory(num1, num2, operation, res);
 	AddHistory(his);
@@ -130,7 +130,7 @@ void CalculatorDlg::OnExp()
 {
 	UpdateData();
 	auto res = calc.Exp(num1, num2);
-	result.SetString(CString(res.str().c_str()));
+	SetResult(res.str());
 	operation = '^';
 	auto his = ComposeHistory(num1, num2, operation, res);
 	AddHistory(his);
