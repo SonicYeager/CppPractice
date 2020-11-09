@@ -23,7 +23,7 @@ public:
 	virtual void AddHistory(const std::string&) = 0;
 	virtual std::pair<double, double> GetValues() = 0;
 
-	//CalcEvent onAdd = {};
+	CalcEvent onAdd = {};
 	//CalcEvent onSub = {};
 	//CalcEvent onMul = {};
 	//CalcEvent onDiv = {};

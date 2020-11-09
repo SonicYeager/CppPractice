@@ -1,6 +1,5 @@
 #pragma once
 #include "Contracts.h"
-#include "Calc.h"
 
 class CalculatorDlg : public CDialogEx , public Ui
 {
@@ -32,5 +31,5 @@ private:
 	CString result;
 	char operation;
 	CListBox history;
-	Calc calc{};
+	Logic& calc;
 };
