@@ -137,7 +137,8 @@ void CalculatorDlg::OnMod()
 void CalculatorDlg::OnExp()
 {
 	UpdateData();
-	result.Format(L"%g", pow(num1, num2));
+	auto res = calc.Exp(num1, num2);
+	result.SetString(CString(res.str().c_str()));
 	operation = '^';
 	CString txt;
 	txt.Format(L"%g ^ %g = %s", num1, num2, result);

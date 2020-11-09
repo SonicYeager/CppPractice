@@ -44,10 +44,10 @@ std::stringstream Calc::Mod(double numLeft, double numRight) const
 	}
 	return res;
 }
-//
-//std::stringstream Calc::Exp(double numLeft, double numRight) const
-//{
-//	std::stringstream res;
-//	//res << pow(numLeft, numRight);
-//	return res;
-//}
+
+std::stringstream Calc::Exp(double numLeft, double numRight) const
+{
+	std::stringstream res;
+	res << pow(numLeft, numRight);
+	return res;
+}
