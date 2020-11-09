@@ -25,7 +25,7 @@ public:
 
 	CalcEvent onAdd = {};
 	CalcEvent onSub = {};
-	//CalcEvent onMul = {};
+	CalcEvent onMul = {};
 	//CalcEvent onDiv = {};
 	//CalcEvent onMod = {};
 	//CalcEvent onExp = {};

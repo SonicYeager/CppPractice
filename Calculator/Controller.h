@@ -8,7 +8,7 @@ public:
 	~Controller() = default;
 	void Add();
 	void Sub();
-	//void Mul();
+	void Mul();
 	//void Div();
 	//void Mod();
 	//void Exp();

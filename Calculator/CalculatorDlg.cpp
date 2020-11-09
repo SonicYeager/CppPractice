@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "CalculatorDlg.h"
 #include "Resource.h"
-#include "Calc.h"
 
 IMPLEMENT_DYNAMIC(CalculatorDlg, CDialogEx)
 
@@ -24,7 +23,6 @@ CalculatorDlg::CalculatorDlg() noexcept //standalone
 	, result("0")
 	, operation(' ')
 	, history{}
-	, calc(Calc())
 {}
 
 void CalculatorDlg::Init()
@@ -92,11 +90,7 @@ void CalculatorDlg::OnSub()
 void CalculatorDlg::OnMul()
 {
 	operation = '*';
-	UpdateData();
-	auto res = calc.Mul(num1, num2);
-	SetResult(res.str());
-	auto his = ComposeHistory(num1, num2, operation, res);
-	AddHistory(his);
+	onMul();
 }
 
 void CalculatorDlg::OnDiv()
