@@ -28,6 +28,6 @@ public:
 	CalcEvent onMul = {};
 	CalcEvent onDiv = {};
 	CalcEvent onMod = {};
-	//CalcEvent onExp = {};
+	CalcEvent onExp = {};
 	//std::function<void(char)> onNum = {};
 };

@@ -11,7 +11,7 @@ public:
 	void Mul();
 	void Div();
 	void Mod();
-	//void Exp();
+	void Exp();
 
 private:
 	Ui& ui;

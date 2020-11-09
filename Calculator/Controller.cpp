@@ -75,14 +75,14 @@ void Controller::Mod()
 	//history.push_back(his);
 	ui.AddHistory(his);
 }
-//
-//void Controller::Exp()
-//{
-//	operation = '^';
-//	auto input = ui.GetValues();
-//	auto res = logic.Exp(input.first, input.second);
-//	ui.SetResult(res.str());
-//	auto his = ComposeHistory(input.first, input.second, operation, res);
-//	history.push_back(his);
-//	ui.AddHistory(his);
-//}
+
+void Controller::Exp()
+{
+	//operation = '^';
+	auto input = ui.GetValues();
+	auto res = logic.Exp(input.first, input.second);
+	ui.SetResult(res.str());
+	auto his = ComposeHistoryCntr(input.first, input.second, '^', res);
+	//history.push_back(his);
+	ui.AddHistory(his);
+}

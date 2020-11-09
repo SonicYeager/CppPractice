@@ -102,21 +102,13 @@ void CalculatorDlg::OnDiv()
 void CalculatorDlg::OnMod()
 {
 	operation = '%';
-	UpdateData();
-	auto res = calc.Mod(num1, num2);
-	SetResult(res.str());
-	auto his = ComposeHistory(num1, num2, operation, res);
-	AddHistory(his);
+	onMod();
 }
 
 void CalculatorDlg::OnExp()
 {
 	operation = '^';
-	UpdateData();
-	auto res = calc.Exp(num1, num2);
-	SetResult(res.str());
-	auto his = ComposeHistory(num1, num2, operation, res);
-	AddHistory(his);
+	onExp();
 }
 
 void CalculatorDlg::OnNum()
