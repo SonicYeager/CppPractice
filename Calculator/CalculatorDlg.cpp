@@ -86,11 +86,7 @@ void CalculatorDlg::OnAdd()
 void CalculatorDlg::OnSub()
 {
 	operation = '-';
-	UpdateData();
-	auto res = calc.Sub(num1, num2);
-	SetResult(res.str());
-	auto his = ComposeHistory(num1, num2, operation, res);
-	AddHistory(his);
+	onSub();
 }
 
 void CalculatorDlg::OnMul()

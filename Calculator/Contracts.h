@@ -24,7 +24,7 @@ public:
 	virtual std::pair<double, double> GetValues() = 0;
 
 	CalcEvent onAdd = {};
-	//CalcEvent onSub = {};
+	CalcEvent onSub = {};
 	//CalcEvent onMul = {};
 	//CalcEvent onDiv = {};
 	//CalcEvent onMod = {};

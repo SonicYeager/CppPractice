@@ -7,7 +7,7 @@ public:
 	Controller(Ui&, Logic&);
 	~Controller() = default;
 	void Add();
-	//void Sub();
+	void Sub();
 	//void Mul();
 	//void Div();
 	//void Mod();
