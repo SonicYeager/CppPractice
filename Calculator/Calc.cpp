@@ -20,14 +20,14 @@ std::stringstream Calc::Mul(double numLeft, double numRight) const
 	res << numLeft * numRight;
 	return res;
 }
-//
-//std::stringstream Calc::Div(double numLeft, double numRight) const
-//{
-//	std::stringstream res;
-//	//res << numLeft / numRight;
-//	return res;
-//}
-//
+
+std::stringstream Calc::Div(double numLeft, double numRight) const
+{
+	std::stringstream res;
+	res << numLeft / numRight;
+	return res;
+}
+
 //std::stringstream Calc::Mod(double numLeft, double numRight) const
 //{
 //	std::stringstream res;

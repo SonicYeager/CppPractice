@@ -111,7 +111,8 @@ void CalculatorDlg::OnMul()
 void CalculatorDlg::OnDiv()
 {
 	UpdateData();
-	result.Format(L"%g", num1 / num2);
+	auto res = calc.Div(num1, num2);
+	result.SetString(CString(res.str().c_str()));
 	operation = '/';
 	CString txt;
 	txt.Format(L"%g / %g = %s", num1, num2, result);
