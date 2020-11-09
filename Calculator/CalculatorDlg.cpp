@@ -17,7 +17,7 @@ ON_EN_CHANGE(IDC_NUM1, OnNum)
 ON_EN_CHANGE(IDC_NUM2, OnNum)
 END_MESSAGE_MAP()
 
-CalculatorDlg::CalculatorDlg() noexcept
+CalculatorDlg::CalculatorDlg() noexcept //standalone
 	: CDialogEx(IDD_CALCULATOR)
 	, num1(0)
 	, num2(0)
@@ -26,7 +26,7 @@ CalculatorDlg::CalculatorDlg() noexcept
 	, history{}
 {}
 
-void CalculatorDlg::DoDataExchange(CDataExchange* pDX)
+void CalculatorDlg::DoDataExchange(CDataExchange* pDX)//Update??
 {
 	CDialogEx::DoDataExchange(pDX);
 	::DDX_Text(pDX, IDC_NUM1, num1);

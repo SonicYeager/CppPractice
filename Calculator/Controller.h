@@ -1,0 +1,20 @@
+#pragma once
+#include "Contracts.h"
+
+class Controller
+{
+public:
+	Controller(Ui&, Logic&);
+	~Controller() = default;
+	void Add();
+	void Sub();
+	void Mul();
+	void Div();
+	void Mod();
+	void Exp();
+	void Num();
+
+private:
+	Ui& ui;
+	Logic& logic;
+};

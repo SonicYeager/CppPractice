@@ -1,6 +1,7 @@
 #pragma once
+#include "Contracts.h"
 
-class CalculatorDlg : public CDialogEx
+class CalculatorDlg : public CDialogEx //, public Ui
 {
 	DECLARE_DYNAMIC(CalculatorDlg)
 public:
