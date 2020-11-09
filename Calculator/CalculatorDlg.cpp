@@ -26,18 +26,18 @@ CalculatorDlg::CalculatorDlg() noexcept //standalone
 	, history{}
 {}
 
-//void CalculatorDlg::Init()
-//{
-//	DoModal();
-//}
-//
+void CalculatorDlg::Init()
+{
+	DoModal();
+}
+
 void CalculatorDlg::SetResult(const std::string& strRes)
 {
 	CString c{strRes.c_str()};
 	result.SetString(c);
 	UpdateData(FALSE);
 }
-//
+
 void CalculatorDlg::AddHistory(const std::string& his)
 {
 	CString txt{his.c_str()};
@@ -45,12 +45,12 @@ void CalculatorDlg::AddHistory(const std::string& his)
 	history.SetCurSel(count);
 	UpdateData(FALSE);
 }
-//
-//std::pair<double, double> CalculatorDlg::GetValues()
-//{
-//	UpdateData(TRUE);
-//	return std::make_pair(num1, num2);
-//}
+
+std::pair<double, double> CalculatorDlg::GetValues()
+{
+	UpdateData(TRUE);
+	return std::make_pair(num1, num2);
+}
 
 std::string ComposeHistory(double left, double right, char op, const std::stringstream& result)
 {
@@ -78,60 +78,60 @@ BOOL CalculatorDlg::OnInitDialog()
 
 void CalculatorDlg::OnAdd()
 {
+	operation = '+';
 	UpdateData();
 	auto res = calc.Add(num1, num2);
 	SetResult(res.str());
-	operation = '+';
 	auto his = ComposeHistory(num1, num2, operation, res);
 	AddHistory(his);
 }
 
 void CalculatorDlg::OnSub()
 {
+	operation = '-';
 	UpdateData();
 	auto res = calc.Sub(num1, num2);
 	SetResult(res.str());
-	operation = '-';
 	auto his = ComposeHistory(num1, num2, operation, res);
 	AddHistory(his);
 }
 
 void CalculatorDlg::OnMul()
 {
+	operation = '*';
 	UpdateData();
 	auto res = calc.Mul(num1, num2);
 	SetResult(res.str());
-	operation = '*';
 	auto his = ComposeHistory(num1, num2, operation, res);
 	AddHistory(his);
 }
 
 void CalculatorDlg::OnDiv()
 {
+	operation = '/';
 	UpdateData();
 	auto res = calc.Div(num1, num2);
 	SetResult(res.str());
-	operation = '/';
 	auto his = ComposeHistory(num1, num2, operation, res);
 	AddHistory(his);
 }
 
 void CalculatorDlg::OnMod()
 {
+	operation = '%';
 	UpdateData();
 	auto res = calc.Mod(num1, num2);
 	SetResult(res.str());
-	operation = '%';
 	auto his = ComposeHistory(num1, num2, operation, res);
 	AddHistory(his);
 }
 
 void CalculatorDlg::OnExp()
 {
+	operation = '^';
 	UpdateData();
 	auto res = calc.Exp(num1, num2);
 	SetResult(res.str());
-	operation = '^';
 	auto his = ComposeHistory(num1, num2, operation, res);
 	AddHistory(his);
 }
