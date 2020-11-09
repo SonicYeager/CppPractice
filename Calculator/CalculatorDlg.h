@@ -1,11 +1,15 @@
 #pragma once
 #include "Contracts.h"
 
-class CalculatorDlg : public CDialogEx //, public Ui
+class CalculatorDlg : public CDialogEx, public Ui
 {
 	DECLARE_DYNAMIC(CalculatorDlg)
 public:
 	CalculatorDlg() noexcept;
+
+	void Init() override;
+	void Update(const std::string&) override;
+	std::pair<double, double> GetValues() override;
 
 protected:
 	void DoDataExchange(CDataExchange* pDX);

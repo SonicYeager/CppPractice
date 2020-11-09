@@ -26,7 +26,29 @@ CalculatorDlg::CalculatorDlg() noexcept //standalone
 	, history{}
 {}
 
-void CalculatorDlg::DoDataExchange(CDataExchange* pDX)//Update??
+void CalculatorDlg::Init()
+{
+	DoModal();
+}
+
+void CalculatorDlg::Update(const std::string& strRes)
+{
+	CString c{strRes.c_str()};
+	result.SetString(c);
+	CString txt;
+	txt.Format(L"%g %c %g = %s", num1, operation, num2, result);
+	int count = history.AddString(txt); 
+	history.SetCurSel(count);
+	UpdateData(FALSE);
+}
+
+std::pair<double, double> CalculatorDlg::GetValues()
+{
+	UpdateData(TRUE);
+	return std::make_pair(num1, num2);
+}
+
+void CalculatorDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	::DDX_Text(pDX, IDC_NUM1, num1);
@@ -45,108 +67,132 @@ BOOL CalculatorDlg::OnInitDialog()
 
 void CalculatorDlg::OnAdd()
 {
-	UpdateData();
-	result.Format(L"%g", num1 + num2);
+	//UpdateData();
+	//result.Format(L"%g", num1 + num2);
+	//operation = '+';
+	//CString txt;
+	//txt.Format(L"%g + %g = %s", num1, num2, result);
+	//int count = history.AddString(txt);
+	//history.SetCurSel(count);
+	//UpdateData(FALSE);
+
+	//new
 	operation = '+';
-	CString txt;
-	txt.Format(L"%g + %g = %s", num1, num2, result);
-	int count = history.AddString(txt);
-	history.SetCurSel(count);
-	UpdateData(FALSE);
+	onAdd();
 }
 
 void CalculatorDlg::OnSub()
 {
-	UpdateData();
-	result.Format(L"%g", num1 - num2);
+	//UpdateData();
+	//result.Format(L"%g", num1 - num2);
+	//operation = '-';
+	//CString txt;
+	//txt.Format(L"%g - %g = %s", num1, num2, result);
+	//int count = history.AddString(txt);
+	//history.SetCurSel(count);
+	//UpdateData(FALSE);
+
+	//new
 	operation = '-';
-	CString txt;
-	txt.Format(L"%g - %g = %s", num1, num2, result);
-	int count = history.AddString(txt);
-	history.SetCurSel(count);
-	UpdateData(FALSE);
+	onSub();
 }
 
 void CalculatorDlg::OnMul()
 {
-	UpdateData();
-	result.Format(L"%g", num1 * num2);
+	//UpdateData();
+	//result.Format(L"%g", num1 * num2);
+	//operation = '*';
+	//CString txt;
+	//txt.Format(L"%g * %g = %s", num1, num2, result);
+	//int count = history.AddString(txt);
+	//history.SetCurSel(count);
+	//UpdateData(FALSE);
+
+	//new
 	operation = '*';
-	CString txt;
-	txt.Format(L"%g * %g = %s", num1, num2, result);
-	int count = history.AddString(txt);
-	history.SetCurSel(count);
-	UpdateData(FALSE);
+	onMul();
 }
 
 void CalculatorDlg::OnDiv()
 {
-	UpdateData();
-	result.Format(L"%g", num1 / num2);
+	//UpdateData();
+	//result.Format(L"%g", num1 / num2);
+	//operation = '/';
+	//CString txt;
+	//txt.Format(L"%g / %g = %s", num1, num2, result);
+	//int count = history.AddString(txt);
+	//history.SetCurSel(count);
+	//UpdateData(FALSE);
+
+	//new
 	operation = '/';
-	CString txt;
-	txt.Format(L"%g / %g = %s", num1, num2, result);
-	int count = history.AddString(txt);
-	history.SetCurSel(count);
-	UpdateData(FALSE);
+	onDiv();
 }
 
 void CalculatorDlg::OnMod()
 {
-	UpdateData();
-	auto divis = static_cast<int>(std::abs(num2));
-	if(divis == 0)
-		result.Format(L"%g", 0.0);
-	else {
-		auto divid = static_cast<int>(std::abs(num1));
-		if((num1 < 0 && num2 > 0) || (num1 > 0 && num2 < 0))
-			result.Format(L"%i", -divid % divis);
-		else
-			result.Format(L"%i", divid % divis);
-	}
+	//UpdateData();
+	//auto divis = static_cast<int>(std::abs(num2));
+	//if(divis == 0)
+	//	result.Format(L"%g", 0.0);
+	//else {
+	//	auto divid = static_cast<int>(std::abs(num1));
+	//	if((num1 < 0 && num2 > 0) || (num1 > 0 && num2 < 0))
+	//		result.Format(L"%i", -divid % divis);
+	//	else
+	//		result.Format(L"%i", divid % divis);
+	//}
+	//operation = '%';
+	//CString txt;
+	//txt.Format(L"%g mod %g = %s", num1, num2, result);
+	//int count = history.AddString(txt);
+	//history.SetCurSel(count);
+	//UpdateData(FALSE);
+
+	//new
 	operation = '%';
-	CString txt;
-	txt.Format(L"%g mod %g = %s", num1, num2, result);
-	int count = history.AddString(txt);
-	history.SetCurSel(count);
-	UpdateData(FALSE);
+	onMod();
 }
 
 void CalculatorDlg::OnExp()
 {
-	UpdateData();
-	result.Format(L"%g", pow(num1, num2));
+	//UpdateData();
+	//result.Format(L"%g", pow(num1, num2));
+	//operation = '^';
+	//CString txt;
+	//txt.Format(L"%g ^ %g = %s", num1, num2, result);
+	//int count = history.AddString(txt);
+	//history.SetCurSel(count);
+	//UpdateData(FALSE);
+
+	//new
 	operation = '^';
-	CString txt;
-	txt.Format(L"%g ^ %g = %s", num1, num2, result);
-	int count = history.AddString(txt);
-	history.SetCurSel(count);
-	UpdateData(FALSE);
+	onExp();
 }
 
 void CalculatorDlg::OnNum()
 {
-	switch(operation)
-	{
-	case '+':
-		OnAdd();
-		break;
-	case '-':
-		OnSub();
-		break;
-	case '*':
-		OnMul();
-		break;
-	case '/':
-		OnDiv();
-		break;
-	case '%':
-		OnMod();
-		break;
-	case '^':
-		OnExp();
-		break;
-	}
+	//switch(operation)
+	//{
+	//case '+':
+	//	OnAdd();
+	//	break;
+	//case '-':
+	//	OnSub();
+	//	break;
+	//case '*':
+	//	OnMul();
+	//	break;
+	//case '/':
+	//	OnDiv();
+	//	break;
+	//case '%':
+	//	OnMod();
+	//	break;
+	//case '^':
+	//	OnExp();
+	//	break;
+	//}
 }
 
 void CalculatorDlg::OnOK()
