@@ -38,13 +38,13 @@ CalculatorDlg::CalculatorDlg() noexcept //standalone
 //	UpdateData(FALSE);
 //}
 //
-//void CalculatorDlg::AddHistory(const std::string& his)
-//{
-//	CString txt{his.c_str()};
-//	int count = history.AddString(txt);
-//	history.SetCurSel(count);
-//	UpdateData(FALSE);
-//}
+void CalculatorDlg::AddHistory(const std::string& his)
+{
+	CString txt{his.c_str()};
+	int count = history.AddString(txt);
+	history.SetCurSel(count);
+	UpdateData(FALSE);
+}
 //
 //std::pair<double, double> CalculatorDlg::GetValues()
 //{
@@ -83,10 +83,7 @@ void CalculatorDlg::OnAdd()
 	result.SetString(CString(res.str().c_str()));
 	operation = '+';
 	auto his = ComposeHistory(num1, num2, operation, res);
-	CString txt{his.c_str()};
-	int count = history.AddString(txt);
-	history.SetCurSel(count);
-	UpdateData(FALSE);
+	AddHistory(his);
 }
 
 void CalculatorDlg::OnSub()
@@ -96,10 +93,7 @@ void CalculatorDlg::OnSub()
 	result.SetString(CString(res.str().c_str()));
 	operation = '-';
 	auto his = ComposeHistory(num1, num2, operation, res);
-	CString txt{his.c_str()};
-	int count = history.AddString(txt);
-	history.SetCurSel(count);
-	UpdateData(FALSE);
+	AddHistory(his);
 }
 
 void CalculatorDlg::OnMul()
@@ -109,10 +103,7 @@ void CalculatorDlg::OnMul()
 	result.SetString(CString(res.str().c_str()));
 	operation = '*';
 	auto his = ComposeHistory(num1, num2, operation, res);
-	CString txt{his.c_str()};
-	int count = history.AddString(txt);
-	history.SetCurSel(count);
-	UpdateData(FALSE);
+	AddHistory(his);
 }
 
 void CalculatorDlg::OnDiv()
@@ -122,10 +113,7 @@ void CalculatorDlg::OnDiv()
 	result.SetString(CString(res.str().c_str()));
 	operation = '/';
 	auto his = ComposeHistory(num1, num2, operation, res);
-	CString txt{his.c_str()};
-	int count = history.AddString(txt);
-	history.SetCurSel(count);
-	UpdateData(FALSE);
+	AddHistory(his);
 }
 
 void CalculatorDlg::OnMod()
@@ -135,10 +123,7 @@ void CalculatorDlg::OnMod()
 	result.SetString(CString(res.str().c_str()));
 	operation = '%';
 	auto his = ComposeHistory(num1, num2, operation, res);
-	CString txt{his.c_str()};
-	int count = history.AddString(txt);
-	history.SetCurSel(count);
-	UpdateData(FALSE);
+	AddHistory(his);
 }
 
 void CalculatorDlg::OnExp()
@@ -148,10 +133,7 @@ void CalculatorDlg::OnExp()
 	result.SetString(CString(res.str().c_str()));
 	operation = '^';
 	auto his = ComposeHistory(num1, num2, operation, res);
-	CString txt{his.c_str()};
-	int count = history.AddString(txt);
-	history.SetCurSel(count);
-	UpdateData(FALSE);
+	AddHistory(his);
 }
 
 void CalculatorDlg::OnNum()

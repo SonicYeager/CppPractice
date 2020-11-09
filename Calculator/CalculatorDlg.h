@@ -10,7 +10,7 @@ public:
 
 	//void Init() override;
 	//void SetResult(const std::string&) override;
-	//void AddHistory(const std::string&) override;
+	void AddHistory(const std::string&); //override;
 	//std::pair<double, double> GetValues() override;
 
 protected:
