@@ -6,9 +6,7 @@ bool FileChecker::Check(const std::wstring& str)
 	if(IsInvalidPathString(filePath))
 		return false;
 
-	struct _stat buf
-	{};
-	if(::_wstat(filePath.c_str(), &buf) != 0)
+	if (not std::filesystem::exists(filePath))
 		return false;
 
 	auto lreader = CreateReader();
@@ -60,7 +58,7 @@ void LegacyReader::SetLib(const std::string& libStr)
 		this->lib = lib;
 }
 
-bool LegacyReader::CheckFile(const std::wstring& path)
+bool LegacyReader::CheckFile(const std::filesystem::path& path)
 {
 	using CheckFileFunc = bool (*)(const wchar_t*);
 	auto checkFile = reinterpret_cast<CheckFileFunc>(::GetProcAddress(lib, "CheckFile"));
@@ -71,9 +69,9 @@ bool LegacyReader::CheckFile(const std::wstring& path)
 	return false;
 }
 
-bool LegacyReader::IsExtensionSupported(const std::wstring& path)
+bool LegacyReader::IsExtensionSupported(const std::filesystem::path& path)
 {
 	using IsExtSupported = bool (*)(const wchar_t*);
 	auto isExtSupported = reinterpret_cast<IsExtSupported>(::GetProcAddress(lib, "IsExtensionSupported"));
-	return isExtSupported(path.substr(path.find_last_of('.') + 1).c_str());
+	return isExtSupported(path.extension().c_str());
 }

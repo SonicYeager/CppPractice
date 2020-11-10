@@ -9,8 +9,8 @@ class LegacyReader
 public:
 	~LegacyReader();
 	virtual void SetLib(const std::string&);
-	virtual bool CheckFile(const std::wstring& path);
-	virtual bool IsExtensionSupported(const std::wstring& path);
+	virtual bool CheckFile(const std::filesystem::path& path);
+	virtual bool IsExtensionSupported(const std::filesystem::path& path);
 private:
 	HMODULE lib{};
 };

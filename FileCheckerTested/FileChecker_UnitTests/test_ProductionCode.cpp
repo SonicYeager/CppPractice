@@ -5,11 +5,11 @@ class StubReader : public LegacyReader
 {
 public:
 	MOCK_METHOD(void, SetLib, (const std::string&), (override));
-	bool CheckFile(const std::wstring&) override
+	bool CheckFile(const std::filesystem::path&) override
 	{
 		return true;
 	}
-	bool IsExtensionSupported(const std::wstring&) override
+	bool IsExtensionSupported(const std::filesystem::path&) override
 	{
 		return true;
 	}
