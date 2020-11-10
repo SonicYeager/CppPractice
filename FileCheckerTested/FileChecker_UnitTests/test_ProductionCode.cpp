@@ -15,6 +15,15 @@ public:
 	}
 };
 
+class MockFileChecker : public FileChecker
+{
+	private:
+		std::unique_ptr<LegacyReader> CreateReader() override
+		{
+			return std::make_unique<StubReader>();
+		}
+};
+
 //TEST(TestFileChecker, Check_ValidPath_ReturnTrue)
 //{
 //	FileChecker fc;
