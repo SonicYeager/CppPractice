@@ -24,12 +24,63 @@ class MockFileChecker : public FileChecker
 		}
 };
 
-//TEST(TestFileChecker, Check_ValidPath_ReturnTrue)
-//{
-//	FileChecker fc;
-//	std::wstring path{ L"C:\\Uebungsprojekte\\FileCheckerTested\\Testy.txt" };
-//
-//	auto actual = fc.Check(path);
-//
-//	EXPECT_TRUE(actual);
-//}
+
+TEST(TestFileChecker, Check_ValidPathWithDash_ReturnTrue)
+{
+	::testing::StrictMock<MockFileChecker> fc;
+	std::wstring path{ L"C:/Uebungsprojekte/FileCheckerTested/Testy.txt" };
+
+	auto actual = fc.Check(path);
+
+	EXPECT_TRUE(actual);
+}
+
+TEST(TestFileChecker, Check_ValidPathWithCounterDashes_ReturnTrue)
+{
+	::testing::StrictMock<MockFileChecker> fc;
+	std::wstring path{ L"C:\\Uebungsprojekte\\FileCheckerTested\\Testy.txt" };
+
+	auto actual = fc.Check(path);
+
+	EXPECT_TRUE(actual);
+}
+
+TEST(TestFileChecker, Check_InvalidPathNoExtension_ReturnFalse)
+{
+	::testing::StrictMock<MockFileChecker> fc;
+	std::wstring path{ L"C:\\Uebungsprojekte\\FileCheckerTested\\Testy" };
+
+	auto actual = fc.Check(path);
+
+	EXPECT_FALSE(actual);
+}
+
+TEST(TestFileChecker, Check_InvalidPathNoFilename_ReturnTrue)
+{
+	::testing::StrictMock<MockFileChecker> fc;
+	std::wstring path{ L"C:\\Uebungsprojekte\\FileCheckerTested\\.txt" };
+
+	auto actual = fc.Check(path);
+
+	EXPECT_FALSE(actual);
+}
+
+TEST(TestFileChecker, Check_InvalidPathNoFilenameNoExtension_ReturnTrue)
+{
+	::testing::StrictMock<MockFileChecker> fc;
+	std::wstring path{ L"C:\\Uebungsprojekte\\FileCheckerTested\\" };
+
+	auto actual = fc.Check(path);
+
+	EXPECT_FALSE(actual);
+}
+
+TEST(TestFileChecker, Check_InvalidPathEmpty_ReturnTrue)
+{
+	::testing::StrictMock<MockFileChecker> fc;
+	std::wstring path{ L"" };
+
+	auto actual = fc.Check(path);
+
+	EXPECT_FALSE(actual);
+}
