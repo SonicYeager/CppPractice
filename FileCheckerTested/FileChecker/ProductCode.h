@@ -1,8 +1,9 @@
 #pragma once
 #include <string>
-#include <sys/stat.h>
+//#include <sys/stat.h>
 #include <windows.h>
 #include <memory>
+#include <filesystem>
 
 class Reader
 {
@@ -23,7 +24,7 @@ public:
 	bool Check(const std::wstring& filePath);
 
 private:
-	bool IsInvalidPathString(const std::wstring&) const;
+	bool IsInvalidPathString(const std::filesystem::path&) const;
 
 protected:
 	virtual void CreateReader();
