@@ -10,13 +10,12 @@ bool FileChecker::Check(const std::wstring& filePath)
 	if(::_wstat(filePath.c_str(), &buf) != 0)
 		return false;
 
-	LegacyReader lreader{};
-	lreader.SetLib("reader.dll");
+	auto lreader = CreateReader();
 	bool result{ false };
 
-	if(lreader.IsExtensionSupported(filePath))
+	if(lreader->IsExtensionSupported(filePath))
 	{
-		result = lreader.CheckFile(filePath);
+		result = lreader->CheckFile(filePath);
 	}
 	return result;
 }
@@ -27,6 +26,13 @@ bool HasExtension(const std::wstring& filePath);
 bool FileChecker::IsInvalidPathString(const std::wstring& filePath) const
 {
 	return filePath.empty() or not HasExtension(filePath) or not HasFileName(filePath);
+}
+
+std::unique_ptr<LegacyReader> FileChecker::CreateReader()
+{
+	LegacyReader lreader;
+	lreader.SetLib("reader.dll");
+	return std::make_unique<LegacyReader>(lreader);
 }
 
 bool HasFileName(const std::wstring& filePath)

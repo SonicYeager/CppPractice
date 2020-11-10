@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <memory>
 #include <windows.h>
 
 class LegacyReader
@@ -20,4 +21,5 @@ public:
 
 private:
 	bool IsInvalidPathString(const std::wstring&) const;
+	virtual std::unique_ptr<LegacyReader> CreateReader();
 };
