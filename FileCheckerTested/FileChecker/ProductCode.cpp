@@ -1,34 +1,24 @@
 #include "ProductCode.h"
-#include <sys/stat.h>
-#include <windows.h>
 
 bool FileChecker::Check(const std::wstring& filePath)
 {
 	if(IsInvalidPathString(filePath))
 		return false;
 
+
 	struct _stat buf
 	{};
 	if(::_wstat(filePath.c_str(), &buf) != 0)
 		return false;
 
-	HMODULE lib = ::LoadLibrary("reader.dll");
-	if(not lib)
-		return false;
+	CreateReader();
 	bool result = false;
-	using IsExtSupported = bool (*)(const wchar_t*);
-	auto isExtSupported = reinterpret_cast<IsExtSupported>(::GetProcAddress(lib, "IsExtensionSupported"));
+
 	// Check extension first because it is faster
-	if(isExtSupported(filePath.substr(filePath.find_last_of('.') + 1).c_str()))
+	if(reader->IsExtensionSupported(filePath))
 	{
-		using CheckFileFunc = bool (*)(const wchar_t*);
-		auto checkFile = reinterpret_cast<CheckFileFunc>(::GetProcAddress(lib, "CheckFile"));
-		if(checkFile(filePath.c_str()))
-		{
-			result = true;
-		}
+		reader->CheckFile(filePath);
 	}
-	FreeLibrary(lib);
 	return result;
 }
 
@@ -38,6 +28,12 @@ bool HasExtension(const std::wstring& filePath);
 bool FileChecker::IsInvalidPathString(const std::wstring& filePath) const
 {
 	return filePath.empty() or not HasExtension(filePath) or not HasFileName(filePath);
+}
+
+void FileChecker::CreateReader()
+{
+	reader = std::make_unique<Reader>();
+	reader->SetLib(::LoadLibrary("reader.dll"));
 }
 
 bool HasFileName(const std::wstring& filePath)
@@ -57,3 +53,30 @@ bool HasExtension(const std::wstring& filePath)
 	return not ext.empty() and inv == std::wstring::npos;
 }
 
+void Reader::SetLib(const HMODULE& lib)
+{
+	if (lib)
+		this->lib = lib;
+}
+
+Reader::~Reader()
+{
+	FreeLibrary(lib);
+}
+
+bool Reader::CheckFile(const std::wstring& filePath)
+{
+	bool result{false};
+	using CheckFileFunc = bool (*)(const wchar_t*);
+	auto checkFile = reinterpret_cast<CheckFileFunc>(::GetProcAddress(lib, "CheckFile"));
+	if (checkFile(filePath.c_str()))
+		result = true;
+	return result;
+}
+
+bool Reader::IsExtensionSupported(const std::wstring& filePath)
+{
+	using IsExtSupported = bool (*)(const wchar_t*);
+	auto isExtSupported = reinterpret_cast<IsExtSupported>(::GetProcAddress(lib, "IsExtensionSupported"));
+	return isExtSupported(filePath.substr(filePath.find_last_of('.') + 1).c_str());
+}
