@@ -1,7 +1,8 @@
 #include "ProductCode.h"
 
-bool FileChecker::Check(const std::wstring& filePath)
+bool FileChecker::Check(const std::wstring& str)
 {
+	std::filesystem::path filePath{str};
 	if(IsInvalidPathString(filePath))
 		return false;
 
@@ -20,8 +21,8 @@ bool FileChecker::Check(const std::wstring& filePath)
 	return result;
 }
 
-bool HasFileName(const std::wstring& filePath);
-bool HasExtension(const std::wstring& filePath);
+bool HasFileName(const std::filesystem::path& filePath);
+bool HasExtension(const std::filesystem::path& filePath);
 
 bool FileChecker::IsInvalidPathString(const std::wstring& filePath) const
 {
@@ -35,21 +36,14 @@ std::unique_ptr<LegacyReader> FileChecker::CreateReader()
 	return std::make_unique<LegacyReader>(lreader);
 }
 
-bool HasFileName(const std::wstring& filePath)
+bool HasFileName(const std::filesystem::path& filePath)
 {
-	auto posExtBeg = filePath.find_last_of('.') + 1;
-	auto posFileNameBeg = filePath.find_last_of('\\') + 1;
-	auto ext = filePath.substr(posExtBeg);
-	auto fil = filePath.substr(posFileNameBeg, (posExtBeg - 1) - posFileNameBeg);
-	auto inv = fil.find_last_of(L".\\/");
-	return not fil.empty() and inv == std::wstring::npos;
+	return not filePath.filename().empty();
 }
 
-bool HasExtension(const std::wstring& filePath)
+bool HasExtension(const std::filesystem::path& filePath)
 {
-	auto ext = filePath.substr(filePath.find_last_of('.') + 1);
-	auto inv = ext.find_last_of(L".\\/");
-	return not ext.empty() and inv == std::wstring::npos;
+	return not filePath.extension().empty();
 }
 
 LegacyReader::~LegacyReader()

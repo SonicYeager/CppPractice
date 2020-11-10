@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <memory>
+#include <filesystem>
 #include <windows.h>
 
 class LegacyReader
