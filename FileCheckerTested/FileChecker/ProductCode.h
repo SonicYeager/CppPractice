@@ -1,5 +1,17 @@
 #pragma once
 #include <string>
+#include <windows.h>
+
+class LegacyReader
+{
+public:
+	~LegacyReader();
+	virtual void SetLib(const std::string&);
+	virtual bool CheckFile(const std::wstring& path);
+	virtual bool IsExtensionSupported(const std::wstring& path);
+private:
+	HMODULE lib{};
+};
 
 class FileChecker
 {

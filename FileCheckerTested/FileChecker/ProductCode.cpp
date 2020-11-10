@@ -1,6 +1,4 @@
 #include "ProductCode.h"
-#include <sys/stat.h>
-#include <windows.h>
 
 bool FileChecker::Check(const std::wstring& filePath)
 {
@@ -12,23 +10,14 @@ bool FileChecker::Check(const std::wstring& filePath)
 	if(::_wstat(filePath.c_str(), &buf) != 0)
 		return false;
 
-	HMODULE lib = ::LoadLibrary("reader.dll");
-	if(not lib)
-		return false;
-	bool result = false;
-	using IsExtSupported = bool (*)(const wchar_t*);
-	auto isExtSupported = reinterpret_cast<IsExtSupported>(::GetProcAddress(lib, "IsExtensionSupported"));
-	// Check extension first because it is faster
-	if(isExtSupported(filePath.substr(filePath.find_last_of('.') + 1).c_str()))
+	LegacyReader lreader{};
+	lreader.SetLib("reader.dll");
+	bool result{ false };
+
+	if(lreader.IsExtensionSupported(filePath))
 	{
-		using CheckFileFunc = bool (*)(const wchar_t*);
-		auto checkFile = reinterpret_cast<CheckFileFunc>(::GetProcAddress(lib, "CheckFile"));
-		if(checkFile(filePath.c_str()))
-		{
-			result = true;
-		}
+		result = lreader.CheckFile(filePath);
 	}
-	FreeLibrary(lib);
 	return result;
 }
 
@@ -57,3 +46,34 @@ bool HasExtension(const std::wstring& filePath)
 	return not ext.empty() and inv == std::wstring::npos;
 }
 
+LegacyReader::~LegacyReader()
+{
+	FreeLibrary(lib);
+}
+
+void LegacyReader::SetLib(const std::string& libStr)
+{
+	HMODULE lib = ::LoadLibrary(libStr.c_str());
+	if (not lib)
+		throw; //specify exeption!!
+	else
+		this->lib = lib;
+}
+
+bool LegacyReader::CheckFile(const std::wstring& path)
+{
+	using CheckFileFunc = bool (*)(const wchar_t*);
+	auto checkFile = reinterpret_cast<CheckFileFunc>(::GetProcAddress(lib, "CheckFile"));
+	if (checkFile(path.c_str()))
+	{
+		return true;
+	}
+	return false;
+}
+
+bool LegacyReader::IsExtensionSupported(const std::wstring& path)
+{
+	using IsExtSupported = bool (*)(const wchar_t*);
+	auto isExtSupported = reinterpret_cast<IsExtSupported>(::GetProcAddress(lib, "IsExtensionSupported"));
+	return isExtSupported(path.substr(path.find_last_of('.') + 1).c_str());
+}
