@@ -17,7 +17,7 @@ bool FileChecker::Check(const std::wstring& filePath)
 	// Check extension first because it is faster
 	if(reader->IsExtensionSupported(filePath))
 	{
-		reader->CheckFile(filePath);
+		result = reader->CheckFile(filePath);
 	}
 	return result;
 }
@@ -55,7 +55,9 @@ bool HasExtension(const std::wstring& filePath)
 
 void Reader::SetLib(const HMODULE& lib)
 {
-	if (lib)
+	if (not lib)
+		throw;
+	else
 		this->lib = lib;
 }
 
@@ -70,8 +72,8 @@ bool Reader::CheckFile(const std::wstring& filePath)
 	using CheckFileFunc = bool (*)(const wchar_t*);
 	auto checkFile = reinterpret_cast<CheckFileFunc>(::GetProcAddress(lib, "CheckFile"));
 	if (checkFile(filePath.c_str()))
-		result = true;
-	return result;
+		return true;
+	return false;
 }
 
 bool Reader::IsExtensionSupported(const std::wstring& filePath)

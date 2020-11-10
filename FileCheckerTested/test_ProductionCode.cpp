@@ -5,8 +5,16 @@ class StubReader : public Reader
 {
 public:
 	MOCK_METHOD(void, SetLib, (const HMODULE&), (override));
-	MOCK_METHOD(bool, CheckFile, (const std::wstring&), (override));
-	MOCK_METHOD(bool, IsExtensionSupported, (const std::wstring&), (override));
+	//MOCK_METHOD(bool, CheckFile, (const std::wstring&), (override));
+	//MOCK_METHOD(bool, IsExtensionSupported, (const std::wstring&), (override));
+	bool CheckFile(const std::wstring&) override
+	{
+		return true;
+	}
+	bool IsExtensionSupported(const std::wstring&) override
+	{
+		return true;
+	}
 };
 
 class MockFileChecker : public FileChecker
@@ -22,22 +30,62 @@ protected:
 };
 
 
+TEST(TestFileChecker, Check_ValidPathWithDash_ReturnFalse)
+{
+	::testing::StrictMock<MockFileChecker> fc{};
+	const std::wstring path{ L"C:/Uebungsprojekte/FileCheckerTested/FALCON.BMP" };
+
+	auto actual = fc.Check(path);
+
+	EXPECT_TRUE(actual);
+}
+
 TEST(TestFileChecker, Check_ValidPath_ReturnTrue)
 {
-	FileChecker fc{};
-	const std::wstring path{ L"C:\\tmp\\HelloWorld.txt" };
+	::testing::StrictMock<MockFileChecker> fc{};
+	const std::wstring path{ L"C:\\Uebungsprojekte\\FileCheckerTested\\FALCON.BMP" };
 
 	auto actual = fc.Check(path);
 
 	EXPECT_TRUE(actual); 
 }
 
-TEST(TestFileChecker, Check_InvalidPath_ReturnFalse)
+TEST(TestFileChecker, Check_InvalidPathNoExtension_ReturnFalse)
 {
-	FileChecker fc{};
-	const std::wstring path{ L"C:/tmp/HelloWorld.txt" };
+	::testing::StrictMock<MockFileChecker> fc{};
+	const std::wstring path{ L"C:\\Uebungsprojekte\\FileCheckerTested\\FALCON" };
 
 	auto actual = fc.Check(path);
 
-	EXPECT_TRUE(actual);
+	EXPECT_FALSE(actual);
+}
+
+TEST(TestFileChecker, Check_InvalidPathNoFileNameWithExtension_ReturnFalse)
+{
+	::testing::StrictMock<MockFileChecker> fc{};
+	const std::wstring path{ L"C:\\Uebungsprojekte\\FileCheckerTested\\.BMP" };
+
+	auto actual = fc.Check(path);
+
+	EXPECT_FALSE(actual);
+}
+
+TEST(TestFileChecker, Check_InvalidPathNoFileNameNoExtension_ReturnFalse)
+{
+	::testing::StrictMock<MockFileChecker> fc{};
+	const std::wstring path{ L"C:\\Uebungsprojekte\\FileCheckerTested\\" };
+
+	auto actual = fc.Check(path);
+
+	EXPECT_FALSE(actual);
+}
+
+TEST(TestFileChecker, Check_InvalidPathEmpty_ReturnFalse)
+{
+	::testing::StrictMock<MockFileChecker> fc{};
+	const std::wstring path{ L"" };
+
+	auto actual = fc.Check(path);
+
+	EXPECT_FALSE(actual);
 }
