@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <memory>
 
 struct IReader
 {
@@ -9,6 +10,7 @@ struct IReader
 	virtual bool IsLoaded() = 0;
 };
 
+
 class FileChecker
 {
 public:
@@ -16,4 +18,7 @@ public:
 
 private:
 	bool IsInvalidPathString(const std::wstring&) const;
+
+protected:
+	virtual std::unique_ptr<IReader> CreateReader();
 };

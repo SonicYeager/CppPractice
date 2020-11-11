@@ -1,6 +1,5 @@
 #include "ProductCode.h"
 #include <windows.h>
-#include <memory>
 
 
 struct Reader : public IReader
@@ -32,7 +31,7 @@ struct Reader : public IReader
 	HMODULE lib;
 };
 
-std::unique_ptr<IReader> CreateReader()
+std::unique_ptr<IReader> FileChecker::CreateReader()
 {
 	return std::make_unique<Reader>();
 }
