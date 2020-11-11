@@ -36,8 +36,9 @@ std::unique_ptr<IReader> FileChecker::CreateReader()
 	return std::make_unique<Reader>();
 }
 
-bool FileChecker::Check(const std::wstring& filePath)
+bool FileChecker::Check(const std::filesystem::path & path)
 {
+	std::wstring filePath{std::filesystem::absolute(path)};
 	if(IsInvalidPathString(filePath))
 		return false;
 
