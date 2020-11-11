@@ -2,6 +2,13 @@
 #include <sys/stat.h>
 #include <windows.h>
 
+bool CheckFile(HMODULE lib, const std::wstring& filePath)
+{
+	using CheckFileFunc = bool (*)(const wchar_t*);
+	auto checkFile = reinterpret_cast<CheckFileFunc>(::GetProcAddress(lib, "CheckFile"));
+	return checkFile(filePath.c_str());
+}
+
 bool FileChecker::Check(const std::wstring& filePath)
 {
 	if(IsInvalidPathString(filePath))
@@ -16,14 +23,12 @@ bool FileChecker::Check(const std::wstring& filePath)
 	if(not lib)
 		return false;
 	bool result = false;
+	// Check extension first because it is faster
 	using IsExtSupported = bool (*)(const wchar_t*);
 	auto isExtSupported = reinterpret_cast<IsExtSupported>(::GetProcAddress(lib, "IsExtensionSupported"));
-	// Check extension first because it is faster
 	if(isExtSupported(filePath.substr(filePath.find_last_of('.') + 1).c_str()))
 	{
-		using CheckFileFunc = bool (*)(const wchar_t*);
-		auto checkFile = reinterpret_cast<CheckFileFunc>(::GetProcAddress(lib, "CheckFile"));
-		if(checkFile(filePath.c_str()))
+		if(CheckFile(lib, filePath))
 		{
 			result = true;
 		}
