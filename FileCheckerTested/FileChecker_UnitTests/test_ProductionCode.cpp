@@ -51,3 +51,13 @@ TEST(TestFileChecker, Check_InvalidPathNoExtension_ReturnFalse)
 
 	EXPECT_FALSE(actual);
 }
+
+TEST(TestFileChecker, Check_InvalidPathNoFilename_ReturnFalse)
+{
+	FileCheckerUnderTest fc;
+	std::wstring path{ L"TestData/.txt" };
+
+	auto actual = fc.Check(path);
+
+	EXPECT_FALSE(actual);
+}
