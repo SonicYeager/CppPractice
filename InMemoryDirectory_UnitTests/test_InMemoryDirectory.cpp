@@ -66,3 +66,5 @@ TEST(TestInMemoryDirectory, GenerateIndex_MultipleTimes_OneIndex)
 	auto expected = 1;
 	EXPECT_EQ(actual, expected);
 }
+
+//test if multiple calls from generate fuqs the index text
