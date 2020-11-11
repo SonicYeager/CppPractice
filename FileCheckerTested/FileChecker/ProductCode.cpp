@@ -25,6 +25,10 @@ struct Reader
 		auto isExtSupported = reinterpret_cast<IsExtSupported>(::GetProcAddress(lib, "IsExtensionSupported"));
 		return isExtSupported(extension.c_str());
 	}
+	bool IsLoaded()
+	{
+		return lib;
+	}
 	HMODULE lib;
 };
 
@@ -39,7 +43,7 @@ bool FileChecker::Check(const std::wstring& filePath)
 		return false;
 
 	Reader reader{};
-	if(not reader.lib)
+	if (not reader.IsLoaded())
 		return false;
 
 	bool result = false;
