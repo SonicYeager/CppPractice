@@ -9,6 +9,13 @@ bool CheckFile(HMODULE lib, const std::wstring& filePath)
 	return checkFile(filePath.c_str());
 }
 
+bool IsExtensionSupported(HMODULE lib, const std::wstring& extension)
+{
+	using IsExtSupported = bool (*)(const wchar_t*);
+	auto isExtSupported = reinterpret_cast<IsExtSupported>(::GetProcAddress(lib, "IsExtensionSupported"));
+	return isExtSupported(extension.c_str());
+}
+
 bool FileChecker::Check(const std::wstring& filePath)
 {
 	if(IsInvalidPathString(filePath))
@@ -24,9 +31,8 @@ bool FileChecker::Check(const std::wstring& filePath)
 		return false;
 	bool result = false;
 	// Check extension first because it is faster
-	using IsExtSupported = bool (*)(const wchar_t*);
-	auto isExtSupported = reinterpret_cast<IsExtSupported>(::GetProcAddress(lib, "IsExtensionSupported"));
-	if(isExtSupported(filePath.substr(filePath.find_last_of('.') + 1).c_str()))
+
+	if(IsExtensionSupported(lib, filePath.substr(filePath.find_last_of('.') + 1)))
 	{
 		if(CheckFile(lib, filePath))
 		{
