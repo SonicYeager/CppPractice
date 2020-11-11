@@ -4,8 +4,8 @@
 void InMemoryDirectory::AddElement(std::unique_ptr<Element> pElement)
 {
 	m_elements.push_back(std::move(pElement));
-	//if (GetElement("index") != nullptr)
-	//	GenerateIndex();
+	if (GetElement("index") != nullptr)
+		GenerateIndex();
 }
 
 void InMemoryDirectory::GenerateIndex()
@@ -14,9 +14,10 @@ void InMemoryDirectory::GenerateIndex()
 	if (index == nullptr)
 	{
 		auto pNewElement = std::make_unique<Element>("index");
+		pNewElement->AddText("index\n");
 		for(auto& pElement : m_elements)
 			pNewElement->AddText(pElement->GetName() + '\n');
-		AddElement(std::move(pNewElement));
+		m_elements.insert(std::begin(m_elements), std::move(pNewElement));
 	}
 	else
 		index->AddText(m_elements.back()->GetName() + "\n");
