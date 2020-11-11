@@ -62,11 +62,10 @@ bool FileChecker::Check(const std::filesystem::path & path)
 }
 
 bool HasFileName(const std::filesystem::path & filePath);
-bool HasExtension(const std::filesystem::path& filePath);
 
-bool FileChecker::IsInvalidPathString(const std::wstring& filePath) const
+bool FileChecker::IsInvalidPathString(const std::filesystem::path& filePath) const
 {
-	return filePath.empty() or not HasExtension(filePath) or not HasFileName(filePath);
+	return filePath.empty() or not filePath.has_extension() or not HasFileName(filePath);
 }
 
 bool HasFileName(const std::filesystem::path & filePath)
@@ -77,10 +76,5 @@ bool HasFileName(const std::filesystem::path & filePath)
 	fname = fname.substr(posFileNameBeg, (posExtBeg - 1) - posFileNameBeg);
 	auto inv = fname.find_last_of(".\\/");;
 	return not fname.empty() and inv == std::wstring::npos;
-}
-
-bool HasExtension(const std::filesystem::path& filePath)
-{
-	return filePath.has_extension();
 }
 

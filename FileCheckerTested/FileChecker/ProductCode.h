@@ -18,7 +18,7 @@ public:
 	bool Check(const std::filesystem::path & filePath);
 
 private:
-	bool IsInvalidPathString(const std::wstring&) const;
+	bool IsInvalidPathString(const std::filesystem::path& filePath) const;
 
 protected:
 	virtual std::unique_ptr<IReader> CreateReader();
