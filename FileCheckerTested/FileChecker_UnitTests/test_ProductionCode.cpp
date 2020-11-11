@@ -4,7 +4,10 @@
 class StubReader : public LegacyReader
 {
 public:
-	MOCK_METHOD(void, SetLib, (const std::string&), (override));
+	bool SetLib(const std::string&) override
+	{
+		return true;
+	}
 	bool CheckFile(const std::filesystem::path&) override
 	{
 		return true;

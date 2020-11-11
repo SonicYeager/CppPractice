@@ -10,6 +10,9 @@ bool FileChecker::Check(const std::wstring& str)
 		return false;
 
 	auto lreader = CreateReader();
+	if (not lreader->SetLib("reader.dll"))
+		return false;
+
 	bool result{ false };
 
 	if(lreader->IsExtensionSupported(filePath))
@@ -30,7 +33,6 @@ bool FileChecker::IsInvalidPathString(const std::wstring& filePath) const
 std::unique_ptr<LegacyReader> FileChecker::CreateReader()
 {
 	LegacyReader lreader;
-	lreader.SetLib("reader.dll");
 	return std::make_unique<LegacyReader>(lreader);
 }
 
@@ -49,13 +51,14 @@ LegacyReader::~LegacyReader()
 	FreeLibrary(lib);
 }
 
-void LegacyReader::SetLib(const std::string& libStr)
+bool LegacyReader::SetLib(const std::string& libStr)
 {
 	HMODULE lib = ::LoadLibrary(libStr.c_str());
 	if (not lib)
-		throw; //specify exeption!!
+		return false;
 	else
 		this->lib = lib;
+	return true;
 }
 
 bool LegacyReader::CheckFile(const std::filesystem::path& path)
