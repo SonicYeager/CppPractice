@@ -1,78 +1,89 @@
 #include "ProductCode.h"
+#include <windows.h>
 
-bool FileChecker::Check(const std::wstring& path)
+
+struct Reader : public IReader
 {
-	std::filesystem::path filePath{path};
+	Reader() 
+		: lib(::LoadLibrary("reader.dll"))
+	{}
+	~Reader() override
+	{
+		if(lib)
+			FreeLibrary(lib);
+	}
+	bool CheckFile(const std::wstring& filePath) override
+	{
+		using CheckFileFunc = bool (*)(const wchar_t*);
+		auto checkFile = reinterpret_cast<CheckFileFunc>(::GetProcAddress(lib, "CheckFile"));
+		return checkFile(filePath.c_str());
+	}
+	bool IsExtensionSupported(const std::wstring& extension) override
+	{
+		using IsExtSupported = bool (*)(const wchar_t*);
+		auto isExtSupported = reinterpret_cast<IsExtSupported>(::GetProcAddress(lib, "IsExtensionSupported"));
+		return isExtSupported(extension.c_str());
+	}
+	bool IsLoaded()	 override
+	{
+		return lib;
+	}
+	HMODULE lib;
+};
+
+std::unique_ptr<IReader> FileChecker::CreateReader()
+{
+	return std::make_unique<Reader>();
+}
+
+bool FileChecker::Check(const std::wstring& filePath)
+{
 	if(IsInvalidPathString(filePath))
 		return false;
-
 
 	struct _stat buf
 	{};
 	if(::_wstat(filePath.c_str(), &buf) != 0)
 		return false;
 
-	CreateReader();
-	bool result = false;
+	auto reader = CreateReader();
+	if (not reader->IsLoaded())
+		return false;
 
+	bool result = false;
 	// Check extension first because it is faster
-	if(reader->IsExtensionSupported(filePath))
+	if(reader->IsExtensionSupported(filePath.substr(filePath.find_last_of('.') + 1)))
 	{
-		result = reader->CheckFile(filePath);
+		if(reader->CheckFile(filePath))
+		{
+			result = true;
+		}
 	}
 	return result;
 }
 
-bool HasFileName(const std::filesystem::path& filePath);
-bool HasExtension(const std::filesystem::path& filePath);
+bool HasFileName(const std::wstring& filePath);
+bool HasExtension(const std::wstring& filePath);
 
-bool FileChecker::IsInvalidPathString(const std::filesystem::path& filePath) const
+bool FileChecker::IsInvalidPathString(const std::wstring& filePath) const
 {
 	return filePath.empty() or not HasExtension(filePath) or not HasFileName(filePath);
 }
 
-void FileChecker::CreateReader()
+bool HasFileName(const std::wstring& filePath)
 {
-	reader = std::make_unique<Reader>();
-	reader->SetLib(::LoadLibrary("reader.dll"));
+	auto posExtBeg = filePath.find_last_of('.') + 1;
+	auto posFileNameBeg = filePath.find_last_of(L"\\/") + 1;
+	auto ext = filePath.substr(posExtBeg);
+	auto fil = filePath.substr(posFileNameBeg, (posExtBeg - 1) - posFileNameBeg);
+	auto inv = fil.find_last_of(L".\\/");
+	return not fil.empty() and inv == std::wstring::npos;
 }
 
-bool HasFileName(const std::filesystem::path& filePath)
+bool HasExtension(const std::wstring& filePath)
 {
-	return not filePath.filename().empty();
+	auto ext = filePath.substr(filePath.find_last_of('.') + 1);
+	auto inv = ext.find_last_of(L".\\/");
+	return not ext.empty() and inv == std::wstring::npos;
 }
 
-bool HasExtension(const std::filesystem::path& filePath)
-{
-	return not filePath.extension().empty();
-}
-
-void Reader::SetLib(const HMODULE& lib)
-{
-	if (not lib)
-		throw;
-	else
-		this->lib = lib;
-}
-
-Reader::~Reader()
-{
-	FreeLibrary(lib);
-}
-
-bool Reader::CheckFile(const std::wstring& filePath)
-{
-	bool result{false};
-	using CheckFileFunc = bool (*)(const wchar_t*);
-	auto checkFile = reinterpret_cast<CheckFileFunc>(::GetProcAddress(lib, "CheckFile"));
-	if (checkFile(filePath.c_str()))
-		return true;
-	return false;
-}
-
-bool Reader::IsExtensionSupported(const std::wstring& filePath)
-{
-	using IsExtSupported = bool (*)(const wchar_t*);
-	auto isExtSupported = reinterpret_cast<IsExtSupported>(::GetProcAddress(lib, "IsExtensionSupported"));
-	return isExtSupported(filePath.substr(filePath.find_last_of('.') + 1).c_str());
-}

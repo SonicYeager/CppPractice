@@ -1,31 +1,24 @@
 #pragma once
 #include <string>
-#include <windows.h>
 #include <memory>
-#include <filesystem>
 
-class Reader
+struct IReader
 {
-public:
-	~Reader();
-	virtual void SetLib(const HMODULE&);
-	virtual bool CheckFile(const std::wstring&);
-	virtual bool IsExtensionSupported(const std::wstring&);
-
-private:
-	HMODULE lib;
+	virtual ~IReader() = default;
+	virtual bool CheckFile(const std::wstring& filePath) = 0;
+	virtual bool IsExtensionSupported(const std::wstring& extension) = 0;
+	virtual bool IsLoaded() = 0;
 };
+
 
 class FileChecker
 {
 public:
-	FileChecker() = default;
 	bool Check(const std::wstring& filePath);
 
 private:
-	bool IsInvalidPathString(const std::filesystem::path&) const;
+	bool IsInvalidPathString(const std::wstring&) const;
 
 protected:
-	virtual void CreateReader();
-	std::unique_ptr<Reader> reader;
+	virtual std::unique_ptr<IReader> CreateReader();
 };
