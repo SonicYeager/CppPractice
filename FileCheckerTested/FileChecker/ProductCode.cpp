@@ -1,31 +1,30 @@
 #include "ProductCode.h"
-#include <sys/stat.h>
 #include <windows.h>
 
 
-struct Reader
+struct Reader : public IReader
 {
-	Reader()
+	Reader() 
 		: lib(::LoadLibrary("reader.dll"))
 	{}
-	~Reader()
+	~Reader() override
 	{
 		if(lib)
 			FreeLibrary(lib);
 	}
-	bool CheckFile(const std::wstring& filePath)
+	bool CheckFile(const std::wstring& filePath) override
 	{
 		using CheckFileFunc = bool (*)(const wchar_t*);
 		auto checkFile = reinterpret_cast<CheckFileFunc>(::GetProcAddress(lib, "CheckFile"));
 		return checkFile(filePath.c_str());
 	}
-	bool IsExtensionSupported(const std::wstring& extension)
+	bool IsExtensionSupported(const std::wstring& extension) override
 	{
 		using IsExtSupported = bool (*)(const wchar_t*);
 		auto isExtSupported = reinterpret_cast<IsExtSupported>(::GetProcAddress(lib, "IsExtensionSupported"));
 		return isExtSupported(extension.c_str());
 	}
-	bool IsLoaded()
+	bool IsLoaded()	 override
 	{
 		return lib;
 	}
