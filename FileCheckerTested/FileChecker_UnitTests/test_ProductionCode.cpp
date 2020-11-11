@@ -1,9 +1,30 @@
 #include "gmock/gmock.h"
 #include "ProductCode.h"
 
+struct StubReader : IReader
+{
+	StubReader()
+	{
+		ON_CALL(*this, CheckFile(::testing::_)).WillByDefault(::testing::Return(true));
+		ON_CALL(*this, IsExtensionSupported(::testing::_)).WillByDefault(::testing::Return(true));
+		ON_CALL(*this, IsLoaded()).WillByDefault(::testing::Return(true));
+	}
+	MOCK_METHOD(bool, CheckFile, (const std::wstring& filePath), (override));
+	MOCK_METHOD(bool, IsExtensionSupported, (const std::wstring& extension), (override));
+	MOCK_METHOD(bool, IsLoaded, (), (override));
+};
+
+struct FileCheckerUnderTest : FileChecker
+{
+	std::unique_ptr<IReader> CreateReader() override
+	{
+		return std::make_unique<::testing::NiceMock<StubReader>>();
+	}
+};
+
 TEST(TestFileChecker, Check_ValidPath_ReturnTrue)
 {
-	FileChecker fc;
+	FileCheckerUnderTest fc;
 	std::wstring path{ L"Testy.txt" };
 
 	auto actual = fc.Check(path);
