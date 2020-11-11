@@ -52,3 +52,17 @@ TEST(TestInMemoryDirectory, GenerateIndex_OneTimes_OneIndex)
 	auto expected = 1;
 	EXPECT_EQ(actual, expected);
 }
+
+TEST(TestInMemoryDirectory, GenerateIndex_MultipleTimes_OneIndex)
+{
+	InMemoryDirectory imd{};
+
+	imd.GenerateIndex();
+	imd.GenerateIndex();
+	imd.GenerateIndex();
+	imd.GenerateIndex();
+
+	auto actual = imd.GetElementCount();
+	auto expected = 1;
+	EXPECT_EQ(actual, expected);
+}
