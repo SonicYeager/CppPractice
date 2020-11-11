@@ -13,7 +13,7 @@ TEST(TestInMemoryDirectory, AddElement_AddOneElement_OneElementAndOneIndexWithTe
 	EXPECT_EQ(*actual, expected);
 }
 
-TEST(TestInMemoryDirectory, GenerateIndex_AddOneElement_OneIndexWithCorrectText)
+TEST(TestInMemoryDirectory, GenerateIndex_AddOneElement_CorrectIndex)
 {
 	InMemoryDirectory imd{};
 
@@ -26,7 +26,7 @@ TEST(TestInMemoryDirectory, GenerateIndex_AddOneElement_OneIndexWithCorrectText)
 	EXPECT_EQ(actual, expected);
 }
 
-TEST(TestInMemoryDirectory, GenerateIndex_AddMultipleElement_OneIndexWithCorrectText)
+TEST(TestInMemoryDirectory, GenerateIndex_AddMultipleElement_CorrectIndex)
 {
 	InMemoryDirectory imd{};
 
