@@ -25,3 +25,5 @@ Element* InMemoryDirectory::GetElement(const std::string& name) const
 	auto pos = std::find_if(std::begin(m_elements), std::end(m_elements), byName);
 	return pos == std::end(m_elements) ? nullptr : pos->get();
 }
+
+

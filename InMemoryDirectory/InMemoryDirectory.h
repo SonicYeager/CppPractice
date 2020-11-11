@@ -11,6 +11,7 @@ public:
 	size_t GetElementCount() const;
 	Element* GetElement(const std::string& name) const;
 
+
 private:
 	std::vector<std::unique_ptr<Element>> m_elements = {};
 };
