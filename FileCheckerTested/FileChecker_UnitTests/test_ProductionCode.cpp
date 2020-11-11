@@ -22,10 +22,20 @@ struct FileCheckerUnderTest : FileChecker
 	}
 };
 
-TEST(TestFileChecker, Check_ValidPath_ReturnTrue)
+TEST(TestFileChecker, Check_ValidPathWithSlash_ReturnTrue)
 {
 	FileCheckerUnderTest fc;
-	std::wstring path{ L"Testy.txt" };
+	std::wstring path{ L"TestData/Testy.txt" };
+
+	auto actual = fc.Check(path);
+
+	EXPECT_TRUE(actual);
+}
+
+TEST(TestFileChecker, Check_ValidPathWithBackslash_ReturnTrue)
+{
+	FileCheckerUnderTest fc;
+	std::wstring path{ L"TestData\\Testy.txt" };
 
 	auto actual = fc.Check(path);
 
