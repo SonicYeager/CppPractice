@@ -4,9 +4,9 @@
 TEST(TestFileChecker, Check_ValidPath_ReturnTrue)
 {
 	FileChecker fc;
-	std::wstring path{ L"C:\\tmp\\HelloWorld.txt" };
+	std::wstring path{ L"Testy.txt" };
 
-	//auto actual = fc.Check(path);
+	auto actual = fc.Check(path);
 
-	//EXPECT_TRUE(actual);
+	EXPECT_TRUE(actual);
 }
