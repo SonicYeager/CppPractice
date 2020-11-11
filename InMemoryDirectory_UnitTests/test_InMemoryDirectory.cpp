@@ -22,7 +22,7 @@ TEST(TestInMemoryDirectory, GenerateIndex_AddOneElement_OneIndexWithCorrectText)
 
 	auto index = imd.GetElement("index");
 	auto actual = index->GetText();
-	auto expected = "Index\nHeinz\n";
+	auto expected = "index\nHeinz\n";
 	EXPECT_EQ(actual, expected);
 }
 
@@ -38,6 +38,17 @@ TEST(TestInMemoryDirectory, GenerateIndex_AddMultipleElement_OneIndexWithCorrect
 
 	auto index = imd.GetElement("index");
 	auto actual = index->GetText();
-	auto expected = "Index\nHeinz\nKunz\nDonald\nBiden\n";
+	auto expected = "index\nHeinz\nKunz\nDonald\nBiden\n";
+	EXPECT_EQ(actual, expected);
+}
+
+TEST(TestInMemoryDirectory, GenerateIndex_OneTimes_OneIndex)
+{
+	InMemoryDirectory imd{};
+
+	imd.GenerateIndex();
+
+	auto actual = imd.GetElementCount();
+	auto expected = 1;
 	EXPECT_EQ(actual, expected);
 }
