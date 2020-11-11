@@ -1,5 +1,6 @@
 #include "ProductCode.h"
 #include <windows.h>
+#include <memory>
 
 
 struct Reader : public IReader
@@ -31,6 +32,11 @@ struct Reader : public IReader
 	HMODULE lib;
 };
 
+std::unique_ptr<IReader> CreateReader()
+{
+	return std::make_unique<Reader>();
+}
+
 bool FileChecker::Check(const std::wstring& filePath)
 {
 	if(IsInvalidPathString(filePath))
@@ -41,15 +47,15 @@ bool FileChecker::Check(const std::wstring& filePath)
 	if(::_wstat(filePath.c_str(), &buf) != 0)
 		return false;
 
-	Reader reader{};
-	if (not reader.IsLoaded())
+	auto reader = CreateReader();
+	if (not reader->IsLoaded())
 		return false;
 
 	bool result = false;
 	// Check extension first because it is faster
-	if(reader.IsExtensionSupported(filePath.substr(filePath.find_last_of('.') + 1)))
+	if(reader->IsExtensionSupported(filePath.substr(filePath.find_last_of('.') + 1)))
 	{
-		if(reader.CheckFile(filePath))
+		if(reader->CheckFile(filePath))
 		{
 			result = true;
 		}
