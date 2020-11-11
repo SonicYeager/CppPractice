@@ -42,9 +42,7 @@ bool FileChecker::Check(const std::filesystem::path & path)
 	if(IsInvalidPathString(filePath))
 		return false;
 
-	struct _stat buf
-	{};
-	if(::_wstat(filePath.c_str(), &buf) != 0)
+	if (not std::filesystem::exists(path))
 		return false;
 
 	auto reader = CreateReader();
