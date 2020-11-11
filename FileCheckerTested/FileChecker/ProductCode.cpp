@@ -82,8 +82,14 @@ bool HasFileName(const std::wstring& filePath)
 
 bool HasExtension(const std::wstring& filePath)
 {
-	auto ext = filePath.substr(filePath.find_last_of('.') + 1);
-	auto inv = ext.find_last_of(L".\\/");
-	return not ext.empty() and inv == std::wstring::npos;
+	auto found = filePath.find_last_of('.');
+	if (found == std::wstring::npos)
+		return false;
+	else 
+	{
+		auto ext = filePath.substr(found + 1);
+		auto inv = ext.find_last_of(L".\\/");
+		return not ext.empty() and inv == std::wstring::npos;
+	}
 }
 
