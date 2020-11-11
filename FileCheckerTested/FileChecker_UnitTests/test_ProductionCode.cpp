@@ -41,3 +41,13 @@ TEST(TestFileChecker, Check_ValidPathWithBackslash_ReturnTrue)
 
 	EXPECT_TRUE(actual);
 }
+
+TEST(TestFileChecker, Check_InvalidPathNoExtension_ReturnFalse)
+{
+	FileCheckerUnderTest fc;
+	std::wstring path{ L"TestData/Testy" };
+
+	auto actual = fc.Check(path);
+
+	EXPECT_FALSE(actual);
+}
