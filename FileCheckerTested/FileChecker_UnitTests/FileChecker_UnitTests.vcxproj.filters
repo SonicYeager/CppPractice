@@ -26,5 +26,11 @@
     <CopyFileToFolders Include="..\Testy.txt">
       <Filter>Testfiles</Filter>
     </CopyFileToFolders>
+    <CopyFileToFolders Include="..\.txt">
+      <Filter>Testfiles</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Testy">
+      <Filter>Testfiles</Filter>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>

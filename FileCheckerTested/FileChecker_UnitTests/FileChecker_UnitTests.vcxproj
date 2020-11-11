@@ -160,6 +160,17 @@
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(OutDir)TestData\;%(DestinationFolders)</DestinationFolders>
     </CopyFileToFolders>
   </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="..\.txt">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="..\Testy">
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

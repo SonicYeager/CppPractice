@@ -45,7 +45,7 @@ TEST(TestFileChecker, Check_ValidPathWithBackslash_ReturnTrue)
 TEST(TestFileChecker, Check_InvalidPathNoExtension_ReturnFalse)
 {
 	FileCheckerUnderTest fc;
-	std::wstring path{ L"TestData/Testy" };
+	std::wstring path{ L"Testy" };
 
 	auto actual = fc.Check(path);
 
@@ -55,7 +55,7 @@ TEST(TestFileChecker, Check_InvalidPathNoExtension_ReturnFalse)
 TEST(TestFileChecker, Check_InvalidPathNoFilename_ReturnFalse)
 {
 	FileCheckerUnderTest fc;
-	std::wstring path{ L"TestData/.txt" };
+	std::wstring path{ L".txt" };
 
 	auto actual = fc.Check(path);
 
@@ -76,6 +76,16 @@ TEST(TestFileChecker, Check_InvalidPathEmpty_ReturnFalse)
 {
 	FileCheckerUnderTest fc;
 	std::wstring path{ L"" };
+
+	auto actual = fc.Check(path);
+
+	EXPECT_FALSE(actual);
+}
+
+TEST(TestFileChecker, Check_ValidPathFileDoesNotExist_ReturnFalse)
+{
+	FileCheckerUnderTest fc;
+	std::wstring path{ L"TestData\\Testy2.txt" };
 
 	auto actual = fc.Check(path);
 
