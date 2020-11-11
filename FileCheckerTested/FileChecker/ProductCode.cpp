@@ -73,7 +73,7 @@ bool FileChecker::IsInvalidPathString(const std::wstring& filePath) const
 bool HasFileName(const std::wstring& filePath)
 {
 	auto posExtBeg = filePath.find_last_of('.') + 1;
-	auto posFileNameBeg = filePath.find_last_of('\\') + 1;
+	auto posFileNameBeg = filePath.find_last_of(L"\\/") + 1;
 	auto ext = filePath.substr(posExtBeg);
 	auto fil = filePath.substr(posFileNameBeg, (posExtBeg - 1) - posFileNameBeg);
 	auto inv = fil.find_last_of(L".\\/");
