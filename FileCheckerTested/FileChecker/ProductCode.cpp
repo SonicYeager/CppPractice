@@ -16,6 +16,18 @@ bool IsExtensionSupported(HMODULE lib, const std::wstring& extension)
 	return isExtSupported(extension.c_str());
 }
 
+struct Libary
+{
+	Libary()
+		: lib(::LoadLibrary("reader.dll"))
+	{}
+	//~Libary()
+	//{
+
+	//}
+	HMODULE lib;
+};
+
 bool FileChecker::Check(const std::wstring& filePath)
 {
 	if(IsInvalidPathString(filePath))
@@ -26,20 +38,20 @@ bool FileChecker::Check(const std::wstring& filePath)
 	if(::_wstat(filePath.c_str(), &buf) != 0)
 		return false;
 
-	HMODULE lib = ::LoadLibrary("reader.dll");
-	if(not lib)
+	Libary libary{};
+	if(not libary.lib)
 		return false;
+
 	bool result = false;
 	// Check extension first because it is faster
-
-	if(IsExtensionSupported(lib, filePath.substr(filePath.find_last_of('.') + 1)))
+	if(IsExtensionSupported(libary.lib, filePath.substr(filePath.find_last_of('.') + 1)))
 	{
-		if(CheckFile(lib, filePath))
+		if(CheckFile(libary.lib, filePath))
 		{
 			result = true;
 		}
 	}
-	FreeLibrary(lib);
+	FreeLibrary(libary.lib);
 	return result;
 }
 
