@@ -38,8 +38,7 @@ std::unique_ptr<IReader> FileChecker::CreateReader()
 
 bool FileChecker::Check(const std::filesystem::path & path)
 {
-	std::wstring filePath{std::filesystem::absolute(path)};
-	if(IsInvalidPathString(filePath))
+	if(IsInvalidPathString(path))
 		return false;
 
 	if (not std::filesystem::exists(path))
@@ -51,6 +50,7 @@ bool FileChecker::Check(const std::filesystem::path & path)
 
 	bool result = false;
 	// Check extension first because it is faster
+	std::wstring filePath{std::filesystem::absolute(path)};
 	if(reader->IsExtensionSupported(filePath.substr(filePath.find_last_of('.') + 1)))
 	{
 		if(reader->CheckFile(filePath))
