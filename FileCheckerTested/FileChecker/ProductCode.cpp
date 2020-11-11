@@ -2,12 +2,6 @@
 #include <sys/stat.h>
 #include <windows.h>
 
-bool CheckFile(HMODULE lib, const std::wstring& filePath)
-{
-	using CheckFileFunc = bool (*)(const wchar_t*);
-	auto checkFile = reinterpret_cast<CheckFileFunc>(::GetProcAddress(lib, "CheckFile"));
-	return checkFile(filePath.c_str());
-}
 
 bool IsExtensionSupported(HMODULE lib, const std::wstring& extension)
 {
@@ -25,6 +19,12 @@ struct Libary
 	{
 		if(lib)
 			FreeLibrary(lib);
+	}
+	bool CheckFile(HMODULE lib, const std::wstring& filePath)
+	{
+		using CheckFileFunc = bool (*)(const wchar_t*);
+		auto checkFile = reinterpret_cast<CheckFileFunc>(::GetProcAddress(lib, "CheckFile"));
+		return checkFile(filePath.c_str());
 	}
 	HMODULE lib;
 };
@@ -47,7 +47,7 @@ bool FileChecker::Check(const std::wstring& filePath)
 	// Check extension first because it is faster
 	if(IsExtensionSupported(libary.lib, filePath.substr(filePath.find_last_of('.') + 1)))
 	{
-		if(CheckFile(libary.lib, filePath))
+		if(libary.CheckFile(libary.lib, filePath))
 		{
 			result = true;
 		}
