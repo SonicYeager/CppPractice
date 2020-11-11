@@ -21,10 +21,11 @@ struct Libary
 	Libary()
 		: lib(::LoadLibrary("reader.dll"))
 	{}
-	//~Libary()
-	//{
-
-	//}
+	~Libary()
+	{
+		if(lib)
+			FreeLibrary(lib);
+	}
 	HMODULE lib;
 };
 
@@ -51,7 +52,6 @@ bool FileChecker::Check(const std::wstring& filePath)
 			result = true;
 		}
 	}
-	FreeLibrary(libary.lib);
 	return result;
 }
 
