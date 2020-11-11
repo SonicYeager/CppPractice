@@ -3,12 +3,12 @@
 #include <windows.h>
 
 
-struct Libary
+struct Reader
 {
-	Libary()
+	Reader()
 		: lib(::LoadLibrary("reader.dll"))
 	{}
-	~Libary()
+	~Reader()
 	{
 		if(lib)
 			FreeLibrary(lib);
@@ -38,15 +38,15 @@ bool FileChecker::Check(const std::wstring& filePath)
 	if(::_wstat(filePath.c_str(), &buf) != 0)
 		return false;
 
-	Libary libary{};
-	if(not libary.lib)
+	Reader reader{};
+	if(not reader.lib)
 		return false;
 
 	bool result = false;
 	// Check extension first because it is faster
-	if(libary.IsExtensionSupported(filePath.substr(filePath.find_last_of('.') + 1)))
+	if(reader.IsExtensionSupported(filePath.substr(filePath.find_last_of('.') + 1)))
 	{
-		if(libary.CheckFile(filePath))
+		if(reader.CheckFile(filePath))
 		{
 			result = true;
 		}
