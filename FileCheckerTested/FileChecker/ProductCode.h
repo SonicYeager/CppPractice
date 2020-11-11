@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
 #include <memory>
-#include <filesystem>
 
 struct IReader
 {
@@ -15,10 +14,10 @@ struct IReader
 class FileChecker
 {
 public:
-	bool Check(const std::filesystem::path & filePath);
+	bool Check(const std::wstring& filePath);
 
 private:
-	bool IsInvalidPathString(const std::filesystem::path& filePath) const;
+	bool IsInvalidPathString(const std::wstring&) const;
 
 protected:
 	virtual std::unique_ptr<IReader> CreateReader();

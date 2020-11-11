@@ -36,12 +36,14 @@ std::unique_ptr<IReader> FileChecker::CreateReader()
 	return std::make_unique<Reader>();
 }
 
-bool FileChecker::Check(const std::filesystem::path & path)
+bool FileChecker::Check(const std::wstring& filePath)
 {
-	if(IsInvalidPathString(path))
+	if(IsInvalidPathString(filePath))
 		return false;
 
-	if (not std::filesystem::exists(path))
+	struct _stat buf
+	{};
+	if(::_wstat(filePath.c_str(), &buf) != 0)
 		return false;
 
 	auto reader = CreateReader();
@@ -50,7 +52,6 @@ bool FileChecker::Check(const std::filesystem::path & path)
 
 	bool result = false;
 	// Check extension first because it is faster
-	std::wstring filePath{std::filesystem::absolute(path)};
 	if(reader->IsExtensionSupported(filePath.substr(filePath.find_last_of('.') + 1)))
 	{
 		if(reader->CheckFile(filePath))
@@ -61,20 +62,28 @@ bool FileChecker::Check(const std::filesystem::path & path)
 	return result;
 }
 
-bool HasFileName(const std::filesystem::path & filePath);
+bool HasFileName(const std::wstring& filePath);
+bool HasExtension(const std::wstring& filePath);
 
-bool FileChecker::IsInvalidPathString(const std::filesystem::path& filePath) const
+bool FileChecker::IsInvalidPathString(const std::wstring& filePath) const
 {
-	return filePath.empty() or not filePath.has_extension() or not HasFileName(filePath);
+	return filePath.empty() or not HasExtension(filePath) or not HasFileName(filePath);
 }
 
-bool HasFileName(const std::filesystem::path & filePath)
+bool HasFileName(const std::wstring& filePath)
 {
-	auto fname = filePath.filename().string();
-	auto posExtBeg = fname.find_last_of('.') + 1;
-	auto posFileNameBeg = fname.find_last_of("\\/") + 1;
-	fname = fname.substr(posFileNameBeg, (posExtBeg - 1) - posFileNameBeg);
-	auto inv = fname.find_last_of(".\\/");;
-	return not fname.empty() and inv == std::wstring::npos;
+	auto posExtBeg = filePath.find_last_of('.') + 1;
+	auto posFileNameBeg = filePath.find_last_of(L"\\/") + 1;
+	auto ext = filePath.substr(posExtBeg);
+	auto fil = filePath.substr(posFileNameBeg, (posExtBeg - 1) - posFileNameBeg);
+	auto inv = fil.find_last_of(L".\\/");
+	return not fil.empty() and inv == std::wstring::npos;
+}
+
+bool HasExtension(const std::wstring& filePath)
+{
+	auto ext = filePath.substr(filePath.find_last_of('.') + 1);
+	auto inv = ext.find_last_of(L".\\/");
+	return not ext.empty() and inv == std::wstring::npos;
 }
 
