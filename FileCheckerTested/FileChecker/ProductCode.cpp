@@ -61,25 +61,25 @@ bool FileChecker::Check(const std::filesystem::path & path)
 	return result;
 }
 
-bool HasFileName(const std::wstring& filePath);
-bool HasExtension(const std::wstring& filePath);
+bool HasFileName(const std::filesystem::path & filePath);
+bool HasExtension(const std::wstring & filePath);
 
 bool FileChecker::IsInvalidPathString(const std::wstring& filePath) const
 {
 	return filePath.empty() or not HasExtension(filePath) or not HasFileName(filePath);
 }
 
-bool HasFileName(const std::wstring& filePath)
+bool HasFileName(const std::filesystem::path & filePath)
 {
-	auto posExtBeg = filePath.find_last_of('.') + 1;
-	auto posFileNameBeg = filePath.find_last_of(L"\\/") + 1;
-	auto ext = filePath.substr(posExtBeg);
-	auto fil = filePath.substr(posFileNameBeg, (posExtBeg - 1) - posFileNameBeg);
-	auto inv = fil.find_last_of(L".\\/");
-	return not fil.empty() and inv == std::wstring::npos;
+	auto fname = filePath.filename().string();
+	auto posExtBeg = fname.find_last_of('.') + 1;
+	auto posFileNameBeg = fname.find_last_of("\\/") + 1;
+	fname = fname.substr(posFileNameBeg, (posExtBeg - 1) - posFileNameBeg);
+	auto inv = fname.find_last_of(".\\/");;
+	return not fname.empty() and inv == std::wstring::npos;
 }
 
-bool HasExtension(const std::wstring& filePath)
+bool HasExtension(const std::wstring & filePath)
 {
 	auto found = filePath.find_last_of('.');
 	if (found == std::wstring::npos)
