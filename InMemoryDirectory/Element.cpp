@@ -20,8 +20,3 @@ std::string Element::GetText() const
 {
 	return m_text;
 }
-
-bool Element::operator==(const Element& other) const
-{
-	return GetName() == other.GetName() && GetText() == other.GetText();
-}
