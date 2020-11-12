@@ -4,6 +4,8 @@
 void InMemoryDirectory::AddElement(std::unique_ptr<Element> pElement)
 {
 	m_elements.push_back(std::move(pElement));
+	if (GetElement("index") != nullptr)
+		GenerateIndex();
 }
 
 void InMemoryDirectory::GenerateIndex()

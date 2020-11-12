@@ -41,7 +41,7 @@ TEST(TestInMemoryDirectory, AddElement_AddMultipleWithGenerateIndexBefore_Update
 	imd.AddElement(std::make_unique<Element>("Gustav"));
 
 	auto actual = imd.GetElement("index")->GetText();
-	auto expected = "Heinz\nKarl\nGustav\n";
+	auto expected = "index\nHeinz\nKarl\nGustav\n";
 	EXPECT_EQ(actual, expected);
 	auto actualCount = imd.GetElementCount();
 	EXPECT_EQ(actualCount, 4);
