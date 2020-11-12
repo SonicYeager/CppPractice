@@ -44,7 +44,7 @@ include CMakeFiles\rules.ninja
 build cmake_object_order_depends_target_CMakeTesty: phony || CMakeFiles\CMakeTesty.dir
 
 build CMakeFiles\CMakeTesty.dir\CMakeTesty.cpp.obj: CXX_COMPILER__CMakeTesty_Debug ..\..\..\CMakeTesty.cpp || cmake_object_order_depends_target_CMakeTesty
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -MDd
+  FLAGS = /DWIN32 /D_WINDOWS /GR /EHsc /Zi /Ob0 /Od /RTC1 -MDd
   INCLUDES = -I.
   OBJECT_DIR = CMakeFiles\CMakeTesty.dir
   OBJECT_FILE_DIR = CMakeFiles\CMakeTesty.dir
@@ -60,7 +60,7 @@ build CMakeFiles\CMakeTesty.dir\CMakeTesty.cpp.obj: CXX_COMPILER__CMakeTesty_Deb
 # Link the executable CMakeTesty.exe
 
 build CMakeTesty.exe: CXX_EXECUTABLE_LINKER__CMakeTesty_Debug CMakeFiles\CMakeTesty.dir\CMakeTesty.cpp.obj
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -MDd
+  FLAGS = /DWIN32 /D_WINDOWS /GR /EHsc /Zi /Ob0 /Od /RTC1 -MDd
   LINK_FLAGS = /machine:x64 /debug /INCREMENTAL /subsystem:console
   LINK_LIBRARIES = kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib
   OBJECT_DIR = CMakeFiles\CMakeTesty.dir
@@ -76,7 +76,7 @@ build CMakeTesty.exe: CXX_EXECUTABLE_LINKER__CMakeTesty_Debug CMakeFiles\CMakeTe
 # Utility command for edit_cache
 
 build CMakeFiles\edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cmd.exe /C "cd /D "C:\Users\tobias.wollrab\source\Repos\CMakeTesty\out\build\x64-Debug (Standard)" && "C:\Program Files\CMake\bin\cmake-gui.exe" -SC:\Users\tobias.wollrab\source\Repos\CMakeTesty -B"C:\Users\tobias.wollrab\source\Repos\CMakeTesty\out\build\x64-Debug (Standard)""
+  COMMAND = cmd.exe /C "cd /D "C:\Uebungsprojekte\CMakeTesty\out\build\x64-Debug (Standard)" && "C:\Program Files\CMake\bin\cmake-gui.exe" -SC:\Uebungsprojekte\CMakeTesty -B"C:\Uebungsprojekte\CMakeTesty\out\build\x64-Debug (Standard)""
   DESC = Running CMake cache editor...
   pool = console
   restat = 1
@@ -88,7 +88,7 @@ build edit_cache: phony CMakeFiles\edit_cache.util
 # Utility command for rebuild_cache
 
 build CMakeFiles\rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cmd.exe /C "cd /D "C:\Users\tobias.wollrab\source\Repos\CMakeTesty\out\build\x64-Debug (Standard)" && "C:\Program Files\CMake\bin\cmake.exe" --regenerate-during-build -SC:\Users\tobias.wollrab\source\Repos\CMakeTesty -B"C:\Users\tobias.wollrab\source\Repos\CMakeTesty\out\build\x64-Debug (Standard)""
+  COMMAND = cmd.exe /C "cd /D "C:\Uebungsprojekte\CMakeTesty\out\build\x64-Debug (Standard)" && "C:\Program Files\CMake\bin\cmake.exe" --regenerate-during-build -SC:\Uebungsprojekte\CMakeTesty -B"C:\Uebungsprojekte\CMakeTesty\out\build\x64-Debug (Standard)""
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -106,7 +106,7 @@ build CMakeTesty: phony CMakeTesty.exe
 # =============================================================================
 
 #############################################
-# Folder: C:/Users/tobias.wollrab/source/Repos/CMakeTesty/out/build/x64-Debug (Standard)
+# Folder: C:/Uebungsprojekte/CMakeTesty/out/build/x64-Debug (Standard)
 
 build all: phony CMakeTesty.exe
 

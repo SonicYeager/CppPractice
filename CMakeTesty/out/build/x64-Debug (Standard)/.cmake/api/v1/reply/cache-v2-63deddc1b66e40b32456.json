@@ -35,7 +35,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "c:/Users/tobias.wollrab/source/Repos/CMakeTesty/out/build/x64-Debug (Standard)"
+			"value" : "c:/Uebungsprojekte/CMakeTesty/out/build/x64-Debug (Standard)"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -119,10 +119,10 @@
 				},
 				{
 					"name" : "HELPSTRING",
-					"value" : "CXX compiler"
+					"value" : "No help, variable specified on the command line."
 				}
 			],
-			"type" : "STRING",
+			"type" : "FILEPATH",
 			"value" : "C:/Program Files (x86)/Microsoft Visual Studio/2019/Professional/VC/Tools/MSVC/14.28.29333/bin/Hostx64/x64/cl.exe"
 		},
 		{
@@ -139,7 +139,7 @@
 				}
 			],
 			"type" : "STRING",
-			"value" : "/DWIN32 /D_WINDOWS /W3 /GR /EHsc"
+			"value" : "/DWIN32 /D_WINDOWS /GR /EHsc"
 		},
 		{
 			"name" : "CMAKE_CXX_FLAGS_DEBUG",
@@ -155,7 +155,7 @@
 				}
 			],
 			"type" : "STRING",
-			"value" : "/MDd /Zi /Ob0 /Od /RTC1"
+			"value" : "/Zi /Ob0 /Od /RTC1"
 		},
 		{
 			"name" : "CMAKE_CXX_FLAGS_MINSIZEREL",
@@ -171,7 +171,7 @@
 				}
 			],
 			"type" : "STRING",
-			"value" : "/MD /O1 /Ob1 /DNDEBUG"
+			"value" : "/O1 /Ob1 /DNDEBUG"
 		},
 		{
 			"name" : "CMAKE_CXX_FLAGS_RELEASE",
@@ -187,7 +187,7 @@
 				}
 			],
 			"type" : "STRING",
-			"value" : "/MD /O2 /Ob2 /DNDEBUG"
+			"value" : "/O2 /Ob2 /DNDEBUG"
 		},
 		{
 			"name" : "CMAKE_CXX_FLAGS_RELWITHDEBINFO",
@@ -203,7 +203,7 @@
 				}
 			],
 			"type" : "STRING",
-			"value" : "/MD /Zi /O2 /Ob1 /DNDEBUG"
+			"value" : "/Zi /O2 /Ob1 /DNDEBUG"
 		},
 		{
 			"name" : "CMAKE_CXX_STANDARD_LIBRARIES",
@@ -231,10 +231,10 @@
 				},
 				{
 					"name" : "HELPSTRING",
-					"value" : "C compiler"
+					"value" : "No help, variable specified on the command line."
 				}
 			],
-			"type" : "STRING",
+			"type" : "FILEPATH",
 			"value" : "C:/Program Files (x86)/Microsoft Visual Studio/2019/Professional/VC/Tools/MSVC/14.28.29333/bin/Hostx64/x64/cl.exe"
 		},
 		{
@@ -251,7 +251,7 @@
 				}
 			],
 			"type" : "STRING",
-			"value" : "/DWIN32 /D_WINDOWS /W3"
+			"value" : "/DWIN32 /D_WINDOWS"
 		},
 		{
 			"name" : "CMAKE_C_FLAGS_DEBUG",
@@ -267,7 +267,7 @@
 				}
 			],
 			"type" : "STRING",
-			"value" : "/MDd /Zi /Ob0 /Od /RTC1"
+			"value" : "/Zi /Ob0 /Od /RTC1"
 		},
 		{
 			"name" : "CMAKE_C_FLAGS_MINSIZEREL",
@@ -283,7 +283,7 @@
 				}
 			],
 			"type" : "STRING",
-			"value" : "/MD /O1 /Ob1 /DNDEBUG"
+			"value" : "/O1 /Ob1 /DNDEBUG"
 		},
 		{
 			"name" : "CMAKE_C_FLAGS_RELEASE",
@@ -299,7 +299,7 @@
 				}
 			],
 			"type" : "STRING",
-			"value" : "/MD /O2 /Ob2 /DNDEBUG"
+			"value" : "/O2 /Ob2 /DNDEBUG"
 		},
 		{
 			"name" : "CMAKE_C_FLAGS_RELWITHDEBINFO",
@@ -315,7 +315,7 @@
 				}
 			],
 			"type" : "STRING",
-			"value" : "/MD /Zi /O2 /Ob1 /DNDEBUG"
+			"value" : "/Zi /O2 /Ob1 /DNDEBUG"
 		},
 		{
 			"name" : "CMAKE_C_STANDARD_LIBRARIES",
@@ -511,7 +511,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "C:/Users/tobias.wollrab/source/Repos/CMakeTesty"
+			"value" : "C:/Uebungsprojekte/CMakeTesty"
 		},
 		{
 			"name" : "CMAKE_INSTALL_PREFIX",
@@ -523,7 +523,7 @@
 				}
 			],
 			"type" : "PATH",
-			"value" : "C:/Users/tobias.wollrab/source/Repos/CMakeTesty/out/install/x64-Debug (Standard)"
+			"value" : "C:/Uebungsprojekte/CMakeTesty/out/install/x64-Debug (Standard)"
 		},
 		{
 			"name" : "CMAKE_LINKER",
@@ -1107,7 +1107,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/tobias.wollrab/source/Repos/CMakeTesty/out/build/x64-Debug (Standard)"
+			"value" : "C:/Uebungsprojekte/CMakeTesty/out/build/x64-Debug (Standard)"
 		},
 		{
 			"name" : "CMakeTesty_SOURCE_DIR",
@@ -1119,7 +1119,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/tobias.wollrab/source/Repos/CMakeTesty"
+			"value" : "C:/Uebungsprojekte/CMakeTesty"
 		}
 	],
 	"kind" : "cache",

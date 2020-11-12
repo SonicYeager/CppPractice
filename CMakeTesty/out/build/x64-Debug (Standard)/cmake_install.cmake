@@ -1,8 +1,8 @@
-# Install script for directory: C:/Users/tobias.wollrab/source/Repos/CMakeTesty
+# Install script for directory: C:/Uebungsprojekte/CMakeTesty
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "C:/Users/tobias.wollrab/source/Repos/CMakeTesty/out/install/x64-Debug (Standard)")
+  set(CMAKE_INSTALL_PREFIX "C:/Uebungsprojekte/CMakeTesty/out/install/x64-Debug (Standard)")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/Users/tobias.wollrab/source/Repos/CMakeTesty/out/build/x64-Debug (Standard)/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/Uebungsprojekte/CMakeTesty/out/build/x64-Debug (Standard)/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

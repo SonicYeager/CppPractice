@@ -13,5 +13,9 @@ int main(int argc, char* argv[])
 		std::cout << "Usage: " << argv[0] << " number" << std::endl;
 		return 1;
 	}
-	return 0;
+	else
+	{
+		auto a = std::async(std::launch::async, []{ return 0; });
+		return a.get();
+	}
 }

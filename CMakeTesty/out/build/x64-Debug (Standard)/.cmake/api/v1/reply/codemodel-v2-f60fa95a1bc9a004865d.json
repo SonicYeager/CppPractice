@@ -38,7 +38,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "CMakeTesty::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-CMakeTesty-Debug-ee1ab0f36194460d0e93.json",
+					"jsonFile" : "target-CMakeTesty-Debug-8468e1b1429189b8e4cf.json",
 					"name" : "CMakeTesty",
 					"projectIndex" : 0
 				}
@@ -48,8 +48,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "C:/Users/tobias.wollrab/source/Repos/CMakeTesty/out/build/x64-Debug (Standard)",
-		"source" : "C:/Users/tobias.wollrab/source/Repos/CMakeTesty"
+		"build" : "C:/Uebungsprojekte/CMakeTesty/out/build/x64-Debug (Standard)",
+		"source" : "C:/Uebungsprojekte/CMakeTesty"
 	},
 	"version" : 
 	{
