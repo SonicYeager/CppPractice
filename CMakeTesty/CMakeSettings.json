@@ -17,16 +17,6 @@
           "type": "FILEPATH"
         },
         {
-          "name": "CMAKE_BUILD_TYPE",
-          "value": "Debug",
-          "type": "STRING"
-        },
-        {
-          "name": "CMAKE_INSTALL_PREFIX",
-          "value": "C:/Users/tobias.wollrab/source/Repos/CMakeTesty/out/install/x64-Debug (Standard)",
-          "type": "PATH"
-        },
-        {
           "name": "CMAKE_MAKE_PROGRAM",
           "value": "C:/Program Files (x86)/Microsoft Visual Studio/2019/Professional/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe",
           "type": "FILEPATH"
