@@ -74,7 +74,7 @@ TEST(TestInMemoryDirectory, GenerateIndex_MultipleTimesWithAddBetween_JustOneInd
 	imd.GenerateIndex();
 
 	auto actual = imd.GetElement("index")->GetText();
-	auto expected = "Heinz\nKnut\nChester\n";
+	auto expected = "index\nHeinz\nKnut\nChester\n";
 	EXPECT_EQ(actual, expected);
 	auto actualCount = imd.GetElementCount();
 	EXPECT_EQ(actualCount, 4);
@@ -89,7 +89,7 @@ TEST(TestInMemoryDirectory, GenerateIndex_MultipleTimes_JustOneIndex)
 	imd.GenerateIndex();
 
 	auto actual = imd.GetElement("index")->GetText();
-	auto expected = "Heinz\n";
+	auto expected = "Heinz\nindex\n";
 	EXPECT_EQ(actual, expected);
 	auto actualCount = imd.GetElementCount();
 	EXPECT_EQ(actualCount, 2);

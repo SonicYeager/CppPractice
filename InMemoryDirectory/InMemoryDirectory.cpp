@@ -11,7 +11,14 @@ void InMemoryDirectory::GenerateIndex()
 	auto pNewElement = std::make_unique<Element>("index");
 	for(auto& pElement : m_elements)
 		pNewElement->AddText(pElement->GetName() + '\n');
-	AddElement(std::move(pNewElement));
+
+	auto oldElement = GetElement("index");
+	if (oldElement == nullptr)
+		m_elements.push_back(std::move(pNewElement));
+	else
+	{
+		*oldElement = *pNewElement.get();
+	}
 }
 
 size_t InMemoryDirectory::GetElementCount() const
