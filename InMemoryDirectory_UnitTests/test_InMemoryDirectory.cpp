@@ -41,7 +41,7 @@ TEST(TestInMemoryDirectory, AddElement_AddMultipleWithGenerateIndexBefore_Update
 	imd.AddElement(std::make_unique<Element>("Gustav"));
 
 	auto actual = imd.GetElement("index")->GetText();
-	auto expected = "index\nHeinz\nKarl\nGustav\n";
+	auto expected = "Heinz\nKarl\nGustav\n";
 	EXPECT_EQ(actual, expected);
 	auto actualCount = imd.GetElementCount();
 	EXPECT_EQ(actualCount, 4);
@@ -74,7 +74,7 @@ TEST(TestInMemoryDirectory, GenerateIndex_MultipleTimesWithAddBetween_JustOneInd
 	imd.GenerateIndex();
 
 	auto actual = imd.GetElement("index")->GetText();
-	auto expected = "index\nHeinz\nKnut\nChester\n";
+	auto expected = "Heinz\nKnut\nChester\n";
 	EXPECT_EQ(actual, expected);
 	auto actualCount = imd.GetElementCount();
 	EXPECT_EQ(actualCount, 4);
@@ -89,7 +89,7 @@ TEST(TestInMemoryDirectory, GenerateIndex_MultipleTimes_JustOneIndex)
 	imd.GenerateIndex();
 
 	auto actual = imd.GetElement("index")->GetText();
-	auto expected = "Heinz\nindex\n";
+	auto expected = "Heinz\n";
 	EXPECT_EQ(actual, expected);
 	auto actualCount = imd.GetElementCount();
 	EXPECT_EQ(actualCount, 2);

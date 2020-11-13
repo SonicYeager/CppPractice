@@ -3,9 +3,10 @@
 
 void InMemoryDirectory::AddElement(std::unique_ptr<Element> pElement)
 {
+	auto index = GetElement("index");
+	if (index != nullptr)
+		index->AddText(pElement->GetName() + "\n");
 	m_elements.push_back(std::move(pElement));
-	if (GetElement("index") != nullptr)
-		GenerateIndex();
 }
 
 void InMemoryDirectory::GenerateIndex()
