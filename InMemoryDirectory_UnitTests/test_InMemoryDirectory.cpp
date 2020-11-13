@@ -2,7 +2,13 @@
 #include "InMemoryDirectory.h"
 #include <memory>
 
-TEST(TestInMemoryDirectory, AddElement_AddOneElement_OneElementAndOneIndexWithTextOfOneElement)
+bool operator==(const Element& left, const Element& right)
+{
+	return left.GetName() == right.GetName() && left.GetText() == right.GetText();
+}
+
+
+TEST(TestInMemoryDirectory, AddElement_AddOne_Heinz)
 {
 	InMemoryDirectory imd{};
 
@@ -13,58 +19,78 @@ TEST(TestInMemoryDirectory, AddElement_AddOneElement_OneElementAndOneIndexWithTe
 	EXPECT_EQ(*actual, expected);
 }
 
-TEST(TestInMemoryDirectory, GenerateIndex_AddOneElement_CorrectIndex)
+TEST(TestInMemoryDirectory, AddElement_AddMultiple_NoIndex)
+{
+	InMemoryDirectory imd{};
+
+	imd.AddElement(std::make_unique<Element>("Heinz"));
+	imd.AddElement(std::make_unique<Element>("Karl"));
+	imd.AddElement(std::make_unique<Element>("Gustav"));
+
+	auto actual = imd.GetElement("index");
+	EXPECT_EQ(actual, nullptr);
+}
+
+TEST(TestInMemoryDirectory, AddElement_AddMultipleWithGenerateIndexBefore_UpdateIndex)
+{
+	InMemoryDirectory imd{};
+	imd.GenerateIndex();
+
+	imd.AddElement(std::make_unique<Element>("Heinz"));
+	imd.AddElement(std::make_unique<Element>("Karl"));
+	imd.AddElement(std::make_unique<Element>("Gustav"));
+
+	auto actual = imd.GetElement("index")->GetText();
+	auto expected = "Heinz\nKarl\nGustav\n";
+	EXPECT_EQ(actual, expected);
+	auto actualCount = imd.GetElementCount();
+	EXPECT_EQ(actualCount, 4);
+}
+
+TEST(TestInMemoryDirectory, GenerateIndex_OneTimes_CorrectIndex)
+{
+	InMemoryDirectory imd{};
+
+	imd.AddElement(std::make_unique<Element>("Fury"));
+	imd.AddElement(std::make_unique<Element>("Tony"));
+	imd.AddElement(std::make_unique<Element>("Bruce"));
+	imd.GenerateIndex();
+
+	auto actual = imd.GetElement("index")->GetText();
+	auto expected = "Fury\nTony\nBruce\n";
+	EXPECT_EQ(actual, expected);
+	auto actualCount = imd.GetElementCount();
+	EXPECT_EQ(actualCount, 4);
+}
+
+TEST(TestInMemoryDirectory, GenerateIndex_MultipleTimesWithAddBetween_JustOneIndex)
+{
+	InMemoryDirectory imd{};
+
+	imd.GenerateIndex();
+	imd.AddElement(std::make_unique<Element>("Heinz"));
+	imd.AddElement(std::make_unique<Element>("Knut"));
+	imd.AddElement(std::make_unique<Element>("Chester"));
+	imd.GenerateIndex();
+
+	auto actual = imd.GetElement("index")->GetText();
+	auto expected = "Heinz\nKnut\nChester\n";
+	EXPECT_EQ(actual, expected);
+	auto actualCount = imd.GetElementCount();
+	EXPECT_EQ(actualCount, 4);
+}
+
+TEST(TestInMemoryDirectory, GenerateIndex_MultipleTimes_JustOneIndex)
 {
 	InMemoryDirectory imd{};
 
 	imd.AddElement(std::make_unique<Element>("Heinz"));
 	imd.GenerateIndex();
+	imd.GenerateIndex();
 
-	auto index = imd.GetElement("index");
-	auto actual = index->GetText();
-	auto expected = "index\nHeinz\n";
+	auto actual = imd.GetElement("index")->GetText();
+	auto expected = "Heinz\n";
 	EXPECT_EQ(actual, expected);
+	auto actualCount = imd.GetElementCount();
+	EXPECT_EQ(actualCount, 2);
 }
-
-TEST(TestInMemoryDirectory, GenerateIndex_AddMultipleElement_CorrectIndex)
-{
-	InMemoryDirectory imd{};
-
-	imd.AddElement(std::make_unique<Element>("Heinz"));
-	imd.AddElement(std::make_unique<Element>("Kunz"));
-	imd.AddElement(std::make_unique<Element>("Donald"));
-	imd.AddElement(std::make_unique<Element>("Biden"));
-	imd.GenerateIndex();
-
-	auto index = imd.GetElement("index");
-	auto actual = index->GetText();
-	auto expected = "index\nHeinz\nKunz\nDonald\nBiden\n";
-	EXPECT_EQ(actual, expected);
-}
-
-TEST(TestInMemoryDirectory, GenerateIndex_OneTimes_OneIndex)
-{
-	InMemoryDirectory imd{};
-
-	imd.GenerateIndex();
-
-	auto actual = imd.GetElementCount();
-	auto expected = 1;
-	EXPECT_EQ(actual, expected);
-}
-
-TEST(TestInMemoryDirectory, GenerateIndex_MultipleTimes_OneIndex)
-{
-	InMemoryDirectory imd{};
-
-	imd.GenerateIndex();
-	imd.GenerateIndex();
-	imd.GenerateIndex();
-	imd.GenerateIndex();
-
-	auto actual = imd.GetElementCount();
-	auto expected = 1;
-	EXPECT_EQ(actual, expected);
-}
-
-//test if multiple calls from generate fuqs the index text
