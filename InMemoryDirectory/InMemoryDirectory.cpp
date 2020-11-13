@@ -11,16 +11,12 @@ void InMemoryDirectory::AddElement(std::unique_ptr<Element> pElement)
 
 void InMemoryDirectory::GenerateIndex()
 {
-	auto pNewElement = std::make_unique<Element>("index");
-	for(auto& pElement : m_elements)
-		pNewElement->AddText(pElement->GetName() + '\n');
-
-	auto oldElement = GetElement("index");
-	if (oldElement == nullptr)
-		m_elements.push_back(std::move(pNewElement));
-	else
+	if (GetElement("index") == nullptr)
 	{
-		*oldElement = *pNewElement.get();
+		auto pNewElement = std::make_unique<Element>("index");
+		for(auto& pElement : m_elements)
+			pNewElement->AddText(pElement->GetName() + '\n');
+		m_elements.push_back(std::move(pNewElement));
 	}
 }
 
