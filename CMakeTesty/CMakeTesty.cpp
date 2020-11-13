@@ -11,6 +11,8 @@ int main(int argc, char* argv[])
 		std::cout << argv[0] << " Version " << CMakeTesty_VERSION_MAJOR << "."
 			<< CMakeTesty_VERSION_MINOR << std::endl;
 		std::cout << "Usage: " << argv[0] << " number" << std::endl;
+		auto a = std::async(std::launch::async, [] { return 1; });
+		return a.get();
 		return 1;
 	}
 	else

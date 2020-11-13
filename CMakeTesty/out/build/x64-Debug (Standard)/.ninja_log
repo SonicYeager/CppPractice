@@ -1,3 +1,5 @@
 # ninja log v5
-0	589	626879405	CMakeFiles/CMakeTesty.dir/CMakeTesty.cpp.obj	46de3b8eb850ea8a
-589	852	626879405	CMakeTesty.exe	963dc282ada7c83f
+1	571	626898218	CMakeFiles/CMakeTesty.dir/CMakeTesty.cpp.obj	ae0f3e90df03e18a
+572	854	626898219	CMakeTesty.exe	9389cb1b576ee532
+0	619	626898241	CMakeFiles/CMakeTesty.dir/CMakeTesty.cpp.obj	ae0f3e90df03e18a
+619	873	626898241	CMakeTesty.exe	9389cb1b576ee532

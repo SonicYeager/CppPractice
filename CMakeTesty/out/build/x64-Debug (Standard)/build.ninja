@@ -76,7 +76,7 @@ build CMakeTesty.exe: CXX_EXECUTABLE_LINKER__CMakeTesty_Debug CMakeFiles\CMakeTe
 # Utility command for edit_cache
 
 build CMakeFiles\edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cmd.exe /C "cd /D "C:\Uebungsprojekte\CMakeTesty\out\build\x64-Debug (Standard)" && "C:\Program Files\CMake\bin\cmake-gui.exe" -SC:\Uebungsprojekte\CMakeTesty -B"C:\Uebungsprojekte\CMakeTesty\out\build\x64-Debug (Standard)""
+  COMMAND = cmd.exe /C "cd /D "H:\TraineeProjectsCpp\CMakeTesty\out\build\x64-Debug (Standard)" && "C:\Program Files\CMake\bin\cmake-gui.exe" -SH:\TraineeProjectsCpp\CMakeTesty -B"H:\TraineeProjectsCpp\CMakeTesty\out\build\x64-Debug (Standard)""
   DESC = Running CMake cache editor...
   pool = console
   restat = 1
@@ -88,7 +88,7 @@ build edit_cache: phony CMakeFiles\edit_cache.util
 # Utility command for rebuild_cache
 
 build CMakeFiles\rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cmd.exe /C "cd /D "C:\Uebungsprojekte\CMakeTesty\out\build\x64-Debug (Standard)" && "C:\Program Files\CMake\bin\cmake.exe" --regenerate-during-build -SC:\Uebungsprojekte\CMakeTesty -B"C:\Uebungsprojekte\CMakeTesty\out\build\x64-Debug (Standard)""
+  COMMAND = cmd.exe /C "cd /D "H:\TraineeProjectsCpp\CMakeTesty\out\build\x64-Debug (Standard)" && "C:\Program Files\CMake\bin\cmake.exe" --regenerate-during-build -SH:\TraineeProjectsCpp\CMakeTesty -B"H:\TraineeProjectsCpp\CMakeTesty\out\build\x64-Debug (Standard)""
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -106,7 +106,7 @@ build CMakeTesty: phony CMakeTesty.exe
 # =============================================================================
 
 #############################################
-# Folder: C:/Uebungsprojekte/CMakeTesty/out/build/x64-Debug (Standard)
+# Folder: H:/TraineeProjectsCpp/CMakeTesty/out/build/x64-Debug (Standard)
 
 build all: phony CMakeTesty.exe
 
