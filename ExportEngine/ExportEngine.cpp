@@ -9,6 +9,14 @@
 #include "Measurement.h"
 #include "Log.h"
 
+VideoFrame* GetFrame(VideoEngine& vidEngine, long long i)
+{
+	auto res = vidEngine.VideoEngineGetFrame(i);
+	if(res == nullptr)
+		throw std::exception("GetFrame error");
+	return res;
+}
+
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
 	VideoEngine vidEngine{};
@@ -38,9 +46,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 			for(__int64 i = m_config.pPI->rangeStart; i < m_config.pPI->rangeEnd;)
 			{
 				prgHandler.ThrowIFProgressAbort(result);
-				auto videoframe = vidEngine.VideoEngineGetFrame(i);
-				if(videoframe == nullptr)
-					throw std::exception("GetFrame error");
+				auto videoframe = GetFrame(vidEngine, i);
 				ColorSpaceConverter csc{};
 				csc.ConvertFrameColorFormat(m_pExporter, videoframe);
 				m_pExporter->WriteFrame(m_config.pPI->frameRate, videoframe, totalWritten, prgHandler, i);
@@ -71,9 +77,9 @@ bool ExportEngine::CheckBounceIsValid() const
 	{
 		ExportConfig exConfig{};
 		m_pExporter->GetExportInfo(&exConfig);
-		return m_config.pPI->aspectRation == exConfig.aspectRatio //
-			and m_config.pPI->width >= exConfig.width //
-			and m_config.pPI->height >= exConfig.height //
+		return m_config.pPI->aspectRation == exConfig.aspectRatio
+			and m_config.pPI->width >= exConfig.width
+			and m_config.pPI->height >= exConfig.height
 			and not m_config.targetFileName.empty();
 	}
 	return false;
