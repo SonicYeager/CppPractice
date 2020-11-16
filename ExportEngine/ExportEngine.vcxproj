@@ -76,6 +76,7 @@
     <ClCompile Include="Exporter.cpp" />
     <ClCompile Include="FilesystemHandler.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ProgressHandler.cpp" />
     <ClCompile Include="UserInterface.cpp" />
     <ClCompile Include="VideoEngine.cpp" />
   </ItemGroup>
@@ -86,6 +87,7 @@
     <ClInclude Include="ExportEngine.h" />
     <ClInclude Include="Exporter.h" />
     <ClInclude Include="FilesystemHandler.h" />
+    <ClInclude Include="ProgressHandler.h" />
     <ClInclude Include="UserInterface.h" />
     <ClInclude Include="VideoEngine.h" />
   </ItemGroup>

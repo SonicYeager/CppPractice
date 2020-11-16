@@ -5,6 +5,7 @@
 #include "ArrangmentData.h"
 #include "ColorSpaceConverter.h"
 #include "FilesystemHandler.h"
+#include "ProgressHandler.h"
 
 
 IVideoExport* ConfigExporter(const ExportEngineConfig& exporterConfig)
@@ -26,12 +27,6 @@ void ThrowIfProgressIsNullPtr(IUserInterface* UI)
 {
 	if(UI == nullptr)
 		throw std::exception("no progress is set");
-}
-
-void OpenProgress(IUserInterface* UI, const ExportEngineConfig& config)
-{
-	auto range = config.pPI->rangeEnd - config.pPI->rangeStart;
-	UI->OpenProgress("Export", range);
 }
 
 void ThrowIFProgressAbort(IUserInterface* UI, int& res)
@@ -57,6 +52,7 @@ void SetProgress(IUserInterface* UI, const size_t& totalWritten)
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
 	VideoEngine vidEngine{};
+	ProgressHandler prgHandler{m_config.pUserInterface};
 	try
 	{
 		size_t totalWritten = 0;
@@ -71,7 +67,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 			fsHandler.ConfigPath(m_config);
 			m_pUserInterface = m_config.pUserInterface;
 			ThrowIfProgressIsNullPtr(m_pUserInterface);
-			OpenProgress(m_pUserInterface, m_config);
+			prgHandler.OpenProgress(m_pUserInterface, m_config);
 			//{ CONFIGVIDEOENGINE-this
 			vidEngine.PrepareVideoEngine(*m_config.pPI);
 			m_pExporter->Initialize(m_config.targetFileName);
