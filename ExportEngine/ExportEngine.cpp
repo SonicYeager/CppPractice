@@ -23,12 +23,6 @@ IVideoExport* ConfigExporter(const ExportEngineConfig& exporterConfig)
 	}
 }
 
-void ThrowIfProgressIsNullPtr(IUserInterface* UI)
-{
-	if(UI == nullptr)
-		throw std::exception("no progress is set");
-}
-
 void ThrowIFProgressAbort(IUserInterface* UI, int& res)
 {
 	if(UI->Aborted())
@@ -48,7 +42,6 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 	VideoEngine vidEngine{};
 	try
 	{
-		ProgressHandler prgHandler{m_config.pUserInterface};
 		size_t totalWritten = 0;
 		m_config = config;
 		m_Result = -1;
@@ -60,8 +53,8 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 			fsHandler.FindOtherFile(m_config);
 			fsHandler.ConfigPath(m_config);
 			m_pUserInterface = m_config.pUserInterface;
-			ThrowIfProgressIsNullPtr(m_pUserInterface);
-			prgHandler.OpenProgress(m_pUserInterface, m_config);
+			ProgressHandler prgHandler{m_config.pUserInterface};
+			prgHandler.OpenProgress(m_config);
 			//{ CONFIGVIDEOENGINE-this
 			vidEngine.PrepareVideoEngine(*m_config.pPI);
 			m_pExporter->Initialize(m_config.targetFileName);
