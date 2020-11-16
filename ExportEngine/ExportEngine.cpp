@@ -3,6 +3,7 @@
 #include <iostream>
 #include <chrono>
 #include "ArrangmentData.h"
+#include "ColorSpaceConverter.h"
 
 void FindOtherFile(std::filesystem::path& targetFile)
 {
@@ -105,37 +106,8 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 					//{ THROWGETFRAMEERROR
 					throw std::exception("GetFrame error");
 					//}
-				//{ CONVERT-Converter
-				ExportConfig exConfig{};
-				m_pExporter->GetExportInfo(&exConfig);
-				if(static_cast<ExportColorFormat>(videoframe->colorFormat) != exConfig.format)
-				{
-					//{ BGRTOYUV
-					if(videoframe->colorFormat == VideoFrameColorFormat::BGR and exConfig.format == ExportColorFormat::YUV)
-					{
-						for(Pixel& c : videoframe->pixels)
-						{
-							Pixel bgr = c;
-							c.y = static_cast<char>(0.299 * bgr.b + 0.587 * bgr.g + 0.114 * bgr.r);
-							c.u = static_cast<char>((bgr.r - c.y) * 0.493);
-							c.v = static_cast<char>((bgr.b - c.y) * 0.877);
-						}
-					}
-					//}
-					//{ RGBTOYUV
-					else if(videoframe->colorFormat == VideoFrameColorFormat::RGB and exConfig.format == ExportColorFormat::YUV)
-					{
-						for(Pixel& c : videoframe->pixels)
-						{
-							Pixel rgb = c;
-							c.y = static_cast<char>(0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b);
-							c.u = static_cast<char>((rgb.b - c.y) * 0.493);
-							c.v = static_cast<char>((rgb.r - c.y) * 0.877);
-						}
-					}
-					//}
-				}
-				//}
+				ColorSpaceConverter csc{};
+				csc.ConvertFrameColorFormat(m_pExporter, videoframe);
 				//{ WRITEFRAME-this
 				size_t written = 0;
 				bool success = m_pExporter->EncodeVideo(videoframe, &written);
@@ -145,7 +117,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 					//{ OnProgress
 					m_pUserInterface->SetProgress(totalWritten);
 					//}
-					i += static_cast<__int64>(m_config.pPI->frameRate);
+					i += static_cast<__int64>(m_config.pPI->frameRate); //next iter
 					delete videoframe;
 				}
 				else
