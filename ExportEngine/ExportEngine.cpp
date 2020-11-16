@@ -34,16 +34,15 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 			log.LogRange(m_config);
 			Measurement measure{};
 			measure.Start();
-			//{ VALIDATEFRAMES-this | CONVERTFRAMES-Converter | WRITEFRAMES-this
-			for(__int64 i = m_config.pPI->rangeStart; i < m_config.pPI->rangeEnd;)
+			//__int64 i{m_config.pPI->rangeStart};
+			for(__int64 i{m_config.pPI->rangeStart}; i < m_config.pPI->rangeEnd;) //while IsWithinRange(m_config.pPI, i) <- increase by framerate every true
 			{
 				prgHandler.ThrowIFProgressAbort(result);
 				auto videoframe = vidEngine.GetFrame(i);
 				ColorSpaceConverter csc{};
 				csc.ConvertFrameColorFormat(m_pExporter, videoframe);
-				m_pExporter->WriteFrame(m_config.pPI->frameRate, videoframe, totalWritten, prgHandler, i);
+				m_pExporter->WriteFrame(m_config.pPI->frameRate, videoframe, totalWritten, prgHandler, i); //can remove framrate & i then 
 			}
-			//}
 			measure.Stop();
 			log.LogExport(measure, m_config);
 			result = 1;
