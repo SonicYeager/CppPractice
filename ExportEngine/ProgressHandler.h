@@ -7,6 +7,7 @@ struct ProgressHandler
 	~ProgressHandler();
 	void OpenProgress(const ExportEngineConfig& config);
 	void SetProgress(const size_t& totalWritten);
+	void ThrowIFProgressAbort(int& res);
 
 private:
 	IUserInterface* UI;

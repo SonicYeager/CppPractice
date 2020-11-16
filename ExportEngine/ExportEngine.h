@@ -15,17 +15,5 @@ private:
 	ExportEngineConfig m_config = {};
 	int m_Result = 0;
 	IVideoExport* m_pExporter = nullptr;
-	IUserInterface* m_pUserInterface = nullptr;
+	//IUserInterface* m_pUserInterface = nullptr;
 };
-
-void ConfigPath();
-
-void ThrowIfProgressIsNullPtr();
-
-void OpenProgress();
-
-void IsProgressAbort();
-
-void CloseProgress();
-
-void SetProgress(const size_t& totalWritten);

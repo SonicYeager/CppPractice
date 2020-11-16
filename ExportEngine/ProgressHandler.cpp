@@ -23,3 +23,12 @@ void ProgressHandler::SetProgress(const size_t& totalWritten)
 {
 	UI->SetProgress(totalWritten);
 }
+
+void ProgressHandler::ThrowIFProgressAbort(int& res)
+{
+	if(UI->Aborted())
+	{
+		res = 1;
+		throw 5;
+	}
+}
