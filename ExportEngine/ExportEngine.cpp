@@ -9,24 +9,6 @@
 #include "Measurement.h"
 #include "Log.h"
 
-void WriteFrame(IVideoExport* exporter, double framerate, VideoFrame* videoframe, size_t& totalWritten, ProgressHandler& prgHandler, long long& i)
-{
-	size_t written = 0;
-	bool success = exporter->EncodeVideo(videoframe, &written);
-	if(success)
-	{
-		totalWritten += written;
-		prgHandler.SetProgress(totalWritten);
-		i += static_cast<__int64>(framerate); //next iter
-		delete videoframe;
-	}
-	else
-	{
-		delete videoframe;
-		throw std::exception("Encode error");
-	}
-}
-
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
 	VideoEngine vidEngine{};
@@ -60,7 +42,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 					throw std::exception("GetFrame error");
 				ColorSpaceConverter csc{};
 				csc.ConvertFrameColorFormat(m_pExporter, videoframe);
-				WriteFrame(m_pExporter, m_config.pPI->frameRate, videoframe, totalWritten, prgHandler, i);
+				m_pExporter->WriteFrame(m_pExporter, m_config.pPI->frameRate, videoframe, totalWritten, prgHandler, i);
 			}
 			//}
 			measure.Stop();

@@ -1,5 +1,6 @@
 #include "Exporter.h"
 #include "ExportData.h"
+#include "ProgressHandler.h"
 #include <string>
 #include <fstream>
 #include <windows.h>
@@ -55,6 +56,24 @@ public:
 		config->height = 12;
 		config->aspectRatio = 1.0;
 		config->type = m_format == ExportColorFormat::RGB ? ExportType::DVD : ExportType::MP4;
+	}
+
+	void WriteFrame(IVideoExport* exporter, double framerate, VideoFrame* videoframe, size_t& totalWritten, ProgressHandler& prgHandler, long long& i) override
+	{
+		size_t written = 0;
+		bool success = exporter->EncodeVideo(videoframe, &written);
+		if(success)
+		{
+			totalWritten += written;
+			prgHandler.SetProgress(totalWritten);
+			i += static_cast<__int64>(framerate); //next iter
+			delete videoframe;
+		}
+		else
+		{
+			delete videoframe;
+			throw std::exception("Encode error");
+		}
 	}
 
 	std::filesystem::path m_targetFilePath = {};

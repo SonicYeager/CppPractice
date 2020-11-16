@@ -27,6 +27,7 @@ struct ExportConfig
 };
 
 struct ExportEngineConfig;
+struct ProgressHandler;
 
 class IVideoExport
 {
@@ -35,6 +36,7 @@ public:
 	virtual bool EncodeVideo(VideoFrame*, size_t*) = 0;
 	virtual void GetExportInfo(ExportConfig*) = 0;
 	virtual ~IVideoExport() = default;
+	virtual void WriteFrame(IVideoExport* exporter, double framerate, VideoFrame* videoframe, size_t& totalWritten, ProgressHandler& prgHandler, long long& i) = 0;
 
 	static IVideoExport* Create(ExportColorFormat);
 	static IVideoExport* ConfigExporter(const ExportEngineConfig&);
