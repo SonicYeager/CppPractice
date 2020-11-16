@@ -43,6 +43,12 @@ void ThrowIFProgressAbort(IUserInterface* UI, int& res)
 	}
 }
 
+void CloseProgress(IUserInterface* UI)
+{
+	UI->CloseProgress();
+	UI = nullptr;
+}
+
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
 	VideoEngine vidEngine{};
@@ -125,8 +131,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 	}
 	//{ CLEANUP-this
 	vidEngine.ShutdownVideoEngine();
-	m_pUserInterface->CloseProgress();
-	m_pUserInterface = nullptr;
+	CloseProgress();
 	m_pExporter = nullptr;
 	m_config = {};
 	//}
