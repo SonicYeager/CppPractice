@@ -31,6 +31,14 @@ VideoFrame* VideoEngine::VideoEngineGetFrame(__int64 i)
 	return new VideoFrame{12, 12, VideoFrameColorFormat::RGB, rgbData};
 }
 
+VideoFrame* VideoEngine::GetFrame(long long i)
+{
+	auto res = VideoEngineGetFrame(i);
+	if(res == nullptr)
+		throw std::exception("GetFrame error");
+	return res;
+}
+
 void VideoEngine::ShutdownVideoEngine()
 {
 	mStart = mEnd = 0;

@@ -35,6 +35,7 @@ struct VideoEngine
 {
 	void PrepareVideoEngine(const ProjectInfo&);
 	VideoFrame* VideoEngineGetFrame(__int64 i);
+	VideoFrame* GetFrame(long long i);
 	void ShutdownVideoEngine();
 
 private:

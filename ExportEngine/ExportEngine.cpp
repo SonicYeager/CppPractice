@@ -9,14 +9,6 @@
 #include "Measurement.h"
 #include "Log.h"
 
-VideoFrame* GetFrame(VideoEngine& vidEngine, long long i)
-{
-	auto res = vidEngine.VideoEngineGetFrame(i);
-	if(res == nullptr)
-		throw std::exception("GetFrame error");
-	return res;
-}
-
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
 	VideoEngine vidEngine{};
@@ -46,7 +38,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 			for(__int64 i = m_config.pPI->rangeStart; i < m_config.pPI->rangeEnd;)
 			{
 				prgHandler.ThrowIFProgressAbort(result);
-				auto videoframe = GetFrame(vidEngine, i);
+				auto videoframe = vidEngine.GetFrame(i);
 				ColorSpaceConverter csc{};
 				csc.ConvertFrameColorFormat(m_pExporter, videoframe);
 				m_pExporter->WriteFrame(m_config.pPI->frameRate, videoframe, totalWritten, prgHandler, i);
