@@ -11,15 +11,18 @@ void FilesystemHandler::FindOtherFile(ExportEngineConfig& config)
 	}
 }
 
+void LogCreatedDirectory(const std::filesystem::path& path)
+{
+	std::cout << "path (" << path << ") had not been exist -> created";
+}
+
 void FilesystemHandler::ConfigPath(ExportEngineConfig& config)
 {
 	auto path = config.targetFileName.stem();
 	if(std::filesystem::is_directory(path))
 	{
 		if(std::filesystem::create_directory(path))
-			//{ LOG-Logger
-			std::cout << "path (" << path << ") had not been exist -> created";
-			//}
+			LogCreatedDirectory(path);
 		else
 			throw std::exception("could not create target directory");
 	}
