@@ -28,6 +28,22 @@ IVideoExport* ConfigExporter(const ExportEngineConfig& exporterConfig)
 	}
 }
 
+void ConfigPath(ExportEngineConfig& config)
+{
+	if(RENAME_FILENAME_IF_EXIST & config.flagsExport && std::filesystem::exists(config.targetFileName))
+		FindOtherFile(config.targetFileName);
+	auto path = config.targetFileName.stem();
+	if(std::filesystem::is_directory(path))
+	{
+		if(std::filesystem::create_directory(path))
+			//{ LOG-Logger
+			std::cout << "path (" << path << ") had not been exist -> created";
+			//}
+		else
+			throw std::exception("could not create target directory");
+	}
+}
+
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
 	VideoEngine vidEngine{};
@@ -39,25 +55,8 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 		m_pExporter = ConfigExporter(m_config);
 		if(CheckBounceIsValid())
 		{
-			//{ THROWIFUNSUPPORTEDFEATURE-this
 			CheckFeatureProtection(m_config.pExporter);
-			//}
-			//{ CONFIGPATH-this
-			if(RENAME_FILENAME_IF_EXIST & m_config.flagsExport && std::filesystem::exists(m_config.targetFileName))
-				FindOtherFile(m_config.targetFileName);
-			//{ FINDOTHERDIR-this
-			auto path = m_config.targetFileName.stem();
-			if(std::filesystem::is_directory(path))
-			{
-				if(std::filesystem::create_directory(path))
-					//{ LOG-Logger
-					std::cout << "path (" << path << ") had not been exist -> created";
-					//}
-				else
-					throw std::exception("could not create target directory");
-			}
-			//}
-			//}
+			ConfigPath(m_config);
 			//{ CONFIGUI-this
 			m_pUserInterface = m_config.pUserInterface;
 			if(m_pUserInterface == nullptr)
