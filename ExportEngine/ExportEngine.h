@@ -25,3 +25,7 @@ void ThrowIfProgressIsNullPtr();
 void OpenProgress();
 
 void IsProgressAbort();
+
+void CloseProgress();
+
+void SetProgress(const size_t& totalWritten);

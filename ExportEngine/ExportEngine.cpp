@@ -132,12 +132,10 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 	{
 		std::cout << "aborted by user";
 	}
-	//{ CLEANUP-this
 	vidEngine.ShutdownVideoEngine();
-	CloseProgress();
+	CloseProgress(m_pUserInterface);
 	m_pExporter = nullptr;
 	m_config = {};
-	//}
 	return m_Result == 1;
 }
 
