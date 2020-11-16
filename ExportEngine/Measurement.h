@@ -3,7 +3,11 @@
 
 struct Measurement
 {
-	std::chrono::steady_clock::time_point Now();
+	void Start();
+	void Stop();
+	int GetPassesTime();
 
 private:
+	std::chrono::steady_clock::time_point start;
+	std::chrono::steady_clock::time_point stop;
 };

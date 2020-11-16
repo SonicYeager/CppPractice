@@ -54,7 +54,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 			//}
 			//{ START-Measurement
 			Measurement measure{};
-			auto start = measure.Now();
+			measure.Start();
 			//}
 			//{ VALIDATEFRAMES-this | CONVERTFRAMES-Converter | WRITEFRAMES-this
 			for(__int64 i = m_config.pPI->rangeStart; i < m_config.pPI->rangeEnd;)
@@ -84,12 +84,12 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 			}
 			//}
 			//{ STOP-Measurement
-			auto end = measure.Now();
+			measure.Stop();
 			//}
 			//{ LOG-Logger
 			const double expLen = m_config.pPI->rangeEnd - m_config.pPI->rangeStart / m_config.pPI->frameRate;
 			std::cout << "Export " << std::fixed << std::setprecision(1) << expLen
-					  << "s finished successful (Duration=" << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << " ms)\n";
+					  << "s finished successful (Duration=" << measure.GetPassesTime() << " ms)\n";
 			//}
 			m_Result = 1;
 		}
