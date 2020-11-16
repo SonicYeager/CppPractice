@@ -25,12 +25,6 @@ IVideoExport* ConfigExporter(const ExportEngineConfig& exporterConfig)
 	}
 }
 
-void LogRange(const ExportEngineConfig& config)
-{
-	if(config.pPI->rangeEnd > config.pPI->rangeStart)
-		std::cout << " from " << config.pPI->rangeStart << " to " << config.pPI->rangeEnd << " started.\n";
-}
-
 void LogExport(const Measurement& measure, const ExportEngineConfig& config)
 {
 	const double expLen = config.pPI->rangeEnd - config.pPI->rangeStart / config.pPI->frameRate;

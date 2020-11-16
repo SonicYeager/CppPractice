@@ -5,4 +5,5 @@
 struct Log
 {
 	void LogFileName(const ExportEngineConfig& config);
+	void LogRange(const ExportEngineConfig& config);
 };
