@@ -13,6 +13,5 @@ private:
 	void CheckFeatureProtection(IVideoExport*) const;
 
 	ExportEngineConfig m_config = {};
-	int m_Result = 0;
 	IVideoExport* m_pExporter = nullptr;
 };
