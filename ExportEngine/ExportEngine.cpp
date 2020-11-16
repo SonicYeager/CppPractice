@@ -38,12 +38,6 @@ void ThrowIFProgressAbort(IUserInterface* UI, int& res)
 	}
 }
 
-void CloseProgress(IUserInterface* UI)
-{
-	UI->CloseProgress();
-	UI = nullptr;
-}
-
 void SetProgress(IUserInterface* UI, const size_t& totalWritten)
 {
 	UI->SetProgress(totalWritten);
@@ -52,9 +46,9 @@ void SetProgress(IUserInterface* UI, const size_t& totalWritten)
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
 	VideoEngine vidEngine{};
-	ProgressHandler prgHandler{m_config.pUserInterface};
 	try
 	{
+		ProgressHandler prgHandler{m_config.pUserInterface};
 		size_t totalWritten = 0;
 		m_config = config;
 		m_Result = -1;
@@ -129,7 +123,6 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 		std::cout << "aborted by user";
 	}
 	vidEngine.ShutdownVideoEngine();
-	CloseProgress(m_pUserInterface);
 	m_pExporter = nullptr;
 	m_config = {};
 	return m_Result == 1;
