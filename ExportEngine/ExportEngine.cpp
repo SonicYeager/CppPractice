@@ -13,18 +13,16 @@ void FindOtherFile(std::filesystem::path& targetFile)
 	targetFile.replace_filename(newFilename);
 }
 
-void ConfigExporter(IVideoExport* pExporter, ExportEngineConfig& exporterConfig)
+IVideoExport* ConfigExporter(const ExportEngineConfig& exporterConfig)
 {
 	if(exporterConfig.pExporter)
 	{
-		pExporter = exporterConfig.pExporter;
+		return exporterConfig.pExporter;
 	}
 	else
 	{
 		if(exporterConfig.createExport)
-			//{ CREATEEXPORT
-			pExporter = exporterConfig.createExport(exporterConfig.flagsExport & RGB_EXPORT ? ExportColorFormat::RGB : ExportColorFormat::YUV);
-			//}
+			return exporterConfig.createExport(exporterConfig.flagsExport & RGB_EXPORT ? ExportColorFormat::RGB : ExportColorFormat::YUV);
 		else
 			throw std::exception("no export available");
 	}
@@ -38,20 +36,11 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 		size_t totalWritten = 0;
 		m_config = config;
 		m_Result = -1;
-		//{ SETEXPORTER-this
-		ConfigExporter(m_pExporter, m_config);
-		//}
+		m_pExporter = ConfigExporter(m_config);
 		if(CheckBounceIsValid())
 		{
 			//{ THROWIFUNSUPPORTEDFEATURE-this
-			if(m_config.pExporter)
-			{
-				bool success = CheckFeatureProtection(m_config.pExporter);
-				if(not success)
-					//{ THROWFEATURENOTALLOWED
-					throw std::exception("Feature not allowed");
-					//}
-			}
+			CheckFeatureProtection(m_config.pExporter);
 			//}
 			//{ CONFIGPATH-this
 			if(RENAME_FILENAME_IF_EXIST & m_config.flagsExport && std::filesystem::exists(m_config.targetFileName))
@@ -65,9 +54,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 					std::cout << "path (" << path << ") had not been exist -> created";
 					//}
 				else
-					//{ THROWCOULDNOTCREATEDIR
 					throw std::exception("could not create target directory");
-					//}
 			}
 			//}
 			//}
@@ -106,9 +93,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 				//} 
 				auto videoframe = vidEngine.VideoEngineGetFrame(i);
 				if(videoframe == nullptr)
-					//{ THROWGETFRAMEERROR
 					throw std::exception("GetFrame error");
-					//}
 				ColorSpaceConverter csc{};
 				csc.ConvertFrameColorFormat(m_pExporter, videoframe);
 				//{ WRITEFRAME-this
@@ -126,9 +111,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 				else
 				{
 					delete videoframe;
-					//{ THROWENCODEERROR
 					throw std::exception("Encode error");
-					//}
 				}
 				//}
 			}
@@ -176,11 +159,13 @@ bool ExportEngine::CheckBounceIsValid() const
 	return false;
 }
 
-bool ExportEngine::CheckFeatureProtection(IVideoExport* pExporter) const
+void ExportEngine::CheckFeatureProtection(IVideoExport* pExporter) const
 {
-	if(not pExporter) //remove
-		return false;
-	ExportConfig config{};
-	pExporter->GetExportInfo(&config);
-	return config.type == ExportType::DVD or config.type == ExportType::MP4;
+	if(pExporter)
+	{
+		ExportConfig config{};
+		pExporter->GetExportInfo(&config);
+		if(not(config.type == ExportType::DVD) or not (config.type == ExportType::MP4))
+			throw std::exception("Feature not allowed");
+	}
 }

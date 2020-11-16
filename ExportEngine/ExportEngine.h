@@ -10,7 +10,7 @@ public:
 
 private:
 	bool CheckBounceIsValid() const;
-	bool CheckFeatureProtection(IVideoExport*) const;
+	void CheckFeatureProtection(IVideoExport*) const;
 
 	ExportEngineConfig m_config = {};
 	int m_Result = 0;
