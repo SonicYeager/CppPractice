@@ -25,6 +25,24 @@ IVideoExport* ConfigExporter(const ExportEngineConfig& exporterConfig)
 	}
 }
 
+void WriteFrame(IVideoExport* exporter, const ExportEngineConfig& config, VideoFrame* videoframe, size_t& totalWritten, ProgressHandler& prgHandler, long long& i)
+{
+	size_t written = 0;
+	bool success = exporter->EncodeVideo(videoframe, &written);
+	if(success)
+	{
+		totalWritten += written;
+		prgHandler.SetProgress(totalWritten);
+		i += static_cast<__int64>(config.pPI->frameRate); //next iter
+		delete videoframe;
+	}
+	else
+	{
+		delete videoframe;
+		throw std::exception("Encode error");
+	}
+}
+
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
 	VideoEngine vidEngine{};
@@ -36,15 +54,15 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 		m_pExporter = ConfigExporter(m_config);
 		if(CheckBounceIsValid())
 		{
+			Log log{};
 			CheckFeatureProtection(m_config.pExporter);
 			FilesystemHandler fsHandler{};
 			fsHandler.FindOtherFile(m_config);
-			fsHandler.ConfigPath(m_config);
+			fsHandler.ConfigPath(m_config, log);
 			ProgressHandler prgHandler{m_config.pUserInterface};
 			prgHandler.OpenProgress(m_config);
 			vidEngine.PrepareVideoEngine(*m_config.pPI);
 			m_pExporter->Initialize(m_config.targetFileName);
-			Log log{};
 			log.LogFileName(m_config);
 			log.LogRange(m_config);
 			Measurement measure{};
@@ -59,20 +77,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 				ColorSpaceConverter csc{};
 				csc.ConvertFrameColorFormat(m_pExporter, videoframe);
 				//{ WRITEFRAME-this
-				size_t written = 0;
-				bool success = m_pExporter->EncodeVideo(videoframe, &written);
-				if(success)
-				{
-					totalWritten += written;
-					prgHandler.SetProgress(totalWritten);
-					i += static_cast<__int64>(m_config.pPI->frameRate); //next iter
-					delete videoframe;
-				}
-				else
-				{
-					delete videoframe;
-					throw std::exception("Encode error");
-				}
+				WriteFrame(m_pExporter, m_config, videoframe, totalWritten, prgHandler, i);
 				//}
 			}
 			//}
