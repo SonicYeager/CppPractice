@@ -24,6 +24,11 @@ IVideoExport* ConfigExporter(const ExportEngineConfig& exporterConfig)
 	}
 }
 
+void LogFileName(const ExportEngineConfig& config)
+{
+	std::cout << "Export" << config.targetFileName;
+}
+
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
 	VideoEngine vidEngine{};
@@ -41,21 +46,15 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 			fsHandler.ConfigPath(m_config);
 			ProgressHandler prgHandler{m_config.pUserInterface};
 			prgHandler.OpenProgress(m_config);
-			//{ CONFIGVIDEOENGINE-this
 			vidEngine.PrepareVideoEngine(*m_config.pPI);
 			m_pExporter->Initialize(m_config.targetFileName);
-			//{ LOG-Logger
-			std::cout << "Export" << m_config.targetFileName;
-			//}
+			LogFileName(m_config);
 			if(m_config.pPI->rangeEnd > m_config.pPI->rangeStart)
 				//{ LOG-Logger
 				std::cout << " from " << m_config.pPI->rangeStart << " to " << m_config.pPI->rangeEnd << " started.\n";
 				//}
-			//}
-			//{ START-Measurement
 			Measurement measure{};
 			measure.Start();
-			//}
 			//{ VALIDATEFRAMES-this | CONVERTFRAMES-Converter | WRITEFRAMES-this
 			for(__int64 i = m_config.pPI->rangeStart; i < m_config.pPI->rangeEnd;)
 			{
@@ -83,9 +82,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 				//}
 			}
 			//}
-			//{ STOP-Measurement
 			measure.Stop();
-			//}
 			//{ LOG-Logger
 			const double expLen = m_config.pPI->rangeEnd - m_config.pPI->rangeStart / m_config.pPI->frameRate;
 			std::cout << "Export " << std::fixed << std::setprecision(1) << expLen
