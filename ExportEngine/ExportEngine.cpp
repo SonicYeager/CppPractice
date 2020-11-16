@@ -13,6 +13,23 @@ void FindOtherFile(std::filesystem::path& targetFile)
 	targetFile.replace_filename(newFilename);
 }
 
+void ConfigExporter(IVideoExport* pExporter, ExportEngineConfig& exporterConfig)
+{
+	if(exporterConfig.pExporter)
+	{
+		pExporter = exporterConfig.pExporter;
+	}
+	else
+	{
+		if(exporterConfig.createExport)
+			//{ CREATEEXPORT
+			pExporter = exporterConfig.createExport(exporterConfig.flagsExport & RGB_EXPORT ? ExportColorFormat::RGB : ExportColorFormat::YUV);
+			//}
+		else
+			throw std::exception("no export available");
+	}
+}
+
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
 	VideoEngine vidEngine{};
@@ -22,21 +39,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 		m_config = config;
 		m_Result = -1;
 		//{ SETEXPORTER-this
-		if(m_config.pExporter)
-		{
-			m_pExporter = m_config.pExporter;
-		}
-		else
-		{
-			if(m_config.createExport)
-				//{ CREATEEXPORT
-				m_pExporter = m_config.createExport(m_config.flagsExport & RGB_EXPORT ? ExportColorFormat::RGB : ExportColorFormat::YUV);
-				//} 
-			else
-				//{ THROWNOEXPORTAVAILABLE
-				throw std::exception("no export available");
-				//}
-		}
+		ConfigExporter(m_pExporter, m_config);
 		//}
 		if(CheckBounceIsValid())
 		{
