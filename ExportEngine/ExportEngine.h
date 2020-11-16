@@ -21,3 +21,7 @@ private:
 void ConfigPath();
 
 void ThrowIfProgressIsNullPtr();
+
+void OpenProgress();
+
+void IsProgressAbort();

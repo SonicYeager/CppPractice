@@ -28,6 +28,21 @@ void ThrowIfProgressIsNullPtr(IUserInterface* UI)
 		throw std::exception("no progress is set");
 }
 
+void OpenProgress(IUserInterface* UI, const ExportEngineConfig& config)
+{
+	auto range = config.pPI->rangeEnd - config.pPI->rangeStart;
+	UI->OpenProgress("Export", range);
+}
+
+void ThrowIFProgressAbort(IUserInterface* UI, int& res)
+{
+	if(UI->Aborted())
+	{
+		res = 1;
+		throw 5;
+	}
+}
+
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
 	VideoEngine vidEngine{};
@@ -43,12 +58,9 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 			FilesystemHandler fsHandler{};
 			fsHandler.FindOtherFile(m_config);
 			fsHandler.ConfigPath(m_config);
-			//{ CONFIGUI-this
 			m_pUserInterface = m_config.pUserInterface;
 			ThrowIfProgressIsNullPtr(m_pUserInterface);
-			auto range = m_config.pPI->rangeEnd - m_config.pPI->rangeStart;
-			m_pUserInterface->OpenProgress("Export", range);
-			//}
+			OpenProgress(m_pUserInterface, m_config);
 			//{ CONFIGVIDEOENGINE-this
 			vidEngine.PrepareVideoEngine(*m_config.pPI);
 			m_pExporter->Initialize(m_config.targetFileName);
@@ -66,13 +78,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 			//{ VALIDATEFRAMES-this | CONVERTFRAMES-Converter | WRITEFRAMES-this
 			for(__int64 i = m_config.pPI->rangeStart; i < m_config.pPI->rangeEnd;)
 			{
-				//{ THROWUSERABORT
-				if(m_pUserInterface->Aborted())
-				{
-					m_Result = 1;
-					throw 5;
-				}
-				//} 
+				ThrowIFProgressAbort(m_pUserInterface, m_Result);
 				auto videoframe = vidEngine.VideoEngineGetFrame(i);
 				if(videoframe == nullptr)
 					throw std::exception("GetFrame error");
