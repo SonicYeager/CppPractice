@@ -23,6 +23,11 @@ IVideoExport* ConfigExporter(const ExportEngineConfig& exporterConfig)
 	}
 }
 
+std::chrono::steady_clock::time_point Now()
+{
+	return std::chrono::high_resolution_clock::now();
+}
+
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
 	VideoEngine vidEngine{};
@@ -52,7 +57,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 				//}
 			//}
 			//{ START-Measurement
-			auto start = std::chrono::high_resolution_clock::now();
+			auto start = Now();
 			//}
 			//{ VALIDATEFRAMES-this | CONVERTFRAMES-Converter | WRITEFRAMES-this
 			for(__int64 i = m_config.pPI->rangeStart; i < m_config.pPI->rangeEnd;)
@@ -82,7 +87,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 			}
 			//}
 			//{ STOP-Measurement
-			auto end = std::chrono::high_resolution_clock::now();
+			auto end = Now();
 			//}
 			//{ LOG-Logger
 			const double expLen = m_config.pPI->rangeEnd - m_config.pPI->rangeStart / m_config.pPI->frameRate;
