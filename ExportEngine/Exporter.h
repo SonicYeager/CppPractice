@@ -1,6 +1,7 @@
 #pragma once
 #include "VideoEngine.h"
 #include <filesystem>
+#include <functional>
 
 enum class ExportType
 {
@@ -25,6 +26,7 @@ struct ExportConfig
 	ExportColorFormat format = ExportColorFormat::YUV;
 };
 
+struct ExportEngineConfig;
 
 class IVideoExport
 {
@@ -35,4 +37,5 @@ public:
 	virtual ~IVideoExport() = default;
 
 	static IVideoExport* Create(ExportColorFormat);
+	static IVideoExport* ConfigExporter(const ExportEngineConfig&);
 };

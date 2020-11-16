@@ -9,23 +9,7 @@
 #include "Measurement.h"
 #include "Log.h"
 
-
-IVideoExport* ConfigExporter(const ExportEngineConfig& exporterConfig)
-{
-	if(exporterConfig.pExporter)
-	{
-		return exporterConfig.pExporter;
-	}
-	else
-	{
-		if(exporterConfig.createExport)
-			return exporterConfig.createExport(exporterConfig.flagsExport & RGB_EXPORT ? ExportColorFormat::RGB : ExportColorFormat::YUV);
-		else
-			throw std::exception("no export available");
-	}
-}
-
-void WriteFrame(IVideoExport* exporter, const ExportEngineConfig& config, VideoFrame* videoframe, size_t& totalWritten, ProgressHandler& prgHandler, long long& i)
+void WriteFrame(IVideoExport* exporter, double framerate, VideoFrame* videoframe, size_t& totalWritten, ProgressHandler& prgHandler, long long& i)
 {
 	size_t written = 0;
 	bool success = exporter->EncodeVideo(videoframe, &written);
@@ -33,7 +17,7 @@ void WriteFrame(IVideoExport* exporter, const ExportEngineConfig& config, VideoF
 	{
 		totalWritten += written;
 		prgHandler.SetProgress(totalWritten);
-		i += static_cast<__int64>(config.pPI->frameRate); //next iter
+		i += static_cast<__int64>(framerate); //next iter
 		delete videoframe;
 	}
 	else
@@ -51,7 +35,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 		size_t totalWritten = 0;
 		m_config = config;
 		m_Result = -1;
-		m_pExporter = ConfigExporter(m_config);
+		m_pExporter = IVideoExport::ConfigExporter(m_config);
 		if(CheckBounceIsValid())
 		{
 			Log log{};
@@ -76,9 +60,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 					throw std::exception("GetFrame error");
 				ColorSpaceConverter csc{};
 				csc.ConvertFrameColorFormat(m_pExporter, videoframe);
-				//{ WRITEFRAME-this
-				WriteFrame(m_pExporter, m_config, videoframe, totalWritten, prgHandler, i);
-				//}
+				WriteFrame(m_pExporter, m_config.pPI->frameRate, videoframe, totalWritten, prgHandler, i);
 			}
 			//}
 			measure.Stop();

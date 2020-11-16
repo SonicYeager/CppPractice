@@ -1,4 +1,5 @@
 #include "Exporter.h"
+#include "ExportData.h"
 #include <string>
 #include <fstream>
 #include <windows.h>
@@ -64,4 +65,19 @@ public:
 IVideoExport* IVideoExport::Create(ExportColorFormat format)
 {
 	return new Exporter(format);
+}
+
+IVideoExport* IVideoExport::ConfigExporter(const ExportEngineConfig& expConf)
+{
+	if(expConf.pExporter)
+	{
+		return expConf.pExporter;
+	}
+	else
+	{
+		if(expConf.createExport)
+			return expConf.createExport(expConf.flagsExport & RGB_EXPORT ? ExportColorFormat::RGB : ExportColorFormat::YUV);
+		else
+			throw std::exception("no export available");
+	}
 }
