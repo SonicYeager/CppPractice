@@ -18,3 +18,8 @@ void ProgressHandler::OpenProgress(const ExportEngineConfig& config)
 	auto range = config.pPI->rangeEnd - config.pPI->rangeStart;
 	UI->OpenProgress("Export", range);
 }
+
+void ProgressHandler::SetProgress(const size_t& totalWritten)
+{
+	UI->SetProgress(totalWritten);
+}
