@@ -4,14 +4,8 @@
 #include <chrono>
 #include "ArrangmentData.h"
 #include "ColorSpaceConverter.h"
+#include "FilesystemHandler.h"
 
-void FindOtherFile(std::filesystem::path& targetFile)
-{
-	std::wstring newFilename = targetFile.stem();
-	newFilename.push_back(L'_');
-	newFilename.append(targetFile.extension());
-	targetFile.replace_filename(newFilename);
-}
 
 IVideoExport* ConfigExporter(const ExportEngineConfig& exporterConfig)
 {
@@ -28,22 +22,6 @@ IVideoExport* ConfigExporter(const ExportEngineConfig& exporterConfig)
 	}
 }
 
-void ConfigPath(ExportEngineConfig& config)
-{
-	if(RENAME_FILENAME_IF_EXIST & config.flagsExport && std::filesystem::exists(config.targetFileName))
-		FindOtherFile(config.targetFileName);
-	auto path = config.targetFileName.stem();
-	if(std::filesystem::is_directory(path))
-	{
-		if(std::filesystem::create_directory(path))
-			//{ LOG-Logger
-			std::cout << "path (" << path << ") had not been exist -> created";
-			//}
-		else
-			throw std::exception("could not create target directory");
-	}
-}
-
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
 	VideoEngine vidEngine{};
@@ -56,7 +34,9 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 		if(CheckBounceIsValid())
 		{
 			CheckFeatureProtection(m_config.pExporter);
-			ConfigPath(m_config);
+			FilesystemHandler fsHandler{};
+			fsHandler.FindOtherFile(m_config);
+			fsHandler.ConfigPath(m_config);
 			//{ CONFIGUI-this
 			m_pUserInterface = m_config.pUserInterface;
 			if(m_pUserInterface == nullptr)

@@ -72,9 +72,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ColorSpaceConverter.cpp" />
-    <ClCompile Include="ExportData.cpp" />
     <ClCompile Include="ExportEngine.cpp" />
     <ClCompile Include="Exporter.cpp" />
+    <ClCompile Include="FilesystemHandler.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="UserInterface.cpp" />
     <ClCompile Include="VideoEngine.cpp" />
@@ -85,6 +85,7 @@
     <ClInclude Include="ExportData.h" />
     <ClInclude Include="ExportEngine.h" />
     <ClInclude Include="Exporter.h" />
+    <ClInclude Include="FilesystemHandler.h" />
     <ClInclude Include="UserInterface.h" />
     <ClInclude Include="VideoEngine.h" />
   </ItemGroup>
