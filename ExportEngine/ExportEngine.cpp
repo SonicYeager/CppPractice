@@ -49,6 +49,11 @@ void CloseProgress(IUserInterface* UI)
 	UI = nullptr;
 }
 
+void SetProgress(IUserInterface* UI, const size_t& totalWritten)
+{
+	UI->SetProgress(totalWritten);
+}
+
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
 	VideoEngine vidEngine{};
@@ -96,9 +101,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 				if(success)
 				{
 					totalWritten += written;
-					//{ OnProgress
-					m_pUserInterface->SetProgress(totalWritten);
-					//}
+					SetProgress(m_pUserInterface, totalWritten);
 					i += static_cast<__int64>(m_config.pPI->frameRate); //next iter
 					delete videoframe;
 				}
