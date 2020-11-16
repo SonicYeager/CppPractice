@@ -12,9 +12,9 @@ void VideoEngine::PrepareVideoEngine(const ProjectInfo& PI)
 	end = PI.rangeEnd;
 }
 
-VideoFrame* VideoEngineGetFrame(__int64 i)
+VideoFrame* VideoEngine::VideoEngineGetFrame(__int64 i)
 {
-	if(start > i or i > end)
+	if(mStart > i or i > mEnd)
 		return nullptr;
 	char c = static_cast<char>(i);
 	// clang-format off

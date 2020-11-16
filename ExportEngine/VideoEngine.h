@@ -34,11 +34,11 @@ struct VideoFrame
 struct VideoEngine
 {
 	void PrepareVideoEngine(const ProjectInfo&);
+	VideoFrame* VideoEngineGetFrame(__int64 i);
 
 private:
 	__int64 mStart = 0;
 	__int64 mEnd = 0;
 };
 
-VideoFrame* VideoEngineGetFrame(__int64 i);
 void ShutdownVideoEngine();

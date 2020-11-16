@@ -102,7 +102,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 					throw 5;
 				}
 				//} 
-				auto videoframe = VideoEngineGetFrame(i);
+				auto videoframe = vidEngine.VideoEngineGetFrame(i);
 				if(videoframe == nullptr)
 					//{ THROWGETFRAMEERROR
 					throw std::exception("GetFrame error");
