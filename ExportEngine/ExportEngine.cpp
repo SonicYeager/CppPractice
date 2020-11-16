@@ -78,7 +78,8 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 			m_pUserInterface->OpenProgress("Export", range);
 			//}
 			//{ CONFIGVIDEOENGINE-this
-			PrepareVideoEngine(*m_config.pPI);
+			VideoEngine vidEngine{};
+			vidEngine.PrepareVideoEngine(*m_config.pPI);
 			m_pExporter->Initialize(m_config.targetFileName);
 			//{ LOG-Logger
 			std::cout << "Export" << m_config.targetFileName;
