@@ -22,6 +22,12 @@ IVideoExport* ConfigExporter(const ExportEngineConfig& exporterConfig)
 	}
 }
 
+void ThrowIfProgressIsNullPtr(IUserInterface* UI)
+{
+	if(UI == nullptr)
+		throw std::exception("no progress is set");
+}
+
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
 	VideoEngine vidEngine{};
@@ -39,10 +45,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 			fsHandler.ConfigPath(m_config);
 			//{ CONFIGUI-this
 			m_pUserInterface = m_config.pUserInterface;
-			if(m_pUserInterface == nullptr)
-				//{ THROWNOPRGRESS
-				throw std::exception("no progress is set");
-				//}
+			ThrowIfProgressIsNullPtr(m_pUserInterface);
 			auto range = m_config.pPI->rangeEnd - m_config.pPI->rangeStart;
 			m_pUserInterface->OpenProgress("Export", range);
 			//}

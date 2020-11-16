@@ -19,3 +19,5 @@ private:
 };
 
 void ConfigPath();
+
+void ThrowIfProgressIsNullPtr();
