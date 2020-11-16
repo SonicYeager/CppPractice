@@ -12,11 +12,12 @@
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
 	VideoEngine vidEngine{};
+	int result;
 	try
 	{
 		size_t totalWritten = 0;
 		m_config = config;
-		m_Result = -1;
+		result = -1;
 		m_pExporter = IVideoExport::ConfigExporter(m_config);
 		if(CheckBounceIsValid())
 		{
@@ -36,18 +37,18 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 			//{ VALIDATEFRAMES-this | CONVERTFRAMES-Converter | WRITEFRAMES-this
 			for(__int64 i = m_config.pPI->rangeStart; i < m_config.pPI->rangeEnd;)
 			{
-				prgHandler.ThrowIFProgressAbort(m_Result);
+				prgHandler.ThrowIFProgressAbort(result);
 				auto videoframe = vidEngine.VideoEngineGetFrame(i);
 				if(videoframe == nullptr)
 					throw std::exception("GetFrame error");
 				ColorSpaceConverter csc{};
 				csc.ConvertFrameColorFormat(m_pExporter, videoframe);
-				m_pExporter->WriteFrame(m_pExporter, m_config.pPI->frameRate, videoframe, totalWritten, prgHandler, i);
+				m_pExporter->WriteFrame(m_config.pPI->frameRate, videoframe, totalWritten, prgHandler, i);
 			}
 			//}
 			measure.Stop();
 			log.LogExport(measure, m_config);
-			m_Result = 1;
+			result = 1;
 		}
 	}
 	catch(std::exception ex)
@@ -61,7 +62,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 	vidEngine.ShutdownVideoEngine();
 	m_pExporter = nullptr;
 	m_config = {};
-	return m_Result == 1;
+	return result == 1;
 }
 
 bool ExportEngine::CheckBounceIsValid() const
