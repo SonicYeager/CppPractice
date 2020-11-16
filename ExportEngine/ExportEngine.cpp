@@ -15,6 +15,7 @@ void FindOtherFile(std::filesystem::path& targetFile)
 
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
+	VideoEngine vidEngine{};
 	try
 	{
 		size_t totalWritten = 0;
@@ -37,7 +38,6 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 				//}
 		}
 		//}
-
 		if(CheckBounceIsValid())
 		{
 			//{ THROWIFUNSUPPORTEDFEATURE-this
@@ -78,7 +78,6 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 			m_pUserInterface->OpenProgress("Export", range);
 			//}
 			//{ CONFIGVIDEOENGINE-this
-			VideoEngine vidEngine{};
 			vidEngine.PrepareVideoEngine(*m_config.pPI);
 			m_pExporter->Initialize(m_config.targetFileName);
 			//{ LOG-Logger
@@ -151,7 +150,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 		std::cout << "aborted by user";
 	}
 	//{ CLEANUP-this
-	ShutdownVideoEngine();
+	vidEngine.ShutdownVideoEngine();
 	m_pUserInterface->CloseProgress();
 	m_pUserInterface = nullptr;
 	m_pExporter = nullptr;

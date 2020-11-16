@@ -1,15 +1,9 @@
 #include "VideoEngine.h"
 
-
-__int64 start = 0;
-__int64 end = 0;
-
 void VideoEngine::PrepareVideoEngine(const ProjectInfo& PI)
 {
 	this->mStart = PI.rangeStart;
 	this->mEnd = PI.rangeEnd;
-	start = PI.rangeStart;
-	end = PI.rangeEnd;
 }
 
 VideoFrame* VideoEngine::VideoEngineGetFrame(__int64 i)
@@ -37,7 +31,7 @@ VideoFrame* VideoEngine::VideoEngineGetFrame(__int64 i)
 	return new VideoFrame{12, 12, VideoFrameColorFormat::RGB, rgbData};
 }
 
-void ShutdownVideoEngine()
+void VideoEngine::ShutdownVideoEngine()
 {
-	start = end = 0;
+	mStart = mEnd = 0;
 }
