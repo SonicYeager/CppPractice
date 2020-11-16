@@ -6,6 +6,7 @@
 #include "ColorSpaceConverter.h"
 #include "FilesystemHandler.h"
 #include "ProgressHandler.h"
+#include "Measurement.h"
 
 
 IVideoExport* ConfigExporter(const ExportEngineConfig& exporterConfig)
@@ -21,11 +22,6 @@ IVideoExport* ConfigExporter(const ExportEngineConfig& exporterConfig)
 		else
 			throw std::exception("no export available");
 	}
-}
-
-std::chrono::steady_clock::time_point Now()
-{
-	return std::chrono::high_resolution_clock::now();
 }
 
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
@@ -57,7 +53,8 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 				//}
 			//}
 			//{ START-Measurement
-			auto start = Now();
+			Measurement measure{};
+			auto start = measure.Now();
 			//}
 			//{ VALIDATEFRAMES-this | CONVERTFRAMES-Converter | WRITEFRAMES-this
 			for(__int64 i = m_config.pPI->rangeStart; i < m_config.pPI->rangeEnd;)
@@ -87,7 +84,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 			}
 			//}
 			//{ STOP-Measurement
-			auto end = Now();
+			auto end = measure.Now();
 			//}
 			//{ LOG-Logger
 			const double expLen = m_config.pPI->rangeEnd - m_config.pPI->rangeStart / m_config.pPI->frameRate;
