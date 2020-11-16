@@ -29,6 +29,19 @@ void LogFileName(const ExportEngineConfig& config)
 	std::cout << "Export" << config.targetFileName;
 }
 
+void LogRange(const ExportEngineConfig& config)
+{
+	if(config.pPI->rangeEnd > config.pPI->rangeStart)
+		std::cout << " from " << config.pPI->rangeStart << " to " << config.pPI->rangeEnd << " started.\n";
+}
+
+void LogExport(const Measurement& measure, const ExportEngineConfig& config)
+{
+	const double expLen = config.pPI->rangeEnd - config.pPI->rangeStart / config.pPI->frameRate;
+	std::cout << "Export " << std::fixed << std::setprecision(1) << expLen
+			  << "s finished successful (Duration=" << measure.GetPassesTime() << " ms)\n";
+}
+
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
 	VideoEngine vidEngine{};
@@ -49,10 +62,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 			vidEngine.PrepareVideoEngine(*m_config.pPI);
 			m_pExporter->Initialize(m_config.targetFileName);
 			LogFileName(m_config);
-			if(m_config.pPI->rangeEnd > m_config.pPI->rangeStart)
-				//{ LOG-Logger
-				std::cout << " from " << m_config.pPI->rangeStart << " to " << m_config.pPI->rangeEnd << " started.\n";
-				//}
+			LogRange(m_config);
 			Measurement measure{};
 			measure.Start();
 			//{ VALIDATEFRAMES-this | CONVERTFRAMES-Converter | WRITEFRAMES-this
@@ -83,11 +93,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 			}
 			//}
 			measure.Stop();
-			//{ LOG-Logger
-			const double expLen = m_config.pPI->rangeEnd - m_config.pPI->rangeStart / m_config.pPI->frameRate;
-			std::cout << "Export " << std::fixed << std::setprecision(1) << expLen
-					  << "s finished successful (Duration=" << measure.GetPassesTime() << " ms)\n";
-			//}
+			LogExport(measure, m_config);
 			m_Result = 1;
 		}
 	}

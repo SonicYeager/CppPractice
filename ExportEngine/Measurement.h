@@ -5,7 +5,7 @@ struct Measurement
 {
 	void Start();
 	void Stop();
-	int GetPassesTime();
+	int GetPassesTime() const;
 
 private:
 	std::chrono::steady_clock::time_point start;
