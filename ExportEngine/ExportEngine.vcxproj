@@ -75,6 +75,7 @@
     <ClCompile Include="ExportEngine.cpp" />
     <ClCompile Include="Exporter.cpp" />
     <ClCompile Include="FilesystemHandler.cpp" />
+    <ClCompile Include="Log.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Measurement.cpp" />
     <ClCompile Include="ProgressHandler.cpp" />
@@ -88,6 +89,7 @@
     <ClInclude Include="ExportEngine.h" />
     <ClInclude Include="Exporter.h" />
     <ClInclude Include="FilesystemHandler.h" />
+    <ClInclude Include="Log.h" />
     <ClInclude Include="Measurement.h" />
     <ClInclude Include="ProgressHandler.h" />
     <ClInclude Include="UserInterface.h" />

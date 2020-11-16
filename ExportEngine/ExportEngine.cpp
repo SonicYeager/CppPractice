@@ -7,6 +7,7 @@
 #include "FilesystemHandler.h"
 #include "ProgressHandler.h"
 #include "Measurement.h"
+#include "Log.h"
 
 
 IVideoExport* ConfigExporter(const ExportEngineConfig& exporterConfig)
@@ -22,11 +23,6 @@ IVideoExport* ConfigExporter(const ExportEngineConfig& exporterConfig)
 		else
 			throw std::exception("no export available");
 	}
-}
-
-void LogFileName(const ExportEngineConfig& config)
-{
-	std::cout << "Export" << config.targetFileName;
 }
 
 void LogRange(const ExportEngineConfig& config)
@@ -61,7 +57,8 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 			prgHandler.OpenProgress(m_config);
 			vidEngine.PrepareVideoEngine(*m_config.pPI);
 			m_pExporter->Initialize(m_config.targetFileName);
-			LogFileName(m_config);
+			Log log{};
+			log.LogFileName(m_config);
 			LogRange(m_config);
 			Measurement measure{};
 			measure.Start();
