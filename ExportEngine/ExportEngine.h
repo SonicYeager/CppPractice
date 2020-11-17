@@ -19,3 +19,5 @@ private:
 };
 
 void ConvertToYUV(VideoFrame* videoframe);
+
+void VideoEnginePrepare();
