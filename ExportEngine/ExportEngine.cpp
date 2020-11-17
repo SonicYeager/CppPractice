@@ -21,7 +21,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 		if(CheckBounceIsValid())
 		{
 			Log log{};
-			CheckFeatureProtection(m_config.pExporter);
+			CheckFeatureProtection(m_pExporter);
 			FilesystemHandler fsHandler{};
 			fsHandler.FindOtherFile(m_config);
 			fsHandler.ConfigPath(m_config, log);
@@ -81,7 +81,7 @@ void ExportEngine::CheckFeatureProtection(IVideoExport* pExporter) const
 	{
 		ExportConfig config{};
 		pExporter->GetExportInfo(&config);
-		if(not(config.type == ExportType::DVD) or not (config.type == ExportType::MP4))
+		if(not(config.type == ExportType::DVD or config.type == ExportType::MP4))
 			throw std::exception("Feature not allowed");
 	}
 }
