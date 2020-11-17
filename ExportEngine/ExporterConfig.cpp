@@ -14,3 +14,10 @@ IVideoExport* ConfigExporter(IVideoExport* pExporter, std::function<IVideoExport
 			throw std::exception("no export available");
 	}
 }
+
+ExportConfig GetExportConfig(IVideoExport* pExporter)
+{
+	ExportConfig config{};
+	pExporter->GetExportInfo(&config);
+	return config;
+}

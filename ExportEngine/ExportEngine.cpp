@@ -16,13 +16,6 @@ void FindOtherFile(std::filesystem::path& targetFile)
 	targetFile.replace_filename(newFilename);
 }
 
-ExportConfig GetExportConfig(IVideoExport* pExporter)
-{
-	ExportConfig config{};
-	pExporter->GetExportInfo(&config);
-	return config;
-}
-
 void ThrowIfProtectedFeature(IVideoExport* pExporter)
 {
 	if(pExporter)
