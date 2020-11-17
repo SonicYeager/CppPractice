@@ -76,6 +76,7 @@
     <ClCompile Include="Exporter.cpp" />
     <ClCompile Include="ExporterConfig.cpp" />
     <ClCompile Include="FeatureProtection.cpp" />
+    <ClCompile Include="FilesystemHandler.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="UserInterface.cpp" />
     <ClCompile Include="VideoEngine.cpp" />

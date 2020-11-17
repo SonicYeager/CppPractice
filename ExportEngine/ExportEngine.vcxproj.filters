@@ -16,6 +16,7 @@
       <Filter>RefacModules</Filter>
     </ClCompile>
     <ClCompile Include="FeatureProtection.cpp" />
+    <ClCompile Include="FilesystemHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArrangmentData.h" />
