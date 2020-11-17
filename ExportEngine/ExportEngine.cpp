@@ -39,21 +39,22 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 				if(not success)
 					throw std::exception("Feature not allowed");
 			}
+			m_pUserInterface = m_config.pUserInterface;
+			if(m_pUserInterface == nullptr)
+				throw std::exception("no progress is set");
+			auto range = m_config.pPI->rangeEnd - m_config.pPI->rangeStart;
+			m_pUserInterface->OpenProgress("Export", range);
+
 			if(RENAME_FILENAME_IF_EXIST & m_config.flagsExport && std::filesystem::exists(m_config.targetFileName))
 				FindOtherFile(m_config.targetFileName);
 			auto path = m_config.targetFileName.stem();
-			if(std::filesystem::is_directory(path))
+			if(not std::filesystem::is_directory(path))
 			{
 				if(std::filesystem::create_directory(path))
 					std::cout << "path (" << path << ") had not been exist -> created";
 				else
 					throw std::exception("could not create target directory");
 			}
-			m_pUserInterface = m_config.pUserInterface;
-			if(m_pUserInterface == nullptr)
-				throw std::exception("no progress is set");
-			auto range = m_config.pPI->rangeEnd - m_config.pPI->rangeStart;
-			m_pUserInterface->OpenProgress("Export", range);
 			
 			PrepareVideoEngine(*m_config.pPI);
 			m_pExporter->Initialize(m_config.targetFileName);
