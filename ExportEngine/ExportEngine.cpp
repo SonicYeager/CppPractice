@@ -15,25 +15,29 @@ void FindOtherFile(std::filesystem::path& targetFile)
 	targetFile.replace_filename(newFilename);
 }
 
+IVideoExport* ConfigExporter(const ExportEngineConfig& config)
+{
+	if(config.pExporter)
+	{
+		return config.pExporter;
+	}
+	else
+	{
+		if(config.createExport)
+			return std::move(config.createExport(config.flagsExport & RGB_EXPORT ? ExportColorFormat::RGB : ExportColorFormat::YUV));
+		else
+			throw std::exception("no export available");
+	}
+}
+
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
 	try
 	{
 		size_t totalWritten = 0;
-		m_config = config;
 		m_Result = -1;
-		if(m_config.pExporter)
-		{
-			m_pExporter = m_config.pExporter;
-		}
-		else
-		{
-			if(m_config.createExport)
-				m_pExporter = m_config.createExport(m_config.flagsExport & RGB_EXPORT ? ExportColorFormat::RGB : ExportColorFormat::YUV);
-			else
-				throw std::exception("no export available");
-		}
-
+		m_config = config;
+		m_pExporter = ConfigExporter(m_config);
 		if(CheckBounceIsValid())
 		{
 			bool success = CheckFeatureProtection(m_pExporter);
