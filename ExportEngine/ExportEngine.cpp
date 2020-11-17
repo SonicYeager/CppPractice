@@ -15,16 +15,16 @@ void FindOtherFile(std::filesystem::path& targetFile)
 	targetFile.replace_filename(newFilename);
 }
 
-IVideoExport* ConfigExporter(const ExportEngineConfig& config)
+IVideoExport* ConfigExporter(IVideoExport* pExporter, std::function<IVideoExport*(ExportColorFormat)> create, ExportFlags flags)
 {
-	if(config.pExporter)
+	if(pExporter)
 	{
-		return config.pExporter;
+		return pExporter;
 	}
 	else
 	{
-		if(config.createExport)
-			return std::move(config.createExport(config.flagsExport & RGB_EXPORT ? ExportColorFormat::RGB : ExportColorFormat::YUV));
+		if(create)
+			return std::move(create(flags & RGB_EXPORT ? ExportColorFormat::RGB : ExportColorFormat::YUV));
 		else
 			throw std::exception("no export available");
 	}
@@ -37,7 +37,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 		size_t totalWritten = 0;
 		m_Result = -1;
 		m_config = config;
-		m_pExporter = ConfigExporter(m_config);
+		m_pExporter = ConfigExporter(m_config.pExporter, m_config.createExport, static_cast<ExportFlags>(m_config.flagsExport));
 		if(CheckBounceIsValid())
 		{
 			bool success = CheckFeatureProtection(m_pExporter);
