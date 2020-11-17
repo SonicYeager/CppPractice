@@ -25,6 +25,11 @@ void ThrowIfAbort(IUserInterface* ui, int& res)
 	}
 }
 
+void AddProgress(IUserInterface* ui, const size_t& totalWritten)
+{
+	ui->SetProgress(totalWritten);
+}
+
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
 	try
@@ -68,8 +73,11 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 				if(success)
 				{
 					totalWritten += written;
-					m_pUserInterface->SetProgress(totalWritten);
+
+					AddProgress(m_pUserInterface, totalWritten);
+
 					i += static_cast<__int64>(m_config.pPI->frameRate);
+
 					delete videoframe;
 				}
 				else
