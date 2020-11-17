@@ -30,6 +30,11 @@ void AddProgress(IUserInterface* ui, const size_t& totalWritten)
 	ui->SetProgress(totalWritten);
 }
 
+void CloseProgress(IUserInterface* ui)
+{
+	ui->CloseProgress();
+}
+
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
 	try
@@ -105,7 +110,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 		std::cout << "aborted by user";
 	}
 	WrappedVideoEngine::ShutDown();
-	m_pUserInterface->CloseProgress();
+	CloseProgress(m_pUserInterface);
 	m_pUserInterface = nullptr;
 	m_pExporter = nullptr;
 	m_config = {};
