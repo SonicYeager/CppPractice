@@ -22,6 +22,17 @@ std::filesystem::path GetAlternativeFileName(ExportFlags flags, const std::files
 	return target;
 }
 
+void CreateDirectoryIfIsNone(const std::filesystem::path& path)
+{
+	if(not std::filesystem::is_directory(path))
+	{
+		if(std::filesystem::create_directory(path))
+			std::cout << "path (" << path << ") had not been exist -> created";
+		else
+			throw std::exception("could not create target directory");
+	}
+}
+
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
 	try
@@ -33,6 +44,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 		if(CheckBounceIsValid())
 		{
 			ThrowIfProtectedFeature(m_pExporter);
+
 			m_pUserInterface = m_config.pUserInterface;
 			if(m_pUserInterface == nullptr)
 				throw std::exception("no progress is set");
@@ -40,22 +52,18 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 			m_pUserInterface->OpenProgress("Export", range);
 
 			m_config.targetFileName = GetAlternativeFileName(static_cast<ExportFlags>(m_config.flagsExport), m_config.targetFileName);
-			auto path = m_config.targetFileName.stem();
-			if(not std::filesystem::is_directory(path))
-			{
-				if(std::filesystem::create_directory(path))
-					std::cout << "path (" << path << ") had not been exist -> created";
-				else
-					throw std::exception("could not create target directory");
-			}
+			CreateDirectoryIfIsNone(m_config.targetFileName.stem());
 			
 			WrappedVideoEngine::Prepare(*m_config.pPI);
+
 			m_pExporter->Initialize(m_config.targetFileName);
+
 			std::cout << "Export" << m_config.targetFileName;
 			if(m_config.pPI->rangeEnd > m_config.pPI->rangeStart)
 				std::cout << " from " << m_config.pPI->rangeStart << " to " << m_config.pPI->rangeEnd << " started.\n";
 			
 			auto start = std::chrono::high_resolution_clock::now();
+
 			for(__int64 i = m_config.pPI->rangeStart; i < m_config.pPI->rangeEnd;)
 			{
 				if(m_pUserInterface->Aborted())
@@ -63,11 +71,14 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 					m_Result = 1;
 					throw 5;
 				}
+
 				auto videoframe = WrappedVideoEngine::GetFrame(i);
 				WrappedVideoEngine::ValidateVideoFrame(videoframe);
-				ExportConfig exConfig{};
-				m_pExporter->GetExportInfo(&exConfig);
-				ConvertToYUV(videoframe, exConfig.format); 
+
+				auto exConfig = GetExportConfig(m_pExporter);
+
+				ConvertToYUV(videoframe, exConfig.format);
+
 				size_t written = 0;
 				bool success = m_pExporter->EncodeVideo(videoframe, &written);
 				if(success)
@@ -83,10 +94,13 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 					throw std::exception("Encode error");
 				}
 			}
+
 			auto end = std::chrono::high_resolution_clock::now();
+
 			const double expLen = m_config.pPI->rangeEnd - m_config.pPI->rangeStart / m_config.pPI->frameRate;
 			std::cout << "Export " << std::fixed << std::setprecision(1) << expLen
 					  << "s finished successful (Duration=" << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << " ms)\n";
+
 			m_Result = 1;
 		}
 	}
