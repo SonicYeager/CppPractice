@@ -18,3 +18,5 @@ private:
 };
 
 void ConfigDirectory();
+
+void OpenProgress(long long range);

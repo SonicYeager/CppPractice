@@ -11,6 +11,11 @@
 #include "FilesystemHandler.h"
 #include "ProgressHandler.h"
 
+void OpenProgress(IUserInterface* ui, long long range)
+{
+	ui->OpenProgress("Export", range);
+}
+
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
 	try
@@ -24,8 +29,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 			ThrowIfProtectedFeature(m_pExporter);
 
 			m_pUserInterface = ThrowIfProgressNullPtr(config.pUserInterface);
-			auto range = m_config.pPI->rangeEnd - m_config.pPI->rangeStart;
-			m_pUserInterface->OpenProgress("Export", range);
+			OpenProgress(m_pUserInterface, m_config.pPI->rangeEnd - m_config.pPI->rangeStart);
 
 			m_config.targetFileName = ConfigDirectory(static_cast<ExportFlags>(m_config.flagsExport), m_config.targetFileName);
 			
