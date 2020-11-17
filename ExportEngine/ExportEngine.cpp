@@ -10,6 +10,13 @@
 #include "FeatureProtection.h"
 #include "FilesystemHandler.h"
 
+IUserInterface* ThrowIfProgressNullPtr(IUserInterface* ui)
+{
+	if(ui == nullptr)
+		throw std::exception("no progress is set");
+	return ui;
+}
+
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
 	try
@@ -22,9 +29,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 		{
 			ThrowIfProtectedFeature(m_pExporter);
 
-			m_pUserInterface = m_config.pUserInterface;
-			if(m_pUserInterface == nullptr)
-				throw std::exception("no progress is set");
+			m_pUserInterface = ThrowIfProgressNullPtr(config.pUserInterface);
 			auto range = m_config.pPI->rangeEnd - m_config.pPI->rangeStart;
 			m_pUserInterface->OpenProgress("Export", range);
 
