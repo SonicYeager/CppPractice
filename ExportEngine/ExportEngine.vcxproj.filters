@@ -17,6 +17,7 @@
     </ClCompile>
     <ClCompile Include="FeatureProtection.cpp" />
     <ClCompile Include="FilesystemHandler.cpp" />
+    <ClCompile Include="ProgressHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArrangmentData.h" />

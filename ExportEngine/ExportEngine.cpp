@@ -9,13 +9,7 @@
 #include "ExporterConfig.h"
 #include "FeatureProtection.h"
 #include "FilesystemHandler.h"
-
-IUserInterface* ThrowIfProgressNullPtr(IUserInterface* ui)
-{
-	if(ui == nullptr)
-		throw std::exception("no progress is set");
-	return ui;
-}
+#include "ProgressHandler.h"
 
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
