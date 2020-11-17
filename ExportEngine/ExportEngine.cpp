@@ -4,6 +4,8 @@
 #include <chrono>
 #include "ArrangmentData.h"
 
+#include "ColorSpaceConverter.h"
+
 void FindOtherFile(std::filesystem::path& targetFile)
 {
 	std::wstring newFilename = targetFile.stem();

@@ -71,6 +71,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ColorSpaceConverter.cpp" />
     <ClCompile Include="ExportEngine.cpp" />
     <ClCompile Include="Exporter.cpp" />
     <ClCompile Include="main.cpp" />

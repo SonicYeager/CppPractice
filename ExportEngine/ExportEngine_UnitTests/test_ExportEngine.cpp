@@ -22,7 +22,6 @@ void DeleteFolder()
 		std::filesystem::remove(absolute);
 }
 
-
 TEST(TestExportEngine, Bounce_WithFlagsBounceIfValidAndRenameFilenameIfExists_ReturnTrue)
 {
 	ExportEngine exporter{};
