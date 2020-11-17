@@ -16,6 +16,17 @@ void FindOtherFile(std::filesystem::path& targetFile)
 	targetFile.replace_filename(newFilename);
 }
 
+void ThrowIfProtectedFeature(IVideoExport* pExporter)
+{
+	if(pExporter)
+	{
+		ExportConfig config{};
+		pExporter->GetExportInfo(&config); //ExpConf
+		if(not (config.type == ExportType::DVD or config.type == ExportType::MP4))
+			throw std::exception("Feature not allowed");
+	}
+}
+
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
 	try
@@ -26,9 +37,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 		m_pExporter = ConfigExporter(m_config.pExporter, m_config.createExport, static_cast<ExportFlags>(m_config.flagsExport)); //resource leak (no exporter deletion if created :/)
 		if(CheckBounceIsValid())
 		{
-			bool success = CheckFeatureProtection(m_pExporter);
-			if(not success)
-				throw std::exception("Feature not allowed");
+			ThrowIfProtectedFeature(m_pExporter);
 			m_pUserInterface = m_config.pUserInterface;
 			if(m_pUserInterface == nullptr)
 				throw std::exception("no progress is set");
@@ -108,20 +117,11 @@ bool ExportEngine::CheckBounceIsValid() const
 	if(m_config.flagsExport & BOUNCE_IF_VALID and m_pExporter and m_config.pPI)
 	{
 		ExportConfig exConfig{};
-		m_pExporter->GetExportInfo(&exConfig);
-		return m_config.pPI->aspectRation == exConfig.aspectRatio //
-			and m_config.pPI->width >= exConfig.width //
-			and m_config.pPI->height >= exConfig.height //
+		m_pExporter->GetExportInfo(&exConfig); //ExpConf
+		return m_config.pPI->aspectRation == exConfig.aspectRatio
+			and m_config.pPI->width >= exConfig.width
+			and m_config.pPI->height >= exConfig.height
 			and not m_config.targetFileName.empty();
 	}
 	return false;
-}
-
-bool ExportEngine::CheckFeatureProtection(IVideoExport* pExporter) const
-{
-	if(not pExporter)
-		return false;
-	ExportConfig config{};
-	pExporter->GetExportInfo(&config);
-	return config.type == ExportType::DVD or config.type == ExportType::MP4;
 }

@@ -10,10 +10,11 @@ public:
 
 private:
 	bool CheckBounceIsValid() const;
-	bool CheckFeatureProtection(IVideoExport*) const;
 
 	ExportEngineConfig m_config = {};
 	int m_Result = 0;
 	IVideoExport* m_pExporter = nullptr;
 	IUserInterface* m_pUserInterface = nullptr;
 };
+
+void ThrowIfProtectedFeature();
