@@ -1,9 +1,11 @@
+#include "gmock/gmock.h"
 #include "ExportEngine.h"
-#include <iostream>
 
-int main()
+
+
+TEST(TestExportEngine, Bounce_MainTest_ReturnTrue)
 {
-	ExportEngine exporter;
+	ExportEngine exporter{};
 	ProjectInfo PI{};
 	PI.rangeEnd = 200;
 	PI.width = 12;
@@ -13,8 +15,11 @@ int main()
 	config.pPI = &PI;
 	config.flagsExport = BOUNCE_IF_VALID | RENAME_FILENAME_IF_EXIST; // | RGB_EXPORT;
 	config.pUserInterface = IUserInterface::Create();
-	auto ret = exporter.Bounce(config);
+
+	bool actual = exporter.Bounce(config);
+
+	EXPECT_TRUE(actual);
+
+	//cleanup
 	delete config.pUserInterface;
-	//std::cin.get();
-	return ret;
 }
