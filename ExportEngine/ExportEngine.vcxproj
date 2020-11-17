@@ -79,11 +79,20 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArrangmentData.h" />
+    <ClInclude Include="ColorSpaceConverter.h" />
     <ClInclude Include="ExportData.h" />
     <ClInclude Include="ExportEngine.h" />
     <ClInclude Include="Exporter.h" />
+    <ClInclude Include="ExporterConfig.h" />
+    <ClInclude Include="ExportHandler.h" />
+    <ClInclude Include="FeatureProtection.h" />
+    <ClInclude Include="FilesystemHandler.h" />
+    <ClInclude Include="LogHandler.h" />
+    <ClInclude Include="Measurement.h" />
+    <ClInclude Include="ProgressHandler.h" />
     <ClInclude Include="UserInterface.h" />
     <ClInclude Include="VideoEngine.h" />
+    <ClInclude Include="WrappedVideoEngine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
