@@ -7,6 +7,7 @@
 #include "ColorSpaceConverter.h"
 #include "WrappedVideoEngine.h"
 #include "ExporterConfig.h"
+#include "FeatureProtection.h"
 
 void FindOtherFile(std::filesystem::path& targetFile)
 {
@@ -14,16 +15,6 @@ void FindOtherFile(std::filesystem::path& targetFile)
 	newFilename.push_back(L'_');
 	newFilename.append(targetFile.extension());
 	targetFile.replace_filename(newFilename);
-}
-
-void ThrowIfProtectedFeature(IVideoExport* pExporter)
-{
-	if(pExporter)
-	{
-		auto config = GetExportConfig(pExporter);
-		if(not (config.type == ExportType::DVD or config.type == ExportType::MP4))
-			throw std::exception("Feature not allowed");
-	}
 }
 
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
