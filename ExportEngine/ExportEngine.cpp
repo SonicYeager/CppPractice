@@ -19,6 +19,11 @@ void VideoEnginePrepare(const ProjectInfo& pi)
 	PrepareVideoEngine(pi);
 }
 
+VideoFrame* VideoEngineGetFrameT(__int64 i)
+{
+	return VideoEngineGetFrame(i);
+}
+
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
 	try
@@ -77,7 +82,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 					m_Result = 1;
 					throw 5;
 				}
-				auto videoframe = VideoEngineGetFrame(i);
+				auto videoframe = VideoEngineGetFrameT(i);
 				if(videoframe == nullptr)
 					throw std::exception("GetFrame error");
 				ExportConfig exConfig{};
