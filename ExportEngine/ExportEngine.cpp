@@ -15,11 +15,6 @@ void FindOtherFile(std::filesystem::path& targetFile)
 	targetFile.replace_filename(newFilename);
 }
 
-void VideoEngineShutDown()
-{
-	ShutdownVideoEngine();
-}
-
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
 	try
@@ -114,7 +109,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 	{
 		std::cout << "aborted by user";
 	}
-	VideoEngineShutDown();
+	WrappedVideoEngine::VideoEngineShutDown();
 	m_pUserInterface->CloseProgress();
 	m_pUserInterface = nullptr;
 	m_pExporter = nullptr;
