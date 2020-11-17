@@ -24,3 +24,9 @@ void CreateDirectoryIfIsNone(const std::filesystem::path& path)
 			throw std::exception("could not create target directory");
 	}
 }
+
+std::filesystem::path ConfigDirectory(ExportFlags flags, std::filesystem::path target)
+{
+	CreateDirectoryIfIsNone(target.stem());
+	return GetAlternativeFileName(flags, target);
+}

@@ -17,12 +17,6 @@ IUserInterface* ThrowIfProgressNullPtr(IUserInterface* ui)
 	return ui;
 }
 
-std::filesystem::path ConfigDirectory(ExportFlags flags, std::filesystem::path target)
-{
-	CreateDirectoryIfIsNone(target.stem());
-	return GetAlternativeFileName(flags, target);
-}
-
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
 	try
