@@ -35,7 +35,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 		{
 			if(m_config.pExporter)
 			{
-				bool success = CheckFeatureProtection(m_config.pExporter);
+				bool success = CheckFeatureProtection(m_pExporter);
 				if(not success)
 					throw std::exception("Feature not allowed");
 			}
