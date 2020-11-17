@@ -16,7 +16,3 @@ private:
 	IVideoExport* m_pExporter = nullptr;
 	IUserInterface* m_pUserInterface = nullptr;
 };
-
-void ConfigDirectory();
-
-void OpenProgress(long long range);

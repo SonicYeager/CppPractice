@@ -16,6 +16,15 @@ void OpenProgress(IUserInterface* ui, long long range)
 	ui->OpenProgress("Export", range);
 }
 
+void ThrowIfAbort(IUserInterface* ui, int& res) 
+{
+	if(ui->Aborted())
+	{
+		res = 1;
+		throw 5;
+	}
+}
+
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
 	try
@@ -45,11 +54,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 
 			for(__int64 i = m_config.pPI->rangeStart; i < m_config.pPI->rangeEnd;)
 			{
-				if(m_pUserInterface->Aborted())
-				{
-					m_Result = 1;
-					throw 5;
-				}
+				ThrowIfAbort(m_pUserInterface, m_Result);
 
 				auto videoframe = WrappedVideoEngine::GetFrame(i);
 				WrappedVideoEngine::ValidateVideoFrame(videoframe);
