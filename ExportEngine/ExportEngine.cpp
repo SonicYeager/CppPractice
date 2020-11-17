@@ -16,12 +16,18 @@ void FindOtherFile(std::filesystem::path& targetFile)
 	targetFile.replace_filename(newFilename);
 }
 
+ExportConfig GetExportConfig(IVideoExport* pExporter)
+{
+	ExportConfig config{};
+	pExporter->GetExportInfo(&config);
+	return config;
+}
+
 void ThrowIfProtectedFeature(IVideoExport* pExporter)
 {
 	if(pExporter)
 	{
-		ExportConfig config{};
-		pExporter->GetExportInfo(&config); //ExpConf
+		auto config = GetExportConfig(pExporter);
 		if(not (config.type == ExportType::DVD or config.type == ExportType::MP4))
 			throw std::exception("Feature not allowed");
 	}
@@ -116,8 +122,7 @@ bool ExportEngine::CheckBounceIsValid() const
 {
 	if(m_config.flagsExport & BOUNCE_IF_VALID and m_pExporter and m_config.pPI)
 	{
-		ExportConfig exConfig{};
-		m_pExporter->GetExportInfo(&exConfig); //ExpConf
+		auto exConfig = GetExportConfig(m_pExporter);
 		return m_config.pPI->aspectRation == exConfig.aspectRatio
 			and m_config.pPI->width >= exConfig.width
 			and m_config.pPI->height >= exConfig.height
