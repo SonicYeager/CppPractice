@@ -24,6 +24,11 @@ VideoFrame* VideoEngineGetFrameT(__int64 i)
 	return VideoEngineGetFrame(i);
 }
 
+void VideoEngineShutDown()
+{
+	ShutdownVideoEngine();
+}
+
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
 	try
@@ -118,7 +123,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 	{
 		std::cout << "aborted by user";
 	}
-	ShutdownVideoEngine();
+	VideoEngineShutDown();
 	m_pUserInterface->CloseProgress();
 	m_pUserInterface = nullptr;
 	m_pExporter = nullptr;
