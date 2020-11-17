@@ -7,6 +7,7 @@
     <ClCompile Include="UserInterface.cpp" />
     <ClCompile Include="VideoEngine.cpp" />
     <ClCompile Include="ColorSpaceConverter.cpp" />
+    <ClCompile Include="WrappedVideoEngine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArrangmentData.h" />

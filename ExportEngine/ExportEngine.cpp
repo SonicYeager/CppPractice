@@ -5,6 +5,7 @@
 #include "ArrangmentData.h"
 
 #include "ColorSpaceConverter.h"
+#include "WrappedVideoEngine.h"
 
 void FindOtherFile(std::filesystem::path& targetFile)
 {
@@ -12,11 +13,6 @@ void FindOtherFile(std::filesystem::path& targetFile)
 	newFilename.push_back(L'_');
 	newFilename.append(targetFile.extension());
 	targetFile.replace_filename(newFilename);
-}
-
-void VideoEnginePrepare(const ProjectInfo& pi)
-{
-	PrepareVideoEngine(pi);
 }
 
 VideoFrame* VideoEngineGetFrameT(__int64 i)
@@ -73,7 +69,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 					throw std::exception("could not create target directory");
 			}
 			
-			VideoEnginePrepare(*m_config.pPI);
+			WrappedVideoEngine::VideoEnginePrepare(*m_config.pPI);
 			m_pExporter->Initialize(m_config.targetFileName);
 			std::cout << "Export" << m_config.targetFileName;
 			if(m_config.pPI->rangeEnd > m_config.pPI->rangeStart)

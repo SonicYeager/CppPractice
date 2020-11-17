@@ -77,6 +77,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="UserInterface.cpp" />
     <ClCompile Include="VideoEngine.cpp" />
+    <ClCompile Include="WrappedVideoEngine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArrangmentData.h" />
