@@ -17,6 +17,12 @@ IUserInterface* ThrowIfProgressNullPtr(IUserInterface* ui)
 	return ui;
 }
 
+std::filesystem::path ConfigDirectory(ExportFlags flags, std::filesystem::path target)
+{
+	CreateDirectoryIfIsNone(target.stem());
+	return GetAlternativeFileName(flags, target);
+}
+
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
 	try
@@ -33,8 +39,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 			auto range = m_config.pPI->rangeEnd - m_config.pPI->rangeStart;
 			m_pUserInterface->OpenProgress("Export", range);
 
-			m_config.targetFileName = GetAlternativeFileName(static_cast<ExportFlags>(m_config.flagsExport), m_config.targetFileName);
-			CreateDirectoryIfIsNone(m_config.targetFileName.stem());
+			m_config.targetFileName = ConfigDirectory(static_cast<ExportFlags>(m_config.flagsExport), m_config.targetFileName);
 			
 			WrappedVideoEngine::Prepare(*m_config.pPI);
 
