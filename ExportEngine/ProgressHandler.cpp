@@ -26,7 +26,8 @@ void Progress::ThrowIfAbort(int& res)
 	}
 }
 
-void Progress::AddProgress(const size_t& totalWritten)
+void Progress::AddProgress(size_t written)
 {
-	ui->SetProgress(totalWritten);
+	progress += written;
+	ui->SetProgress(progress);
 }

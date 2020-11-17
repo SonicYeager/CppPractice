@@ -15,7 +15,6 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
 	try
 	{
-		size_t totalWritten = 0;
 		m_Result = -1;
 		m_config = config;
 		m_pExporter = ConfigExporter(m_config.pExporter, m_config.createExport, static_cast<ExportFlags>(m_config.flagsExport)); //resource leak (no exporter deletion if created :/)
@@ -53,9 +52,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 				bool success = m_pExporter->EncodeVideo(videoframe, &written);
 				if(success)
 				{
-					totalWritten += written;
-
-					progress.AddProgress(totalWritten);
+					progress.AddProgress(written);
 
 					i += static_cast<__int64>(m_config.pPI->frameRate);
 
