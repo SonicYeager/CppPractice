@@ -3,7 +3,7 @@
 
 struct WrappedVideoEngine
 {
-	static void VideoEnginePrepare(const ProjectInfo& pi);
-	static VideoFrame* VideoEngineGetFrameT(__int64 i);
-	static void VideoEngineShutDown();
+	static void Prepare(const ProjectInfo& pi);
+	static VideoFrame* GetFrame(__int64 i);
+	static void ShutDown();
 };

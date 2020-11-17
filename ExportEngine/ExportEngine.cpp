@@ -59,7 +59,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 					throw std::exception("could not create target directory");
 			}
 			
-			WrappedVideoEngine::VideoEnginePrepare(*m_config.pPI);
+			WrappedVideoEngine::Prepare(*m_config.pPI);
 			m_pExporter->Initialize(m_config.targetFileName);
 			std::cout << "Export" << m_config.targetFileName;
 			if(m_config.pPI->rangeEnd > m_config.pPI->rangeStart)
@@ -73,7 +73,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 					m_Result = 1;
 					throw 5;
 				}
-				auto videoframe = WrappedVideoEngine::VideoEngineGetFrameT(i);
+				auto videoframe = WrappedVideoEngine::GetFrame(i);
 				if(videoframe == nullptr)
 					throw std::exception("GetFrame error");
 				ExportConfig exConfig{};
@@ -109,7 +109,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 	{
 		std::cout << "aborted by user";
 	}
-	WrappedVideoEngine::VideoEngineShutDown();
+	WrappedVideoEngine::ShutDown();
 	m_pUserInterface->CloseProgress();
 	m_pUserInterface = nullptr;
 	m_pExporter = nullptr;

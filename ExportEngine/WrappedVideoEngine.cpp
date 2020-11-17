@@ -1,16 +1,16 @@
 #include "WrappedVideoEngine.h"
 
-void WrappedVideoEngine::VideoEnginePrepare(const ProjectInfo& pi)
+void WrappedVideoEngine::Prepare(const ProjectInfo& pi)
 {
 	PrepareVideoEngine(pi);
 }
 
-VideoFrame* WrappedVideoEngine::VideoEngineGetFrameT(__int64 i)
+VideoFrame* WrappedVideoEngine::GetFrame(__int64 i)
 {
 	return VideoEngineGetFrame(i);
 }
 
-inline void WrappedVideoEngine::VideoEngineShutDown()
+inline void WrappedVideoEngine::ShutDown()
 {
 	ShutdownVideoEngine();
 }
