@@ -3,13 +3,13 @@
 
 struct Progress
 {
-	IUserInterface* SetUi(IUserInterface* ui);
-	void OpenProgress(IUserInterface* ui, long long range);
-	void ThrowIfAbort(IUserInterface* ui, int& res);
-	void AddProgress(IUserInterface* ui, const size_t& totalWritten);
-	void CloseProgress(IUserInterface* ui);
+	Progress(IUserInterface* ui);
+	~Progress();
+	void OpenProgress(long long range);
+	void ThrowIfAbort(int& res);
+	void AddProgress(const size_t& totalWritten);
 
 private:
-	IUserInterface* ui = nullptr;
+	IUserInterface* ui;
 	int progress{};
 };

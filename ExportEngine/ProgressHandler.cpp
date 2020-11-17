@@ -1,18 +1,23 @@
 #include "ProgressHandler.h"
 
-IUserInterface* Progress::SetUi(IUserInterface* ui)
+Progress::Progress(IUserInterface* ui) 
+	: ui(ui)
 {
-	if(ui == nullptr)
+	if(this->ui == nullptr)
 		throw std::exception("no progress is set");
-	return ui;
 }
 
-void Progress::OpenProgress(IUserInterface* ui, long long range)
+Progress::~Progress()
+{
+	ui->CloseProgress();
+}
+
+void Progress::OpenProgress(long long range)
 {
 	ui->OpenProgress("Export", range);
 }
 
-void Progress::ThrowIfAbort(IUserInterface* ui, int& res)
+void Progress::ThrowIfAbort(int& res)
 {
 	if(ui->Aborted())
 	{
@@ -21,12 +26,7 @@ void Progress::ThrowIfAbort(IUserInterface* ui, int& res)
 	}
 }
 
-void Progress::AddProgress(IUserInterface* ui, const size_t& totalWritten)
+void Progress::AddProgress(const size_t& totalWritten)
 {
 	ui->SetProgress(totalWritten);
-}
-
-void Progress::CloseProgress(IUserInterface* ui)
-{
-	ui->CloseProgress();
 }
