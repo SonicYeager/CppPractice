@@ -15,11 +15,6 @@ void FindOtherFile(std::filesystem::path& targetFile)
 	targetFile.replace_filename(newFilename);
 }
 
-VideoFrame* VideoEngineGetFrameT(__int64 i)
-{
-	return VideoEngineGetFrame(i);
-}
-
 void VideoEngineShutDown()
 {
 	ShutdownVideoEngine();
@@ -83,7 +78,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 					m_Result = 1;
 					throw 5;
 				}
-				auto videoframe = VideoEngineGetFrameT(i);
+				auto videoframe = WrappedVideoEngine::VideoEngineGetFrameT(i);
 				if(videoframe == nullptr)
 					throw std::exception("GetFrame error");
 				ExportConfig exConfig{};
