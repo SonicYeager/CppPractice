@@ -15,7 +15,6 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 	int result;
 	try
 	{
-		size_t totalWritten = 0;
 		m_config = config;
 		result = -1;
 		m_pExporter = IVideoExport::ConfigExporter(m_config);
@@ -34,6 +33,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 			log.LogRange(m_config);
 			Measurement measure{};
 			measure.Start();
+			size_t totalWritten = 0;
 			for(__int64 i{m_config.pPI->rangeStart}; i < m_config.pPI->rangeEnd; i += static_cast<__int64>(m_config.pPI->frameRate))
 			{
 				prgHandler.ThrowIFProgressAbort(result);
