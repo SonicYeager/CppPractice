@@ -13,6 +13,7 @@
 
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
+	Progress progress;
 	try
 	{
 		size_t totalWritten = 0;
@@ -23,8 +24,8 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 		{
 			ThrowIfProtectedFeature(m_pExporter);
 
-			m_pUserInterface = ThrowIfProgressNullPtr(config.pUserInterface);
-			OpenProgress(m_pUserInterface, m_config.pPI->rangeEnd - m_config.pPI->rangeStart);
+			m_pUserInterface = progress.SetUi(config.pUserInterface);
+			progress.OpenProgress(m_pUserInterface, m_config.pPI->rangeEnd - m_config.pPI->rangeStart);
 
 			m_config.targetFileName = ConfigDirectory(static_cast<ExportFlags>(m_config.flagsExport), m_config.targetFileName);
 			
@@ -40,7 +41,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 
 			for(__int64 i = m_config.pPI->rangeStart; i < m_config.pPI->rangeEnd;)
 			{
-				ThrowIfAbort(m_pUserInterface, m_Result);
+				progress.ThrowIfAbort(m_pUserInterface, m_Result);
 
 				auto videoframe = WrappedVideoEngine::GetFrame(i);
 				WrappedVideoEngine::ValidateVideoFrame(videoframe);
@@ -55,7 +56,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 				{
 					totalWritten += written;
 
-					AddProgress(m_pUserInterface, totalWritten);
+					progress.AddProgress(m_pUserInterface, totalWritten);
 
 					i += static_cast<__int64>(m_config.pPI->frameRate);
 
@@ -86,7 +87,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 		std::cout << "aborted by user";
 	}
 	WrappedVideoEngine::ShutDown();
-	CloseProgress(m_pUserInterface);
+	progress.CloseProgress(m_pUserInterface);
 	m_pUserInterface = nullptr;
 	m_pExporter = nullptr;
 	m_config = {};
