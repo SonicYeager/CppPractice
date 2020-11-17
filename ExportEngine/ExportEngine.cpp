@@ -9,12 +9,17 @@
 #include "ExporterConfig.h"
 #include "FeatureProtection.h"
 
-void FindOtherFile(std::filesystem::path& targetFile)
+std::filesystem::path GetAlternativeFileName(ExportFlags flags, const std::filesystem::path& targetFileName)
 {
-	std::wstring newFilename = targetFile.stem();
-	newFilename.push_back(L'_');
-	newFilename.append(targetFile.extension());
-	targetFile.replace_filename(newFilename);
+	std::filesystem::path target{targetFileName};
+	if(RENAME_FILENAME_IF_EXIST & flags && std::filesystem::exists(target))
+	{
+		std::wstring newFilename = target.stem();
+		newFilename.push_back(L'_');
+		newFilename.append(target.extension());
+		target.replace_filename(newFilename);
+	}
+	return target;
 }
 
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
@@ -34,8 +39,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 			auto range = m_config.pPI->rangeEnd - m_config.pPI->rangeStart;
 			m_pUserInterface->OpenProgress("Export", range);
 
-			if(RENAME_FILENAME_IF_EXIST & m_config.flagsExport && std::filesystem::exists(m_config.targetFileName))
-				FindOtherFile(m_config.targetFileName);
+			m_config.targetFileName = GetAlternativeFileName(static_cast<ExportFlags>(m_config.flagsExport), m_config.targetFileName);
 			auto path = m_config.targetFileName.stem();
 			if(not std::filesystem::is_directory(path))
 			{
