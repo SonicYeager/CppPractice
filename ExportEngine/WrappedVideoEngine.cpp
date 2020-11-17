@@ -16,7 +16,7 @@ void WrappedVideoEngine::ValidateVideoFrame(VideoFrame* videoframe)
 		throw std::exception("GetFrame error");
 }
 
-inline void WrappedVideoEngine::ShutDown()
+void WrappedVideoEngine::ShutDown()
 {
 	ShutdownVideoEngine();
 }

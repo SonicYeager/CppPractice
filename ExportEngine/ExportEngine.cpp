@@ -36,12 +36,9 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 
 		if(CheckBounceIsValid())
 		{
-			if(m_config.pExporter)
-			{
-				bool success = CheckFeatureProtection(m_pExporter);
-				if(not success)
-					throw std::exception("Feature not allowed");
-			}
+			bool success = CheckFeatureProtection(m_pExporter);
+			if(not success)
+				throw std::exception("Feature not allowed");
 			m_pUserInterface = m_config.pUserInterface;
 			if(m_pUserInterface == nullptr)
 				throw std::exception("no progress is set");
