@@ -15,12 +15,6 @@ void FindOtherFile(std::filesystem::path& targetFile)
 	targetFile.replace_filename(newFilename);
 }
 
-void ValidateVideoFrame(VideoFrame* videoframe)
-{
-	if(videoframe == nullptr)
-		throw std::exception("GetFrame error");
-}
-
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
 	try
@@ -80,10 +74,10 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 					throw 5;
 				}
 				auto videoframe = WrappedVideoEngine::GetFrame(i);
-				ValidateVideoFrame(videoframe);
+				WrappedVideoEngine::ValidateVideoFrame(videoframe);
 				ExportConfig exConfig{};
 				m_pExporter->GetExportInfo(&exConfig);
-				ConvertToYUV(videoframe, exConfig.format); //TODO
+				ConvertToYUV(videoframe, exConfig.format); 
 				size_t written = 0;
 				bool success = m_pExporter->EncodeVideo(videoframe, &written);
 				if(success)
