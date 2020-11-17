@@ -10,17 +10,6 @@
 #include "FeatureProtection.h"
 #include "FilesystemHandler.h"
 
-void CreateDirectoryIfIsNone(const std::filesystem::path& path)
-{
-	if(not std::filesystem::is_directory(path))
-	{
-		if(std::filesystem::create_directory(path))
-			std::cout << "path (" << path << ") had not been exist -> created";
-		else
-			throw std::exception("could not create target directory");
-	}
-}
-
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
 	try
