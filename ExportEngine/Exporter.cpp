@@ -58,7 +58,7 @@ public:
 		config->type = m_format == ExportColorFormat::RGB ? ExportType::DVD : ExportType::MP4;
 	}
 
-	void WriteFrame(double framerate, VideoFrame* videoframe, size_t& totalWritten, ProgressHandler& prgHandler, long long& i) override
+	void WriteFrame(VideoFrame* videoframe, size_t& totalWritten, ProgressHandler& prgHandler) override
 	{
 		size_t written = 0;
 		bool success = EncodeVideo(videoframe, &written);
@@ -66,7 +66,6 @@ public:
 		{
 			totalWritten += written;
 			prgHandler.SetProgress(totalWritten);
-			i += static_cast<__int64>(framerate); //next iter !!!
 			delete videoframe;
 		}
 		else

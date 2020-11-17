@@ -36,7 +36,7 @@ public:
 	virtual bool EncodeVideo(VideoFrame*, size_t*) = 0;
 	virtual void GetExportInfo(ExportConfig*) = 0;
 	virtual ~IVideoExport() = default;
-	virtual void WriteFrame(double framerate, VideoFrame* videoframe, size_t& totalWritten, ProgressHandler& prgHandler, long long& i) = 0;
+	virtual void WriteFrame(VideoFrame* videoframe, size_t& totalWritten, ProgressHandler& prgHandler) = 0;
 
 	static IVideoExport* Create(ExportColorFormat);
 	static IVideoExport* ConfigExporter(const ExportEngineConfig&);
