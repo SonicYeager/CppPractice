@@ -6,6 +6,7 @@
 
 #include "ColorSpaceConverter.h"
 #include "WrappedVideoEngine.h"
+#include "ExporterConfig.h"
 
 void FindOtherFile(std::filesystem::path& targetFile)
 {
@@ -13,21 +14,6 @@ void FindOtherFile(std::filesystem::path& targetFile)
 	newFilename.push_back(L'_');
 	newFilename.append(targetFile.extension());
 	targetFile.replace_filename(newFilename);
-}
-
-IVideoExport* ConfigExporter(IVideoExport* pExporter, std::function<IVideoExport*(ExportColorFormat)> create, ExportFlags flags)
-{
-	if(pExporter)
-	{
-		return pExporter;
-	}
-	else
-	{
-		if(create)
-			return std::move(create(flags & RGB_EXPORT ? ExportColorFormat::RGB : ExportColorFormat::YUV));
-		else
-			throw std::exception("no export available");
-	}
 }
 
 bool ExportEngine::Bounce(const ExportEngineConfig& config)

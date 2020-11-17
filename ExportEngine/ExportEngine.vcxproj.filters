@@ -6,8 +6,15 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="UserInterface.cpp" />
     <ClCompile Include="VideoEngine.cpp" />
-    <ClCompile Include="ColorSpaceConverter.cpp" />
-    <ClCompile Include="WrappedVideoEngine.cpp" />
+    <ClCompile Include="ColorSpaceConverter.cpp">
+      <Filter>RefacModules</Filter>
+    </ClCompile>
+    <ClCompile Include="ExporterConfig.cpp">
+      <Filter>RefacModules</Filter>
+    </ClCompile>
+    <ClCompile Include="WrappedVideoEngine.cpp">
+      <Filter>RefacModules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArrangmentData.h" />

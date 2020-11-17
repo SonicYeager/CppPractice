@@ -74,6 +74,7 @@
     <ClCompile Include="ColorSpaceConverter.cpp" />
     <ClCompile Include="ExportEngine.cpp" />
     <ClCompile Include="Exporter.cpp" />
+    <ClCompile Include="ExporterConfig.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="UserInterface.cpp" />
     <ClCompile Include="VideoEngine.cpp" />
