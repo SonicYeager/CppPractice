@@ -15,10 +15,21 @@
     <ClCompile Include="WrappedVideoEngine.cpp">
       <Filter>RefacModules</Filter>
     </ClCompile>
-    <ClCompile Include="FeatureProtection.cpp" />
-    <ClCompile Include="FilesystemHandler.cpp" />
-    <ClCompile Include="ProgressHandler.cpp" />
-    <ClCompile Include="Measurement.cpp" />
+    <ClCompile Include="FeatureProtection.cpp">
+      <Filter>RefacModules</Filter>
+    </ClCompile>
+    <ClCompile Include="FilesystemHandler.cpp">
+      <Filter>RefacModules</Filter>
+    </ClCompile>
+    <ClCompile Include="Measurement.cpp">
+      <Filter>RefacModules</Filter>
+    </ClCompile>
+    <ClCompile Include="ProgressHandler.cpp">
+      <Filter>RefacModules</Filter>
+    </ClCompile>
+    <ClCompile Include="LogHandler.cpp">
+      <Filter>RefacModules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArrangmentData.h" />

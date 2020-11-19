@@ -11,19 +11,7 @@
 #include "FilesystemHandler.h"
 #include "ProgressHandler.h"
 #include "Measurement.h"
-
-void LogExportRange(long long rangeStart, long long rangeEnd, const std::string& fileName)
-{
-	std::cout << "Export" << fileName;
-	if(rangeEnd > rangeStart)
-		std::cout << " from " << rangeStart << " to " << rangeEnd << " started.\n";
-}
-
-void LogExportTime(double expLen, long long elapsed)
-{
-	std::cout << "Export " << std::fixed << std::setprecision(1) << expLen
-			  << "s finished successful (Duration=" << elapsed << " ms)\n";
-}
+#include "LogHandler.h"
 
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {

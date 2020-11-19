@@ -1,10 +1,5 @@
 #include "FilesystemHandler.h"
-#include <iostream>
-
-void LogPathCreated(const std::filesystem::path& path)
-{
-	std::cout << "path (" << path << ") had not been exist -> created";
-}
+#include "LogHandler.h"
 
 std::filesystem::path GetAlternativeFileName(bool hasFlagRename, const std::filesystem::path& targetFileName)
 {
