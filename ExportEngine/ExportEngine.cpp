@@ -13,16 +13,7 @@
 #include "Measurement.h"
 #include "LogHandler.h"
 #include "ExportHandler.h"
-
-void Initialize(IVideoExport* pExporter, const std::filesystem::path& target)
-{
-	pExporter->Initialize(target);
-}
-
-bool ExportVideoFrame(IVideoExport* pExporter, VideoFrame* videoframe, size_t& written)
-{
-	return pExporter->EncodeVideo(videoframe, &written);
-}
+#include "ExportHandler.h"
 
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
@@ -42,7 +33,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 			
 			WrappedVideoEngine::Prepare(*m_config.pPI);
 
-			Initialize(m_pExporter, m_config.targetFileName);
+			ExportHandler::Initialize(m_pExporter, m_config.targetFileName);
 
 			LogExportRange(m_config.pPI->rangeStart, m_config.pPI->rangeEnd, m_config.targetFileName.string());
 			
@@ -61,7 +52,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 				ConvertToYUV(videoframe, exConfig.format);
 
 				size_t written = 0;
-				bool success = ExportVideoFrame(m_pExporter, videoframe, written);
+				bool success = ExportHandler::ExportVideoFrame(m_pExporter, videoframe, written);
 				if(success)
 				{
 					progress.AddProgress(written);
