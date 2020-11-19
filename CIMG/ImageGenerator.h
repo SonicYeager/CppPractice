@@ -11,6 +11,6 @@ struct ImageGenerator
 	void WriteImgagesAsync();
 	void GenerateImages();
 private:
-	std::vector<cimg_library::CImg<unsigned int>> imgs{};
+	std::vector<cimg_library::CImg<unsigned char>> imgs{};
 	unsigned char textColor[3] = {50,50,50};
 };

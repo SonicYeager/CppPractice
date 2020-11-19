@@ -4,7 +4,7 @@
 void ImageGenerator::CreateHelloWorld()
 {
 #if true
-	cimg_library::CImg<unsigned int> img(200, 200);
+	cimg_library::CImg<unsigned char> img(200, 200);
 	img.fill(0);
 	img.draw_text(50, 50, "Hello World", textColor);
 	img.draw_text(100, 100, "Hello World2", textColor);
@@ -19,7 +19,7 @@ void ImageGenerator::CreateHelloWorld()
 #endif
 }
 
-void WriteImage(std::vector<cimg_library::CImg<unsigned int>> imgs, int thread)
+void WriteImage(std::vector<cimg_library::CImg<unsigned char>> imgs, int thread)
 {
 	for (size_t i{0}; i < imgs.size(); ++i)
 	{
@@ -29,13 +29,13 @@ void WriteImage(std::vector<cimg_library::CImg<unsigned int>> imgs, int thread)
 
 void ImageGenerator::WriteImgagesAsync()
 {
-	std::vector<std::vector<cimg_library::CImg<unsigned int>>> splitted{};
+	std::vector<std::vector<cimg_library::CImg<unsigned char>>> splitted{};
 	for (size_t i{ 0 }; i < 12; ++i)
 	{
 		auto beginv = ((imgs.size() / 12) * i);
 		auto endv = (imgs.size() / 12) + beginv;
-		std::vector<cimg_library::CImg<unsigned int>>::const_iterator begin = imgs.begin() + beginv;
-		std::vector<cimg_library::CImg<unsigned int>>::const_iterator end = imgs.begin() + endv;
+		std::vector<cimg_library::CImg<unsigned char>>::const_iterator begin = imgs.begin() + beginv;
+		std::vector<cimg_library::CImg<unsigned char>>::const_iterator end = imgs.begin() + endv;
 		splitted.emplace_back(begin, end );
 	}
 	std::vector<std::future<void>> asyncs{};
