@@ -15,9 +15,10 @@
 
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
+	int result{};
 	try
 	{
-		m_Result = -1;
+		result = -1;
 		m_config = config;
 		ExportHandler expHandler{m_config.pExporter, m_config.createExport, static_cast<ExportFlags>(m_config.flagsExport)};
 		if(CheckBounceIsValid(expHandler.GetExportConfig()))
@@ -40,7 +41,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 
 			for(__int64 i = m_config.pPI->rangeStart; i < m_config.pPI->rangeEnd;)
 			{
-				progress.ThrowIfAbort(m_Result);
+				progress.ThrowIfAbort(result);
 
 				auto videoframe = WrappedVideoEngine::GetFrame(i);
 				WrappedVideoEngine::ValidateVideoFrame(videoframe);
@@ -69,7 +70,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 			measurement.Stop();
 			LogExportTime(m_config.pPI->rangeEnd - m_config.pPI->rangeStart / m_config.pPI->frameRate, measurement.GetElapsedTime());
 
-			m_Result = 1;
+			result = 1;
 		}
 	}
 	catch(std::exception ex)
@@ -82,7 +83,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 	}
 	WrappedVideoEngine::ShutDown();
 	m_config = {};
-	return m_Result == 1;
+	return result == 1;
 }
 
 bool ExportEngine::CheckBounceIsValid(const ExportConfig& exConfig) const

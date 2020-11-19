@@ -12,5 +12,4 @@ private:
 	bool CheckBounceIsValid(const ExportConfig&) const;
 
 	ExportEngineConfig m_config = {};
-	int m_Result = 0;
 };
