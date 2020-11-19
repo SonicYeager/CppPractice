@@ -1,4 +1,4 @@
 #pragma once
 #include "ExportData.h"
 
-void ConvertToYUV(VideoFrame* videoframe, ExportColorFormat format);
+void ConvertToYUV(const std::unique_ptr<VideoFrame>& videoframe, ExportColorFormat format);

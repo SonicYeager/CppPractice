@@ -1,7 +1,7 @@
 #include "ColorSpaceConverter.h"
 #include <functional>
 
-void BGRToYUV(VideoFrame* videoframe)
+void BGRToYUV(const std::unique_ptr<VideoFrame>& videoframe)
 {
 	for(Pixel& c : videoframe->pixels)
 	{
@@ -12,7 +12,7 @@ void BGRToYUV(VideoFrame* videoframe)
 	}
 }
 
-void RGBToYUV(VideoFrame* videoframe)
+void RGBToYUV(const std::unique_ptr<VideoFrame>& videoframe)
 {
 	for(Pixel& c : videoframe->pixels)
 	{
@@ -38,7 +38,7 @@ void DetermineConversion(ExportColorFormat format, VideoFrameColorFormat colorFo
 	}
 }
 
-void ConvertToYUV(VideoFrame* videoframe, ExportColorFormat format)
+void ConvertToYUV(const std::unique_ptr<VideoFrame>& videoframe, ExportColorFormat format)
 {
 	auto onBGR = [&videoframe] { BGRToYUV(videoframe); };
 	auto onRGB = [&videoframe] { RGBToYUV(videoframe); };

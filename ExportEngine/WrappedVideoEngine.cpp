@@ -5,16 +5,12 @@ void WrappedVideoEngine::Prepare(const ProjectInfo& pi)
 	PrepareVideoEngine(pi);
 }
 
-void ValidateVideoFrame(VideoFrame* videoframe)
+std::unique_ptr<VideoFrame> WrappedVideoEngine::GetFrame(__int64 i)
 {
+	std::unique_ptr<VideoFrame> videoframe{std::move(VideoEngineGetFrame(i))};
 	if(videoframe == nullptr)
 		throw std::exception("GetFrame error");
-}
 
-VideoFrame* WrappedVideoEngine::GetFrame(__int64 i)
-{
-	auto videoframe = VideoEngineGetFrame(i);
-	ValidateVideoFrame(videoframe);
 	return std::move(videoframe);
 }
 
