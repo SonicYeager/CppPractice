@@ -1,10 +1,10 @@
 #include "FilesystemHandler.h"
 #include <iostream>
 
-std::filesystem::path GetAlternativeFileName(ExportFlags flags, const std::filesystem::path& targetFileName)
+std::filesystem::path GetAlternativeFileName(bool hasFlagRename, const std::filesystem::path& targetFileName)
 {
 	std::filesystem::path target{targetFileName};
-	if(RENAME_FILENAME_IF_EXIST & flags && std::filesystem::exists(target))
+	if(hasFlagRename && std::filesystem::exists(target))
 	{
 		std::wstring newFilename = target.stem();
 		newFilename.push_back(L'_');
@@ -25,8 +25,8 @@ void CreateDirectoryIfIsNone(const std::filesystem::path& path)
 	}
 }
 
-std::filesystem::path ConfigDirectory(ExportFlags flags, std::filesystem::path target)
+std::filesystem::path ConfigDirectory(bool hasFlag, std::filesystem::path target)
 {
 	CreateDirectoryIfIsNone(target.stem());
-	return GetAlternativeFileName(flags, target);
+	return GetAlternativeFileName(hasFlag, target);
 }

@@ -25,7 +25,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 			Progress progress{config.pUserInterface};
 			progress.OpenProgress(m_config.pPI->rangeEnd - m_config.pPI->rangeStart);
 
-			m_config.targetFileName = ConfigDirectory(static_cast<ExportFlags>(m_config.flagsExport), m_config.targetFileName);
+			m_config.targetFileName = ConfigDirectory(static_cast<ExportFlags>(m_config.flagsExport) == ExportFlags::RENAME_FILENAME_IF_EXIST, m_config.targetFileName);
 			
 			WrappedVideoEngine::Prepare(*m_config.pPI);
 
