@@ -18,12 +18,23 @@ bool CanExportNextFrame(bool aborted, bool inRange)
 	return not aborted && inRange;
 }
 
+void ExportFrames(Progress& progress, int& result, WrappedVideoEngine& wVideoEng, const ExportEngineConfig& config, ExportHandler& expHandler)
+{
+	while(CanExportNextFrame(progress.IsAborded(result), wVideoEng.IsInRange(config.pPI->rangeStart, config.pPI->rangeEnd)))
+	{
+		auto exConfig = expHandler.GetExportConfig();
+		auto videoframe = wVideoEng.GetNextFrame();
+		ConvertToYUV(videoframe, exConfig.format);
+		auto written = expHandler.ExportVideoFrame(std::move(videoframe));
+		progress.AddProgress(written);
+	}
+}
+
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
-	int result{};
+	int result{-1};
 	try
 	{
-		result = -1;
 		ExportHandler expHandler{config.pExporter, config.createExport, static_cast<ExportFlags>(config.flagsExport)};
 		if(CheckBounceIsValid(expHandler.GetExportConfig(), config))
 		{
@@ -36,16 +47,11 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 			expHandler.Initialize(targetPath);
 			LogExportRange(config.pPI->rangeStart, config.pPI->rangeEnd, targetPath.string());
 			Measurement measurement;
+
 			measurement.Start();
-			while(CanExportNextFrame(progress.IsAborded(result), wVideoEng.IsInRange(config.pPI->rangeStart, config.pPI->rangeEnd)))
-			{
-				auto exConfig = expHandler.GetExportConfig();
-				auto videoframe = wVideoEng.GetNextFrame();
-				ConvertToYUV(videoframe, exConfig.format);
-				auto written = expHandler.ExportVideoFrame(std::move(videoframe));
-				progress.AddProgress(written);
-			}
+			ExportFrames(progress, result, wVideoEng, config, expHandler);
 			measurement.Stop();
+
 			LogExportTime(config.pPI->rangeEnd - config.pPI->rangeStart / config.pPI->frameRate, measurement.GetElapsedTime());
 			result = 1;
 		}
