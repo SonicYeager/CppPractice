@@ -6,7 +6,7 @@ struct ExportHandler
 {
 	ExportHandler(IVideoExport* pExporter, std::function<IVideoExport*(ExportColorFormat)> create, ExportFlags flags);
 	void Initialize(const std::filesystem::path& target);
-	void ExportVideoFrame(std::unique_ptr<VideoFrame> videoframe, size_t& written);
+	size_t ExportVideoFrame(std::unique_ptr<VideoFrame> videoframe);
 	ExportConfig GetExportConfig() const;
 
 private:

@@ -9,7 +9,5 @@ public:
 	bool Bounce(const ExportEngineConfig&);
 
 private:
-	bool CheckBounceIsValid(const ExportConfig&) const;
-
-	ExportEngineConfig m_config = {};
+	bool CheckBounceIsValid(const ExportConfig& exConfig, const ExportEngineConfig& config) const;
 };

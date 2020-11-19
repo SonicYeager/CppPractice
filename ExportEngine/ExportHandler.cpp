@@ -10,10 +10,12 @@ void ExportHandler::Initialize(const std::filesystem::path& target)
 	exporter->Initialize(target);
 }
 
-void ExportHandler::ExportVideoFrame(std::unique_ptr<VideoFrame> videoframe, size_t& written)
+size_t ExportHandler::ExportVideoFrame(std::unique_ptr<VideoFrame> videoframe)
 {
+	size_t written;
 	if(not exporter->EncodeVideo(videoframe.get(), &written))
 		throw std::exception("Encode error");
+	return written;
 }
 
 ExportConfig ExportHandler::GetExportConfig() const

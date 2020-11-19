@@ -19,45 +19,31 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 	try
 	{
 		result = -1;
-		m_config = config;
-		ExportHandler expHandler{m_config.pExporter, m_config.createExport, static_cast<ExportFlags>(m_config.flagsExport)};
-		if(CheckBounceIsValid(expHandler.GetExportConfig()))
+		ExportHandler expHandler{config.pExporter, config.createExport, static_cast<ExportFlags>(config.flagsExport)};
+		if(CheckBounceIsValid(expHandler.GetExportConfig(), config))
 		{
 			ThrowIfProtectedFeature(expHandler.GetExportConfig());
 
 			Progress progress{config.pUserInterface};
-			progress.OpenProgress(m_config.pPI->rangeEnd - m_config.pPI->rangeStart);
-
-			m_config.targetFileName = ConfigDirectory(static_cast<ExportFlags>(m_config.flagsExport) == ExportFlags::RENAME_FILENAME_IF_EXIST, m_config.targetFileName);
-			
-			WrappedVideoEngine::Prepare(*m_config.pPI);
-
-			expHandler.Initialize(m_config.targetFileName);
-
-			LogExportRange(m_config.pPI->rangeStart, m_config.pPI->rangeEnd, m_config.targetFileName.string());
-			
+			progress.OpenProgress(config.pPI->rangeEnd - config.pPI->rangeStart);
+			auto targetPath = ConfigDirectory(static_cast<ExportFlags>(config.flagsExport) == ExportFlags::RENAME_FILENAME_IF_EXIST, config.targetFileName);
+			WrappedVideoEngine::Prepare(*config.pPI);
+			expHandler.Initialize(targetPath);
+			LogExportRange(config.pPI->rangeStart, config.pPI->rangeEnd, targetPath.string());
 			Measurement measurement;
 			measurement.Start();
-
-			for(__int64 i = m_config.pPI->rangeStart; i < m_config.pPI->rangeEnd;)
+			for(__int64 i = config.pPI->rangeStart; i < config.pPI->rangeEnd; i += static_cast<__int64>(config.pPI->frameRate))
 			{
 				progress.ThrowIfAbort(result);
 
-				auto videoframe = WrappedVideoEngine::GetFrame(i);
-
 				auto exConfig = expHandler.GetExportConfig();
-
+				auto videoframe = WrappedVideoEngine::GetFrame(i);
 				ConvertToYUV(videoframe, exConfig.format);
-
-				size_t written = 0;
-				expHandler.ExportVideoFrame(std::move(videoframe), written);
-				i += static_cast<__int64>(m_config.pPI->frameRate);
+				auto written = expHandler.ExportVideoFrame(std::move(videoframe));
 				progress.AddProgress(written);
 			}
-
 			measurement.Stop();
-			LogExportTime(m_config.pPI->rangeEnd - m_config.pPI->rangeStart / m_config.pPI->frameRate, measurement.GetElapsedTime());
-
+			LogExportTime(config.pPI->rangeEnd - config.pPI->rangeStart / config.pPI->frameRate, measurement.GetElapsedTime());
 			result = 1;
 		}
 	}
@@ -70,18 +56,14 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 		std::cout << "aborted by user";
 	}
 	WrappedVideoEngine::ShutDown();
-	m_config = {};
 	return result == 1;
 }
 
-bool ExportEngine::CheckBounceIsValid(const ExportConfig& exConfig) const
+bool ExportEngine::CheckBounceIsValid(const ExportConfig& exConfig, const ExportEngineConfig& config) const
 {
-	if(m_config.flagsExport & BOUNCE_IF_VALID and m_config.pPI)
+	if(config.flagsExport & BOUNCE_IF_VALID and config.pPI)
 	{
-		return m_config.pPI->aspectRation == exConfig.aspectRatio
-			and m_config.pPI->width >= exConfig.width
-			and m_config.pPI->height >= exConfig.height
-			and not m_config.targetFileName.empty();
+		return config.pPI->aspectRation == exConfig.aspectRatio and config.pPI->width >= exConfig.width and config.pPI->height >= exConfig.height and not config.targetFileName.empty();
 	}
 	return false;
 }
