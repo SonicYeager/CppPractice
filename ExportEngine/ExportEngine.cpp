@@ -50,11 +50,9 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 				ConvertToYUV(videoframe, exConfig.format);
 
 				size_t written = 0;
-				bool success = expHandler.ExportVideoFrame(std::move(videoframe), written);
+				expHandler.ExportVideoFrame(std::move(videoframe), written);
 				i += static_cast<__int64>(m_config.pPI->frameRate);
 				progress.AddProgress(written);
-				if(not success)
-					throw std::exception("Encode error");
 			}
 
 			measurement.Stop();
