@@ -12,6 +12,13 @@
 #include "ProgressHandler.h"
 #include "Measurement.h"
 
+void LogExportRange(long long rangeStart, long long rangeEnd, const std::string& fileName)
+{
+	std::cout << "Export" << fileName;
+	if(rangeEnd > rangeStart)
+		std::cout << " from " << rangeStart << " to " << rangeEnd << " started.\n";
+}
+
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
 	try
@@ -32,9 +39,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 
 			m_pExporter->Initialize(m_config.targetFileName);
 
-			std::cout << "Export" << m_config.targetFileName;
-			if(m_config.pPI->rangeEnd > m_config.pPI->rangeStart)
-				std::cout << " from " << m_config.pPI->rangeStart << " to " << m_config.pPI->rangeEnd << " started.\n";
+			LogExportRange(m_config.pPI->rangeStart, m_config.pPI->rangeEnd, m_config.targetFileName.string());
 			
 			Measurement measurement;
 			measurement.Start();
