@@ -1,15 +1,19 @@
 #include "ExporterConfig.h"
 
-IVideoExport* ConfigExporter(IVideoExport* pExporter, std::function<IVideoExport*(ExportColorFormat)> create, ExportFlags flags)
+std::unique_ptr<IVideoExport> ConfigExporter(IVideoExport* pExporter, std::function<IVideoExport*(ExportColorFormat)> create, ExportFlags flags)
 {
 	if(pExporter)
 	{
-		return pExporter;
+		std::unique_ptr<IVideoExport> exp{pExporter};
+		return std::move(exp);
 	}
 	else
 	{
 		if(create)
-			return std::move(create(flags & RGB_EXPORT ? ExportColorFormat::RGB : ExportColorFormat::YUV));
+		{
+			std::unique_ptr<IVideoExport> exp{std::move(create(flags & RGB_EXPORT ? ExportColorFormat::RGB : ExportColorFormat::YUV))};
+			return std::move(exp);
+		}
 		else
 			throw std::exception("no export available");
 	}

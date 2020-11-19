@@ -21,7 +21,8 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 	{
 		m_Result = -1;
 		m_config = config;
-		m_pExporter = ConfigExporter(m_config.pExporter, m_config.createExport, static_cast<ExportFlags>(m_config.flagsExport)); //resource leak (no exporter deletion if created :/)
+		ExportHandler expHandler{m_config.pExporter, m_config.createExport, static_cast<ExportFlags>(m_config.flagsExport)};
+		m_pExporter = ConfigExporter(m_config.pExporter, m_config.createExport, static_cast<ExportFlags>(m_config.flagsExport)).release(); //resource leak (no exporter deletion if created :/)
 		if(CheckBounceIsValid())
 		{
 			ThrowIfProtectedFeature(m_pExporter);
@@ -33,7 +34,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 			
 			WrappedVideoEngine::Prepare(*m_config.pPI);
 
-			ExportHandler::Initialize(m_pExporter, m_config.targetFileName);
+			expHandler.Initialize(m_config.targetFileName);
 
 			LogExportRange(m_config.pPI->rangeStart, m_config.pPI->rangeEnd, m_config.targetFileName.string());
 			
@@ -52,7 +53,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 				ConvertToYUV(videoframe, exConfig.format);
 
 				size_t written = 0;
-				bool success = ExportHandler::ExportVideoFrame(m_pExporter, videoframe, written);
+				bool success = expHandler.ExportVideoFrame(videoframe, written);
 				if(success)
 				{
 					progress.AddProgress(written);

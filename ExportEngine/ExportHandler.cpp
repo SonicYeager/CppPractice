@@ -1,11 +1,16 @@
 #include "ExportHandler.h"
 
-void ExportHandler::Initialize(IVideoExport* pExporter, const std::filesystem::path& target)
+ExportHandler::ExportHandler(IVideoExport* pExporter, std::function<IVideoExport*(ExportColorFormat)> create, ExportFlags flags)
 {
-	pExporter->Initialize(target);
+	exporter = ConfigExporter(pExporter, create, flags);
 }
 
-inline bool ExportHandler::ExportVideoFrame(IVideoExport* pExporter, VideoFrame* videoframe, size_t& written)
+void ExportHandler::Initialize(const std::filesystem::path& target)
 {
-	return pExporter->EncodeVideo(videoframe, &written);
+	exporter->Initialize(target);
+}
+
+bool ExportHandler::ExportVideoFrame(VideoFrame* videoframe, size_t& written)
+{
+	return exporter->EncodeVideo(videoframe, &written);
 }

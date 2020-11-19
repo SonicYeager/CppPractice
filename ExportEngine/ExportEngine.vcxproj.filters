@@ -30,6 +30,7 @@
     <ClCompile Include="LogHandler.cpp">
       <Filter>RefacModules</Filter>
     </ClCompile>
+    <ClCompile Include="ExportHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArrangmentData.h" />

@@ -1,8 +1,13 @@
 #pragma once
 #include "ExportData.h"
+#include "ExporterConfig.h"
 
 struct ExportHandler
 {
-	static void Initialize(IVideoExport* pExporter, const std::filesystem::path& target);
-	static bool ExportVideoFrame(IVideoExport* pExporter, VideoFrame* videoframe, size_t& written);
+	ExportHandler(IVideoExport* pExporter, std::function<IVideoExport*(ExportColorFormat)> create, ExportFlags flags);
+	void Initialize(const std::filesystem::path& target);
+	bool ExportVideoFrame(VideoFrame* videoframe, size_t& written);
+
+private:
+	std::unique_ptr<IVideoExport> exporter;
 };
