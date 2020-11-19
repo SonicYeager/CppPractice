@@ -17,12 +17,12 @@ void Progress::OpenProgress(long long range)
 	ui->OpenProgress("Export", range);
 }
 
-void Progress::ThrowIfAbort(int& res)
+bool Progress::IsAborded(int& res)
 {
 	if(ui->Aborted())
 	{
 		res = 1;
-		throw 5;
+		return true;
 	}
 }
 

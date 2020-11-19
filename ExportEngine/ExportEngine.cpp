@@ -39,7 +39,11 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 			measurement.Start();
 			for(__int64 i = config.pPI->rangeStart; i < config.pPI->rangeEnd; i += static_cast<__int64>(config.pPI->frameRate))
 			{
-				progress.ThrowIfAbort(result);
+				if(progress.IsAborded(result))
+				{
+					std::cout << "aborted by user";
+					break;
+				}
 
 				auto exConfig = expHandler.GetExportConfig();
 				auto videoframe = wVideoEng.GetNextFrame();
@@ -55,10 +59,6 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 	catch(std::exception ex)
 	{
 		std::cerr << "error during export occurred: " << ex.what();
-	}
-	catch(int)
-	{
-		std::cout << "aborted by user";
 	}
 	return result == 1;
 }

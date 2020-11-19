@@ -6,7 +6,7 @@ struct Progress
 	Progress(IUserInterface* ui);
 	~Progress();
 	void OpenProgress(long long range);
-	void ThrowIfAbort(int& res);
+	bool IsAborded(int& res);
 	void AddProgress(size_t written);
 
 private:
