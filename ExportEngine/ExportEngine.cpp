@@ -18,6 +18,11 @@ bool CanExportNextFrame()
 	return true;
 }
 
+void LogAbortByUser()
+{
+	std::cout << "aborted by user";
+}
+
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
 	int result{};
@@ -41,7 +46,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 			{
 				if(progress.IsAborded(result))
 				{
-					std::cout << "aborted by user";
+					LogAbortByUser();
 					break;
 				}
 
