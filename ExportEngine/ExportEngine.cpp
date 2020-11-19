@@ -10,7 +10,8 @@
 #include "FilesystemHandler.h"
 #include "ProgressHandler.h"
 #include "Measurement.h"
-#include "LogHandler.h""
+#include "LogHandler.h"
+#include "ExportHandler.h"
 
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
@@ -20,7 +21,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 		m_config = config;
 		ExportHandler expHandler{m_config.pExporter, m_config.createExport, static_cast<ExportFlags>(m_config.flagsExport)};
 		m_pExporter = ConfigExporter(m_config.pExporter, m_config.createExport, static_cast<ExportFlags>(m_config.flagsExport)).release(); //resource leak (no exporter deletion if created :/)
-		if(CheckBounceIsValid(expHandler))
+		if(CheckBounceIsValid(expHandler.GetExportConfig()))
 		{
 			ThrowIfProtectedFeature(m_pExporter, expHandler.GetExportConfig());
 
@@ -86,11 +87,10 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 	return m_Result == 1;
 }
 
-bool ExportEngine::CheckBounceIsValid(const ExportHandler& exp) const
+bool ExportEngine::CheckBounceIsValid(const ExportConfig& exConfig) const
 {
 	if(m_config.flagsExport & BOUNCE_IF_VALID and m_pExporter and m_config.pPI)
 	{
-		auto exConfig = exp.GetExportConfig();
 		return m_config.pPI->aspectRation == exConfig.aspectRatio
 			and m_config.pPI->width >= exConfig.width
 			and m_config.pPI->height >= exConfig.height
