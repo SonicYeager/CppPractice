@@ -11,6 +11,16 @@
 #include "FilesystemHandler.h"
 #include "ProgressHandler.h"
 
+auto Start() -> std::chrono::steady_clock::time_point
+{
+	return std::chrono::high_resolution_clock::now();
+}
+
+auto Stop() -> std::chrono::steady_clock::time_point
+{
+	return std::chrono::high_resolution_clock::now();
+}
+
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
 	try
@@ -35,7 +45,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 			if(m_config.pPI->rangeEnd > m_config.pPI->rangeStart)
 				std::cout << " from " << m_config.pPI->rangeStart << " to " << m_config.pPI->rangeEnd << " started.\n";
 			
-			auto start = std::chrono::high_resolution_clock::now();
+			auto start = Start();
 
 			for(__int64 i = m_config.pPI->rangeStart; i < m_config.pPI->rangeEnd;)
 			{
@@ -65,7 +75,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 				}
 			}
 
-			auto end = std::chrono::high_resolution_clock::now();
+			auto end = Stop();
 
 			const double expLen = m_config.pPI->rangeEnd - m_config.pPI->rangeStart / m_config.pPI->frameRate;
 			std::cout << "Export " << std::fixed << std::setprecision(1) << expLen
