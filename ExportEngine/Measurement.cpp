@@ -1,11 +1,16 @@
 #include "Measurement.h"
 
-auto Measurement::Start() -> std::chrono::steady_clock::time_point
+void Measurement::Start()
 {
-	return std::chrono::high_resolution_clock::now();
+	start =  std::chrono::high_resolution_clock::now();
 }
 
-inline auto Measurement::Stop() -> std::chrono::steady_clock::time_point
+void Measurement::Stop()
 {
-	return std::chrono::high_resolution_clock::now();
+	stop = std::chrono::high_resolution_clock::now();
+}
+
+auto Measurement::GetElapsedTime() -> long long
+{
+	return std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count();
 }

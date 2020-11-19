@@ -37,7 +37,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 				std::cout << " from " << m_config.pPI->rangeStart << " to " << m_config.pPI->rangeEnd << " started.\n";
 			
 			Measurement measurement;
-			auto start = measurement.Start();
+			measurement.Start();
 
 			for(__int64 i = m_config.pPI->rangeStart; i < m_config.pPI->rangeEnd;)
 			{
@@ -67,11 +67,11 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 				}
 			}
 
-			auto end = measurement.Stop();
+			measurement.Stop();
 
 			const double expLen = m_config.pPI->rangeEnd - m_config.pPI->rangeStart / m_config.pPI->frameRate;
 			std::cout << "Export " << std::fixed << std::setprecision(1) << expLen
-					  << "s finished successful (Duration=" << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << " ms)\n";
+					  << "s finished successful (Duration=" << measurement.GetElapsedTime() << " ms)\n";
 
 			m_Result = 1;
 		}

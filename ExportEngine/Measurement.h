@@ -3,8 +3,9 @@
 
 struct Measurement
 {
-	auto Start() -> std::chrono::steady_clock::time_point;
-	auto Stop() -> std::chrono::steady_clock::time_point;
+	void Start();
+	void Stop();
+	auto GetElapsedTime() -> long long;
 
 private:
 	std::chrono::steady_clock::time_point start{};
