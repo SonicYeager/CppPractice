@@ -19,6 +19,11 @@ void Initialize(IVideoExport* pExporter, const std::filesystem::path& target)
 	pExporter->Initialize(target);
 }
 
+bool ExportVideoFrame(IVideoExport* pExporter, VideoFrame* videoframe, size_t& written)
+{
+	return pExporter->EncodeVideo(videoframe, &written);
+}
+
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
 	try
@@ -56,7 +61,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 				ConvertToYUV(videoframe, exConfig.format);
 
 				size_t written = 0;
-				bool success = m_pExporter->EncodeVideo(videoframe, &written);
+				bool success = ExportVideoFrame(m_pExporter, videoframe, written);
 				if(success)
 				{
 					progress.AddProgress(written);
