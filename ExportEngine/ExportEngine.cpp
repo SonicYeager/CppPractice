@@ -13,6 +13,11 @@
 #include "LogHandler.h"
 #include "ExportHandler.h"
 
+bool CanExportNextFrame()
+{
+	return true;
+}
+
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
 	int result{};
@@ -23,11 +28,11 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 		if(CheckBounceIsValid(expHandler.GetExportConfig(), config))
 		{
 			ThrowIfProtectedFeature(expHandler.GetExportConfig());
-
 			Progress progress{config.pUserInterface};
 			progress.OpenProgress(config.pPI->rangeEnd - config.pPI->rangeStart);
 			auto targetPath = ConfigDirectory(static_cast<ExportFlags>(config.flagsExport) == ExportFlags::RENAME_FILENAME_IF_EXIST, config.targetFileName);
-			WrappedVideoEngine::Prepare(*config.pPI);
+			WrappedVideoEngine wVideoEng;
+			wVideoEng.Prepare(*config.pPI);
 			expHandler.Initialize(targetPath);
 			LogExportRange(config.pPI->rangeStart, config.pPI->rangeEnd, targetPath.string());
 			Measurement measurement;
@@ -37,7 +42,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 				progress.ThrowIfAbort(result);
 
 				auto exConfig = expHandler.GetExportConfig();
-				auto videoframe = WrappedVideoEngine::GetFrame(i);
+				auto videoframe = wVideoEng.GetNextFrame();
 				ConvertToYUV(videoframe, exConfig.format);
 				auto written = expHandler.ExportVideoFrame(std::move(videoframe));
 				progress.AddProgress(written);
@@ -55,7 +60,6 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 	{
 		std::cout << "aborted by user";
 	}
-	WrappedVideoEngine::ShutDown();
 	return result == 1;
 }
 

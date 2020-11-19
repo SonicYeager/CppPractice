@@ -3,19 +3,21 @@
 void WrappedVideoEngine::Prepare(const ProjectInfo& pi)
 {
 	PrepareVideoEngine(pi);
+	index = pi.rangeStart;
+	framerate = pi.frameRate;
 }
 
-std::unique_ptr<VideoFrame> WrappedVideoEngine::GetFrame(__int64 i)
+std::unique_ptr<VideoFrame> WrappedVideoEngine::GetNextFrame()
 {
-	std::unique_ptr<VideoFrame> videoframe{VideoEngineGetFrame(i)};
+	std::unique_ptr<VideoFrame> videoframe{VideoEngineGetFrame(index)};
 	if(videoframe == nullptr)
 		throw std::exception("GetFrame error");
-
+	index += static_cast<__int64>(framerate);
 	return videoframe;
 }
 
 
-void WrappedVideoEngine::ShutDown()
+WrappedVideoEngine::~WrappedVideoEngine()
 {
 	ShutdownVideoEngine();
 }
