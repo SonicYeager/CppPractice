@@ -78,6 +78,7 @@
     <ClCompile Include="FeatureProtection.cpp" />
     <ClCompile Include="FilesystemHandler.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Measurement.cpp" />
     <ClCompile Include="ProgressHandler.cpp" />
     <ClCompile Include="UserInterface.cpp" />
     <ClCompile Include="VideoEngine.cpp" />

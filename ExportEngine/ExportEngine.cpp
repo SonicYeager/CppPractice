@@ -10,16 +10,7 @@
 #include "FeatureProtection.h"
 #include "FilesystemHandler.h"
 #include "ProgressHandler.h"
-
-auto Start() -> std::chrono::steady_clock::time_point
-{
-	return std::chrono::high_resolution_clock::now();
-}
-
-auto Stop() -> std::chrono::steady_clock::time_point
-{
-	return std::chrono::high_resolution_clock::now();
-}
+#include "Measurement.h"
 
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
@@ -45,7 +36,8 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 			if(m_config.pPI->rangeEnd > m_config.pPI->rangeStart)
 				std::cout << " from " << m_config.pPI->rangeStart << " to " << m_config.pPI->rangeEnd << " started.\n";
 			
-			auto start = Start();
+			Measurement measurement;
+			auto start = measurement.Start();
 
 			for(__int64 i = m_config.pPI->rangeStart; i < m_config.pPI->rangeEnd;)
 			{
@@ -75,7 +67,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 				}
 			}
 
-			auto end = Stop();
+			auto end = measurement.Stop();
 
 			const double expLen = m_config.pPI->rangeEnd - m_config.pPI->rangeStart / m_config.pPI->frameRate;
 			std::cout << "Export " << std::fixed << std::setprecision(1) << expLen
