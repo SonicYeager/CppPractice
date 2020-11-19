@@ -10,8 +10,7 @@
 #include "FilesystemHandler.h"
 #include "ProgressHandler.h"
 #include "Measurement.h"
-#include "LogHandler.h"
-#include "ExportHandler.h"
+#include "LogHandler.h""
 
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
@@ -21,9 +20,9 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 		m_config = config;
 		ExportHandler expHandler{m_config.pExporter, m_config.createExport, static_cast<ExportFlags>(m_config.flagsExport)};
 		m_pExporter = ConfigExporter(m_config.pExporter, m_config.createExport, static_cast<ExportFlags>(m_config.flagsExport)).release(); //resource leak (no exporter deletion if created :/)
-		if(CheckBounceIsValid())
+		if(CheckBounceIsValid(expHandler))
 		{
-			ThrowIfProtectedFeature(m_pExporter);
+			ThrowIfProtectedFeature(m_pExporter, expHandler.GetExportConfig());
 
 			Progress progress{config.pUserInterface};
 			progress.OpenProgress(m_config.pPI->rangeEnd - m_config.pPI->rangeStart);
@@ -46,7 +45,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 				auto videoframe = WrappedVideoEngine::GetFrame(i);
 				WrappedVideoEngine::ValidateVideoFrame(videoframe);
 
-				auto exConfig = expHandler.GetExportConfig(m_pExporter);
+				auto exConfig = expHandler.GetExportConfig();
 
 				ConvertToYUV(videoframe, exConfig.format);
 
@@ -87,11 +86,11 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 	return m_Result == 1;
 }
 
-bool ExportEngine::CheckBounceIsValid() const
+bool ExportEngine::CheckBounceIsValid(const ExportHandler& exp) const
 {
 	if(m_config.flagsExport & BOUNCE_IF_VALID and m_pExporter and m_config.pPI)
 	{
-		auto exConfig = GetExportConfig(m_pExporter);
+		auto exConfig = exp.GetExportConfig();
 		return m_config.pPI->aspectRation == exConfig.aspectRatio
 			and m_config.pPI->width >= exConfig.width
 			and m_config.pPI->height >= exConfig.height

@@ -2,4 +2,4 @@
 #include "ExportData.h"
 #include "ExporterConfig.h"
 
-void ThrowIfProtectedFeature(IVideoExport* pExporter);
+void ThrowIfProtectedFeature(IVideoExport* pExporter, const ExportConfig&);
