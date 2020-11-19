@@ -44,7 +44,6 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 				progress.ThrowIfAbort(result);
 
 				auto videoframe = WrappedVideoEngine::GetFrame(i);
-				WrappedVideoEngine::ValidateVideoFrame(videoframe);
 
 				auto exConfig = expHandler.GetExportConfig();
 
