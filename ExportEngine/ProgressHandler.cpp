@@ -1,4 +1,5 @@
 #include "ProgressHandler.h"
+#include "LogHandler.h"
 
 Progress::Progress(IUserInterface* ui) 
 	: ui(ui)
@@ -22,6 +23,7 @@ bool Progress::IsAborded(int& res)
 	if(ui->Aborted())
 	{
 		res = 1;
+		LogAbortByUser();
 		return true;
 	}
 }

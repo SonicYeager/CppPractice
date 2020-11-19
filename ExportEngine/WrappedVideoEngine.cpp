@@ -16,6 +16,11 @@ std::unique_ptr<VideoFrame> WrappedVideoEngine::GetNextFrame()
 	return videoframe;
 }
 
+bool WrappedVideoEngine::IsInRange(long long start, long long end)
+{
+	return index >= start && index <= end;
+}
+
 
 WrappedVideoEngine::~WrappedVideoEngine()
 {

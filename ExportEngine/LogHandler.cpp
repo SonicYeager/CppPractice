@@ -18,3 +18,8 @@ void LogPathCreated(const std::filesystem::path& path)
 {
 	std::cout << "path (" << path << ") had not been exist -> created";
 }
+
+void LogAbortByUser()
+{
+	std::cout << "aborted by user";
+}

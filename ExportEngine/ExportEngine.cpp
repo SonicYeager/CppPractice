@@ -13,14 +13,9 @@
 #include "LogHandler.h"
 #include "ExportHandler.h"
 
-bool CanExportNextFrame()
+bool CanExportNextFrame(bool aborted, bool inRange)
 {
-	return true;
-}
-
-void LogAbortByUser()
-{
-	std::cout << "aborted by user";
+	return not aborted && inRange;
 }
 
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
@@ -42,14 +37,8 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 			LogExportRange(config.pPI->rangeStart, config.pPI->rangeEnd, targetPath.string());
 			Measurement measurement;
 			measurement.Start();
-			for(__int64 i = config.pPI->rangeStart; i < config.pPI->rangeEnd; i += static_cast<__int64>(config.pPI->frameRate))
+			while(CanExportNextFrame(progress.IsAborded(result), wVideoEng.IsInRange(config.pPI->rangeStart, config.pPI->rangeEnd)))
 			{
-				if(progress.IsAborded(result))
-				{
-					LogAbortByUser();
-					break;
-				}
-
 				auto exConfig = expHandler.GetExportConfig();
 				auto videoframe = wVideoEng.GetNextFrame();
 				ConvertToYUV(videoframe, exConfig.format);
