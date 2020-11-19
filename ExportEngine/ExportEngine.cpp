@@ -19,6 +19,12 @@ void LogExportRange(long long rangeStart, long long rangeEnd, const std::string&
 		std::cout << " from " << rangeStart << " to " << rangeEnd << " started.\n";
 }
 
+void LogExportTime(double expLen, long long elapsed)
+{
+	std::cout << "Export " << std::fixed << std::setprecision(1) << expLen
+			  << "s finished successful (Duration=" << elapsed << " ms)\n";
+}
+
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
 	try
@@ -73,10 +79,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 			}
 
 			measurement.Stop();
-
-			const double expLen = m_config.pPI->rangeEnd - m_config.pPI->rangeStart / m_config.pPI->frameRate;
-			std::cout << "Export " << std::fixed << std::setprecision(1) << expLen
-					  << "s finished successful (Duration=" << measurement.GetElapsedTime() << " ms)\n";
+			LogExportTime(m_config.pPI->rangeEnd - m_config.pPI->rangeStart / m_config.pPI->frameRate, measurement.GetElapsedTime());
 
 			m_Result = 1;
 		}

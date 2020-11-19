@@ -15,5 +15,3 @@ private:
 	int m_Result = 0;
 	IVideoExport* m_pExporter = nullptr;
 };
-
-void LogExportRange();
