@@ -12,6 +12,12 @@
 #include "ProgressHandler.h"
 #include "Measurement.h"
 #include "LogHandler.h"
+#include "ExportHandler.h"
+
+void Initialize(IVideoExport* pExporter, const std::filesystem::path& target)
+{
+	pExporter->Initialize(target);
+}
 
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
@@ -31,7 +37,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 			
 			WrappedVideoEngine::Prepare(*m_config.pPI);
 
-			m_pExporter->Initialize(m_config.targetFileName);
+			Initialize(m_pExporter, m_config.targetFileName);
 
 			LogExportRange(m_config.pPI->rangeStart, m_config.pPI->rangeEnd, m_config.targetFileName.string());
 			
