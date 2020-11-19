@@ -1,6 +1,11 @@
 #include "FilesystemHandler.h"
 #include <iostream>
 
+void LogPathCreated(const std::filesystem::path& path)
+{
+	std::cout << "path (" << path << ") had not been exist -> created";
+}
+
 std::filesystem::path GetAlternativeFileName(bool hasFlagRename, const std::filesystem::path& targetFileName)
 {
 	std::filesystem::path target{targetFileName};
@@ -19,7 +24,7 @@ void CreateDirectoryIfIsNone(const std::filesystem::path& path)
 	if(not std::filesystem::is_directory(path))
 	{
 		if(std::filesystem::create_directory(path))
-			std::cout << "path (" << path << ") had not been exist -> created";	//Logger
+			LogPathCreated(path);
 		else
 			throw std::exception("could not create target directory");
 	}
