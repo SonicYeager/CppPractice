@@ -18,10 +18,3 @@ std::unique_ptr<IVideoExport> ConfigExporter(IVideoExport* pExporter, std::funct
 			throw std::exception("no export available");
 	}
 }
-
-ExportConfig GetExportConfig(IVideoExport* pExporter)
-{
-	ExportConfig config{};
-	pExporter->GetExportInfo(&config);
-	return config;
-}

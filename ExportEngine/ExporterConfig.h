@@ -3,4 +3,3 @@
 
 std::unique_ptr<IVideoExport> ConfigExporter(IVideoExport* pExporter, std::function<IVideoExport*(ExportColorFormat)> create, ExportFlags flags);
 
-ExportConfig GetExportConfig(IVideoExport* pExporter);

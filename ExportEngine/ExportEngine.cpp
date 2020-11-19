@@ -6,13 +6,11 @@
 
 #include "ColorSpaceConverter.h"
 #include "WrappedVideoEngine.h"
-#include "ExporterConfig.h"
 #include "FeatureProtection.h"
 #include "FilesystemHandler.h"
 #include "ProgressHandler.h"
 #include "Measurement.h"
 #include "LogHandler.h"
-#include "ExportHandler.h"
 #include "ExportHandler.h"
 
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
@@ -48,7 +46,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 				auto videoframe = WrappedVideoEngine::GetFrame(i);
 				WrappedVideoEngine::ValidateVideoFrame(videoframe);
 
-				auto exConfig = GetExportConfig(m_pExporter);
+				auto exConfig = expHandler.GetExportConfig(m_pExporter);
 
 				ConvertToYUV(videoframe, exConfig.format);
 

@@ -14,3 +14,10 @@ bool ExportHandler::ExportVideoFrame(VideoFrame* videoframe, size_t& written)
 {
 	return exporter->EncodeVideo(videoframe, &written);
 }
+
+ExportConfig ExportHandler::GetExportConfig(IVideoExport* pExporter) const
+{
+	ExportConfig config{};
+	pExporter->GetExportInfo(&config);
+	return config;
+}
