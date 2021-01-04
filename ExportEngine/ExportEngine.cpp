@@ -30,22 +30,13 @@ void ExportFrames(Progress& progress, int& result, WrappedVideoEngine& wVideoEng
 	}
 }
 
-bool CheckBounceIsValid(const ExportConfig& exConfig, const ExportEngineConfig& config)
-{
-	if(config.flagsExport & BOUNCE_IF_VALID and config.pPI)
-	{
-		return config.pPI->aspectRation == exConfig.aspectRatio and config.pPI->width >= exConfig.width and config.pPI->height >= exConfig.height and not config.targetFileName.empty();
-	}
-	return false;
-}
-
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
 	int result{-1};
 	try
 	{
 		ExportHandler expHandler{config.pExporter, config.createExport, static_cast<ExportFlags>(config.flagsExport)};
-		if(CheckBounceIsValid(expHandler.GetExportConfig(), config))
+		if(expHandler.CheckBounceIsValid(expHandler.GetExportConfig(), config))
 		{
 			ThrowIfProtectedFeature(expHandler.GetExportConfig());
 			Progress progress{config.pUserInterface};
