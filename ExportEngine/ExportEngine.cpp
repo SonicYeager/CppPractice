@@ -39,11 +39,6 @@ bool CheckBounceIsValid(const ExportConfig& exConfig, const ExportEngineConfig& 
 	return false;
 }
 
-void LogExportError(std::exception ex)
-{
-	std::cerr << "error during export occurred: " << ex.what();
-}
-
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
 	int result{-1};

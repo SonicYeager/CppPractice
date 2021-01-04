@@ -19,6 +19,11 @@ void LogPathCreated(const std::filesystem::path& path)
 	std::cout << "path (" << path << ") had not been exist -> created";
 }
 
+void LogExportError(std::exception ex)
+{
+	std::cerr << "error during export occurred: " << ex.what();
+}
+
 void LogAbortByUser()
 {
 	std::cout << "aborted by user";
