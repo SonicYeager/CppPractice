@@ -4,11 +4,8 @@
 #include <chrono>
 #include "ArrangmentData.h"
 
-#include "ColorSpaceConverter.h"
-#include "WrappedVideoEngine.h"
 #include "FeatureProtection.h"
 #include "FilesystemHandler.h"
-#include "ProgressHandler.h"
 #include "Measurement.h"
 #include "LogHandler.h"
 #include "ExportHandler.h"
@@ -21,7 +18,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 		ExportHandler expHandler{config.pExporter, config.createExport, static_cast<ExportFlags>(config.flagsExport)};
 		if(expHandler.CheckBounceIsValid(config))
 		{
-			ThrowIfProtectedFeature(expHandler.GetExportConfig());
+			ThrowIfProtectedFeature(expHandler.GetExportConfig().type);
 			Progress progress{config.pUserInterface};
 			progress.OpenProgress(config.pPI->rangeEnd - config.pPI->rangeStart);
 			auto targetPath = ConfigDirectory(static_cast<ExportFlags>(config.flagsExport) == ExportFlags::RENAME_FILENAME_IF_EXIST, config.targetFileName);
@@ -30,11 +27,9 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 			expHandler.Initialize(targetPath);
 			LogExportRange(config.pPI->rangeStart, config.pPI->rangeEnd, targetPath.string());
 			Measurement measurement;
-
 			measurement.Start();
-			expHandler.ExportFrames(progress, result, wVideoEng, config, expHandler);
+			expHandler.ExportFrames(progress, result, wVideoEng, config);
 			measurement.Stop();
-
 			LogExportTime(config.pPI->rangeEnd - config.pPI->rangeStart / config.pPI->frameRate, measurement.GetElapsedTime());
 			result = 1;
 		}

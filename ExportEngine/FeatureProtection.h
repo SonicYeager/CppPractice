@@ -2,4 +2,4 @@
 #include "ExportData.h"
 #include "ExporterConfig.h"
 
-void ThrowIfProtectedFeature(const ExportConfig&);
+void ThrowIfProtectedFeature(const ExportType&);

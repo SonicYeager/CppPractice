@@ -33,14 +33,14 @@ bool ExportHandler::CheckBounceIsValid(const ExportEngineConfig& config)
 	return false;
 }
 
-inline void ExportHandler::ExportFrames(Progress& progress, int& result, WrappedVideoEngine& wVideoEng, const ExportEngineConfig& config, ExportHandler& expHandler)
+void ExportHandler::ExportFrames(Progress& progress, int& result, WrappedVideoEngine& wVideoEng, const ExportEngineConfig& config)
 {
 	while(CanExportNextFrame(progress.IsAborded(result), wVideoEng.IsInRange(config.pPI->rangeStart, config.pPI->rangeEnd)))
 	{
-		auto exConfig = expHandler.GetExportConfig();
+		auto exConfig = GetExportConfig();
 		auto videoframe = wVideoEng.GetNextFrame();
 		ConvertToYUV(videoframe, exConfig.format);
-		auto written = expHandler.ExportVideoFrame(std::move(videoframe));
+		auto written = ExportVideoFrame(std::move(videoframe));
 		progress.AddProgress(written);
 	}
 }

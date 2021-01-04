@@ -1,7 +1,7 @@
 #include "FeatureProtection.h"
 
-void ThrowIfProtectedFeature(const ExportConfig& config)
+void ThrowIfProtectedFeature(const ExportType& type)
 {
-	if(not(config.type == ExportType::DVD or config.type == ExportType::MP4))
+	if(not(type == ExportType::DVD or type == ExportType::MP4))
 		throw std::exception("Feature not allowed");
 }
