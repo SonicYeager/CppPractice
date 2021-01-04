@@ -45,6 +45,30 @@ void ConvertToYUV(const std::unique_ptr<VideoFrame>& videoframe, ExportColorForm
 	DetermineConversion(format, videoframe->colorFormat, onBGR, onRGB);
 }
 
+void BGRToGrayscale(const std::unique_ptr<VideoFrame>& videoframe)
+{
+	for(Pixel& c : videoframe->pixels)
+	{
+		Pixel rgb = c;
+		auto val = (0.299 * rgb.r) + (0.587 * rgb.g) + (0.114 * rgb.b);
+		c.r = static_cast<char>(val);
+		c.g = static_cast<char>(val);
+		c.b = static_cast<char>(val);
+	}
+}
+
+void RGBToGrayscale(const std::unique_ptr<VideoFrame>& videoframe)
+{
+	for(Pixel& c : videoframe->pixels)
+	{
+		Pixel rgb = c;
+		auto val = (0.299 * rgb.r) + (0.587 * rgb.g) + (0.114 * rgb.b);
+		c.r = static_cast<char>(val);
+		c.g = static_cast<char>(val);
+		c.b = static_cast<char>(val);
+	}
+}
+
 void DetermineConversion(VideoFrameColorFormat colorFormat, std::function<void()> onBGR, std::function<void()> onRGB)
 {
 	if(colorFormat == VideoFrameColorFormat::BGR)
@@ -59,16 +83,7 @@ void DetermineConversion(VideoFrameColorFormat colorFormat, std::function<void()
 
 void ConvertToGrayscale(const std::unique_ptr<VideoFrame>& videoframe)
 {	
-	auto onBGR = [&videoframe] { BGRToYUV(videoframe); };
-	auto onRGB = [&videoframe] { RGBToYUV(videoframe); };
+	auto onBGR = [&videoframe] { BGRToGrayscale(videoframe); };
+	auto onRGB = [&videoframe] { RGBToGrayscale(videoframe); };
 	DetermineConversion(videoframe->colorFormat, onBGR, onRGB);
 }
-
-//for(Pixel& c : videoframe->pixels)
-//{
-//	Pixel rgb = c;
-//	auto val = 0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b;
-//	c.r = static_cast<char>(val);
-//	c.g = static_cast<char>(val);
-//	c.b = static_cast<char>(val);
-//}
