@@ -10,8 +10,10 @@
 #include "LogHandler.h"
 #include "ExportHandler.h"
 
-void ExportIfBounceIsValid(ExportHandler& expHandler, const ExportEngineConfig& config, int& result)
+int ExportIfBounceIsValid(const ExportEngineConfig& config)
 {
+	int result{-1};
+	ExportHandler expHandler{config.pExporter, config.createExport, static_cast<ExportFlags>(config.flagsExport)};
 	if(expHandler.CheckBounceIsValid(config))
 	{
 		ThrowIfProtectedFeature(expHandler.GetExportConfig().type);
@@ -29,6 +31,7 @@ void ExportIfBounceIsValid(ExportHandler& expHandler, const ExportEngineConfig& 
 		LogExportTime(config.pPI->rangeEnd - config.pPI->rangeStart / config.pPI->frameRate, measurement.GetElapsedTime());
 		result = 1;
 	}
+	return result;
 }
 
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
@@ -36,8 +39,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 	int result{-1};
 	try
 	{
-		ExportHandler expHandler{config.pExporter, config.createExport, static_cast<ExportFlags>(config.flagsExport)};
-		ExportIfBounceIsValid(expHandler, config, result);
+		result = ExportIfBounceIsValid(config);
 	}
 	catch(std::exception ex)
 	{
