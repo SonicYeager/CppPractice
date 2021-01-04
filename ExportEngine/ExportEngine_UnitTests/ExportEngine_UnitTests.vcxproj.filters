@@ -18,5 +18,8 @@
     <ClCompile Include="test_ExportEngine.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="test_ColorSpaceConverter.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

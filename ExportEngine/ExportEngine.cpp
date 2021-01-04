@@ -14,12 +14,14 @@ Progress GetOpenedProgress(IUserInterface* ui, long long range)
 {
 	Progress progress{ui};
 	progress.OpenProgress(range);
+	return progress;
 }
 
 WrappedVideoEngine GetPreparedWrappedVideoEngine(const ProjectInfo& pi)
 {
 	WrappedVideoEngine wVideoEng;
 	wVideoEng.Prepare(pi);
+	return wVideoEng;
 }
 
 Measurement ExportFramesReturnElapsedTime(Progress& progress, int& result, WrappedVideoEngine& wVideoEng, const ExportEngineConfig& config, ExportHandler& expHandler)
@@ -28,6 +30,7 @@ Measurement ExportFramesReturnElapsedTime(Progress& progress, int& result, Wrapp
 	measurement.Start();
 	expHandler.ExportFrames(progress, result, wVideoEng, config);
 	measurement.Stop();
+	return measurement;
 }
 
 int ExportIfBounceIsValid(const ExportEngineConfig& config)

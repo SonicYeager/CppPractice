@@ -44,3 +44,31 @@ void ConvertToYUV(const std::unique_ptr<VideoFrame>& videoframe, ExportColorForm
 	auto onRGB = [&videoframe] { RGBToYUV(videoframe); };
 	DetermineConversion(format, videoframe->colorFormat, onBGR, onRGB);
 }
+
+void DetermineConversion(VideoFrameColorFormat colorFormat, std::function<void()> onBGR, std::function<void()> onRGB)
+{
+	if(colorFormat == VideoFrameColorFormat::BGR)
+	{
+		onBGR();
+	}
+	else if(colorFormat == VideoFrameColorFormat::RGB)
+	{
+		onRGB();
+	}
+}
+
+void ConvertToGrayscale(const std::unique_ptr<VideoFrame>& videoframe)
+{	
+	auto onBGR = [&videoframe] { BGRToYUV(videoframe); };
+	auto onRGB = [&videoframe] { RGBToYUV(videoframe); };
+	DetermineConversion(videoframe->colorFormat, onBGR, onRGB);
+}
+
+//for(Pixel& c : videoframe->pixels)
+//{
+//	Pixel rgb = c;
+//	auto val = 0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b;
+//	c.r = static_cast<char>(val);
+//	c.g = static_cast<char>(val);
+//	c.b = static_cast<char>(val);
+//}
