@@ -13,23 +13,6 @@
 #include "LogHandler.h"
 #include "ExportHandler.h"
 
-bool CanExportNextFrame(bool aborted, bool inRange)
-{
-	return not aborted && inRange;
-}
-
-void ExportFrames(Progress& progress, int& result, WrappedVideoEngine& wVideoEng, const ExportEngineConfig& config, ExportHandler& expHandler)
-{
-	while(CanExportNextFrame(progress.IsAborded(result), wVideoEng.IsInRange(config.pPI->rangeStart, config.pPI->rangeEnd)))
-	{
-		auto exConfig = expHandler.GetExportConfig();
-		auto videoframe = wVideoEng.GetNextFrame();
-		ConvertToYUV(videoframe, exConfig.format);
-		auto written = expHandler.ExportVideoFrame(std::move(videoframe));
-		progress.AddProgress(written);
-	}
-}
-
 bool ExportEngine::Bounce(const ExportEngineConfig& config)
 {
 	int result{-1};
@@ -49,7 +32,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 			Measurement measurement;
 
 			measurement.Start();
-			ExportFrames(progress, result, wVideoEng, config, expHandler);
+			expHandler.ExportFrames(progress, result, wVideoEng, config, expHandler);
 			measurement.Stop();
 
 			LogExportTime(config.pPI->rangeEnd - config.pPI->rangeStart / config.pPI->frameRate, measurement.GetElapsedTime());

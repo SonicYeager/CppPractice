@@ -1,4 +1,10 @@
 #include "ExportHandler.h"
+#include "ColorSpaceConverter.h"
+
+bool CanExportNextFrame(bool aborted, bool inRange)
+{
+	return not aborted && inRange;
+}
 
 ExportHandler::ExportHandler(IVideoExport* pExporter, std::function<IVideoExport*(ExportColorFormat)> create, ExportFlags flags)
 {
@@ -25,6 +31,18 @@ bool ExportHandler::CheckBounceIsValid(const ExportEngineConfig& config)
 		return config.pPI->aspectRation == GetExportConfig().aspectRatio and config.pPI->width >= GetExportConfig().width and config.pPI->height >= GetExportConfig().height and not config.targetFileName.empty();
 	}
 	return false;
+}
+
+inline void ExportHandler::ExportFrames(Progress& progress, int& result, WrappedVideoEngine& wVideoEng, const ExportEngineConfig& config, ExportHandler& expHandler)
+{
+	while(CanExportNextFrame(progress.IsAborded(result), wVideoEng.IsInRange(config.pPI->rangeStart, config.pPI->rangeEnd)))
+	{
+		auto exConfig = expHandler.GetExportConfig();
+		auto videoframe = wVideoEng.GetNextFrame();
+		ConvertToYUV(videoframe, exConfig.format);
+		auto written = expHandler.ExportVideoFrame(std::move(videoframe));
+		progress.AddProgress(written);
+	}
 }
 
 ExportConfig ExportHandler::GetExportConfig() const
