@@ -2,7 +2,7 @@
 #include "ExportEngine.h"
 #include <filesystem>
 
-const std::filesystem::path exportEnginePath{"ExportEngine "};
+const std::filesystem::path exportEnginePath{"ExportEngine"};
 const std::filesystem::path absolute = std::filesystem::absolute(exportEnginePath);
 
 bool FolderExists()

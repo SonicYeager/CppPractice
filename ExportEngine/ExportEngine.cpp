@@ -17,13 +17,6 @@ Progress GetOpenedProgress(IUserInterface* ui, long long range)
 	return progress;
 }
 
-WrappedVideoEngine GetPreparedWrappedVideoEngine(const ProjectInfo& pi)
-{
-	WrappedVideoEngine wVideoEng;
-	wVideoEng.Prepare(pi);
-	return wVideoEng;
-}
-
 Measurement ExportFramesReturnElapsedTime(Progress& progress, int& result, WrappedVideoEngine& wVideoEng, const ExportEngineConfig& config, ExportHandler& expHandler)
 {
 	Measurement measurement;
@@ -44,7 +37,8 @@ int ExportIfBounceIsValid(const ExportEngineConfig& config)
 			ThrowIfProtectedFeature(expHandler.GetExportConfig().type);
 			auto progress = GetOpenedProgress(config.pUserInterface, config.pPI->rangeEnd - config.pPI->rangeStart);
 			auto targetPath = ConfigDirectory(static_cast<ExportFlags>(config.flagsExport) == ExportFlags::RENAME_FILENAME_IF_EXIST, config.targetFileName);
-			auto wVideoEng = GetPreparedWrappedVideoEngine(*config.pPI);
+			WrappedVideoEngine wVideoEng;
+			wVideoEng.Prepare(*config.pPI);
 			expHandler.Initialize(targetPath);
 			LogExportRange(config.pPI->rangeStart, config.pPI->rangeEnd, targetPath.string());
 			auto measurement = ExportFramesReturnElapsedTime(progress, result, wVideoEng, config, expHandler);
