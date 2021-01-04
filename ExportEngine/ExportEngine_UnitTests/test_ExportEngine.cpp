@@ -147,7 +147,7 @@ TEST(TestExportEngine, BounceGrayscale_WithFlagsBounceIfValidAndRenameFilenameIf
 	config.flagsExport = BOUNCE_IF_VALID | RENAME_FILENAME_IF_EXIST; // | RGB_EXPORT;
 	config.pUserInterface = IUserInterface::Create();
 
-	bool actual = exporter.Bounce(config);
+	bool actual = exporter.BounceGrayscale(config);
 
 	EXPECT_TRUE(actual);
 

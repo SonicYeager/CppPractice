@@ -52,7 +52,6 @@ void ExportHandler::ExportGrayscaleFrames(Progress& progress, int& result, Wrapp
 		auto exConfig = GetExportConfig();
 		auto videoframe = wVideoEng.GetNextFrame();
 		ConvertToGrayscale(videoframe);
-		ConvertToYUV(videoframe, exConfig.format);
 		auto written = ExportVideoFrame(std::move(videoframe));
 		progress.AddProgress(written);
 	}
