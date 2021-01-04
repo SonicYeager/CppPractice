@@ -22,6 +22,14 @@ WrappedVideoEngine GetPreparedWrappedVideoEngine(const ProjectInfo& pi)
 	wVideoEng.Prepare(pi);
 }
 
+Measurement ExportFramesReturnElapsedTime(Progress& progress, int& result, WrappedVideoEngine& wVideoEng, const ExportEngineConfig& config, ExportHandler& expHandler)
+{
+	Measurement measurement;
+	measurement.Start();
+	expHandler.ExportFrames(progress, result, wVideoEng, config);
+	measurement.Stop();
+}
+
 int ExportIfBounceIsValid(const ExportEngineConfig& config)
 {
 	int result{-1};
@@ -36,12 +44,7 @@ int ExportIfBounceIsValid(const ExportEngineConfig& config)
 			auto wVideoEng = GetPreparedWrappedVideoEngine(*config.pPI);
 			expHandler.Initialize(targetPath);
 			LogExportRange(config.pPI->rangeStart, config.pPI->rangeEnd, targetPath.string());
-
-			Measurement measurement;
-			measurement.Start();
-			expHandler.ExportFrames(progress, result, wVideoEng, config);
-			measurement.Stop();
-
+			auto measurement = ExportFramesReturnElapsedTime(progress, result, wVideoEng, config, expHandler);
 			LogExportTime(config.pPI->rangeEnd - config.pPI->rangeStart / config.pPI->frameRate, measurement.GetElapsedTime());
 			result = 1;
 		}
