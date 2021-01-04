@@ -7,4 +7,5 @@ class ExportEngine
 {
 public:
 	bool Bounce(const ExportEngineConfig&);
+	bool BounceGrayscale(const ExportEngineConfig&);
 };

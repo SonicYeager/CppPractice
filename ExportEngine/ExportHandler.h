@@ -11,6 +11,7 @@ struct ExportHandler
 	size_t ExportVideoFrame(std::unique_ptr<VideoFrame> videoframe);
 	bool CheckBounceIsValid(const ExportEngineConfig& config);
 	void ExportFrames(Progress& progress, int& result, WrappedVideoEngine& wVideoEng, const ExportEngineConfig& config);
+	void ExportGrayscaleFrames(Progress& progress, int& result, WrappedVideoEngine& wVideoEng, const ExportEngineConfig& config);
 	ExportConfig GetExportConfig() const;
 
 private:

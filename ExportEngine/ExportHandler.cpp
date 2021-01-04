@@ -45,6 +45,19 @@ void ExportHandler::ExportFrames(Progress& progress, int& result, WrappedVideoEn
 	}
 }
 
+void ExportHandler::ExportGrayscaleFrames(Progress& progress, int& result, WrappedVideoEngine& wVideoEng, const ExportEngineConfig& config)
+{
+	while(CanExportNextFrame(progress.IsAborded(result), wVideoEng.IsInRange(config.pPI->rangeStart, config.pPI->rangeEnd)))
+	{
+		auto exConfig = GetExportConfig();
+		auto videoframe = wVideoEng.GetNextFrame();
+		ConvertToGrayscale(videoframe);
+		ConvertToYUV(videoframe, exConfig.format);
+		auto written = ExportVideoFrame(std::move(videoframe));
+		progress.AddProgress(written);
+	}
+}
+
 ExportConfig ExportHandler::GetExportConfig() const
 {
 	ExportConfig config{};
