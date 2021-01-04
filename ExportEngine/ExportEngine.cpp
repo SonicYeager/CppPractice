@@ -36,7 +36,7 @@ bool ExportEngine::Bounce(const ExportEngineConfig& config)
 	try
 	{
 		ExportHandler expHandler{config.pExporter, config.createExport, static_cast<ExportFlags>(config.flagsExport)};
-		if(expHandler.CheckBounceIsValid(expHandler.GetExportConfig(), config))
+		if(expHandler.CheckBounceIsValid(config))
 		{
 			ThrowIfProtectedFeature(expHandler.GetExportConfig());
 			Progress progress{config.pUserInterface};

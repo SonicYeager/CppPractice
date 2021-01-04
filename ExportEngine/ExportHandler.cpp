@@ -18,11 +18,11 @@ size_t ExportHandler::ExportVideoFrame(std::unique_ptr<VideoFrame> videoframe)
 	return written;
 }
 
-bool ExportHandler::CheckBounceIsValid(const ExportConfig& exConfig, const ExportEngineConfig& config)
+bool ExportHandler::CheckBounceIsValid(const ExportEngineConfig& config)
 {
 	if(config.flagsExport & BOUNCE_IF_VALID and config.pPI)
 	{
-		return config.pPI->aspectRation == exConfig.aspectRatio and config.pPI->width >= exConfig.width and config.pPI->height >= exConfig.height and not config.targetFileName.empty();
+		return config.pPI->aspectRation == GetExportConfig().aspectRatio and config.pPI->width >= GetExportConfig().width and config.pPI->height >= GetExportConfig().height and not config.targetFileName.empty();
 	}
 	return false;
 }
