@@ -2,7 +2,7 @@
 
 void Measurement::Start()
 {
-	start = std::chrono::high_resolution_clock::now();
+	start =  std::chrono::high_resolution_clock::now();
 }
 
 void Measurement::Stop()
@@ -10,8 +10,7 @@ void Measurement::Stop()
 	stop = std::chrono::high_resolution_clock::now();
 }
 
-int Measurement::GetPassesTime() const
+auto Measurement::GetElapsedTime() -> long long
 {
-	auto dur = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
-	return dur.count();
+	return std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count();
 }

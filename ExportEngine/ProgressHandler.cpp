@@ -1,34 +1,35 @@
 #include "ProgressHandler.h"
+#include "LogHandler.h"
 
-ProgressHandler::ProgressHandler(IUserInterface* UI) 
-	: UI(UI)
+Progress::Progress(IUserInterface* ui) 
+	: ui(ui)
 {
-	if(this->UI == nullptr)
+	if(this->ui == nullptr)
 		throw std::exception("no progress is set");
 }
 
-ProgressHandler::~ProgressHandler()
+Progress::~Progress()
 {
-	UI->CloseProgress();
-	UI = nullptr;
+	ui->CloseProgress();
 }
 
-void ProgressHandler::OpenProgress(const ExportEngineConfig& config)
+void Progress::OpenProgress(long long range)
 {
-	auto range = config.pPI->rangeEnd - config.pPI->rangeStart;
-	UI->OpenProgress("Export", range);
+	ui->OpenProgress("Export", range);
 }
 
-void ProgressHandler::SetProgress(const size_t& totalWritten)
+bool Progress::IsAborded(int& res)
 {
-	UI->SetProgress(totalWritten);
-}
-
-void ProgressHandler::ThrowIFProgressAbort(int& res)
-{
-	if(UI->Aborted())
+	if(ui->Aborted())
 	{
 		res = 1;
-		throw 5;
+		LogAbortByUser();
+		return true;
 	}
+}
+
+void Progress::AddProgress(size_t written)
+{
+	progress += written;
+	ui->SetProgress(progress);
 }

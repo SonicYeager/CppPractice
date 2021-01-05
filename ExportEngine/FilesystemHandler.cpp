@@ -1,24 +1,32 @@
 #include "FilesystemHandler.h"
+#include "LogHandler.h"
 
-void FilesystemHandler::FindOtherFile(ExportEngineConfig& config)
+std::filesystem::path GetAlternativeFileName(bool hasFlagRename, const std::filesystem::path& targetFileName)
 {
-	if(RENAME_FILENAME_IF_EXIST & config.flagsExport && std::filesystem::exists(config.targetFileName))
+	std::filesystem::path target{targetFileName};
+	if(hasFlagRename && std::filesystem::exists(target))
 	{
-		std::wstring newFilename = config.targetFileName.stem();
+		std::wstring newFilename = target.stem();
 		newFilename.push_back(L'_');
-		newFilename.append(config.targetFileName.extension());
-		config.targetFileName.replace_filename(newFilename);
+		newFilename.append(target.extension());
+		target.replace_filename(newFilename);
 	}
+	return target;
 }
 
-void FilesystemHandler::ConfigPath(ExportEngineConfig& config, const Log& log)
+void CreateDirectoryIfIsNone(const std::filesystem::path& path)
 {
-	auto path = config.targetFileName.stem();
-	if(std::filesystem::is_directory(path))
+	if(not std::filesystem::is_directory(path))
 	{
 		if(std::filesystem::create_directory(path))
-			log.LogCreatedDirectory(path);
+			LogPathCreated(path);
 		else
 			throw std::exception("could not create target directory");
 	}
+}
+
+std::filesystem::path ConfigDirectory(bool hasFlag, std::filesystem::path target)
+{
+	CreateDirectoryIfIsNone(target.stem());
+	return GetAlternativeFileName(hasFlag, target);
 }

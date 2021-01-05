@@ -1,8 +1,5 @@
 #pragma once
-#include "Exporter.h"
+#include "ExportData.h"
 
-class ColorSpaceConverter
-{
-public:
-	void ConvertFrameColorFormat(IVideoExport* pExporter, VideoFrame* videoframe);
-};
+void ConvertToYUV(const std::unique_ptr<VideoFrame>& videoframe, ExportColorFormat format);
+void ConvertToGrayscale(const std::unique_ptr<VideoFrame>& videoframe);

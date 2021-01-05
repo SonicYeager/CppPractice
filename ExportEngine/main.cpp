@@ -13,8 +13,8 @@ int main()
 	config.pPI = &PI;
 	config.flagsExport = BOUNCE_IF_VALID | RENAME_FILENAME_IF_EXIST | RGB_EXPORT;
 	config.pUserInterface = IUserInterface::Create();
-	exporter.Bounce(config);
+	auto ret = exporter.Bounce(config);
 	delete config.pUserInterface;
-	std::cin.get();
-	return 0;
+	//std::cin.get();
+	return ret;
 }

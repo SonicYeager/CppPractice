@@ -1,14 +1,15 @@
 #pragma once
 #include "ExportData.h"
 
-struct ProgressHandler
+struct Progress
 {
-	ProgressHandler(IUserInterface* UI);
-	~ProgressHandler();
-	void OpenProgress(const ExportEngineConfig& config);
-	void SetProgress(const size_t& totalWritten);
-	void ThrowIFProgressAbort(int& res);
+	Progress(IUserInterface* ui);
+	~Progress();
+	void OpenProgress(long long range);
+	bool IsAborded(int& res);
+	void AddProgress(size_t written);
 
 private:
-	IUserInterface* UI;
+	IUserInterface* ui;
+	int progress{};
 };

@@ -1,6 +1,9 @@
 #include "VideoEngine.h"
 
-void VideoEngine::PrepareVideoEngine(const ProjectInfo& PI)
+__int64 start;
+__int64 end;
+
+void PrepareVideoEngine(const ProjectInfo& PI)
 {
 	this->mStart = PI.rangeStart;
 	this->mEnd = PI.rangeEnd;

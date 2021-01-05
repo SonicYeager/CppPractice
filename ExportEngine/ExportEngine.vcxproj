@@ -18,12 +18,12 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -74,13 +74,17 @@
     <ClCompile Include="ColorSpaceConverter.cpp" />
     <ClCompile Include="ExportEngine.cpp" />
     <ClCompile Include="Exporter.cpp" />
+    <ClCompile Include="ExporterConfig.cpp" />
+    <ClCompile Include="ExportHandler.cpp" />
+    <ClCompile Include="FeatureProtection.cpp" />
     <ClCompile Include="FilesystemHandler.cpp" />
-    <ClCompile Include="Log.cpp" />
+    <ClCompile Include="LogHandler.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Measurement.cpp" />
     <ClCompile Include="ProgressHandler.cpp" />
     <ClCompile Include="UserInterface.cpp" />
     <ClCompile Include="VideoEngine.cpp" />
+    <ClCompile Include="WrappedVideoEngine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArrangmentData.h" />
@@ -88,12 +92,16 @@
     <ClInclude Include="ExportData.h" />
     <ClInclude Include="ExportEngine.h" />
     <ClInclude Include="Exporter.h" />
+    <ClInclude Include="ExporterConfig.h" />
+    <ClInclude Include="ExportHandler.h" />
+    <ClInclude Include="FeatureProtection.h" />
     <ClInclude Include="FilesystemHandler.h" />
-    <ClInclude Include="Log.h" />
+    <ClInclude Include="LogHandler.h" />
     <ClInclude Include="Measurement.h" />
     <ClInclude Include="ProgressHandler.h" />
     <ClInclude Include="UserInterface.h" />
     <ClInclude Include="VideoEngine.h" />
+    <ClInclude Include="WrappedVideoEngine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

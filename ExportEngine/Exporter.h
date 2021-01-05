@@ -13,7 +13,8 @@ enum class ExportType
 enum class ExportColorFormat
 {
 	RGB = 0,
-	YUV
+	YUV,
+	GRAYSCALE
 };
 
 struct ExportConfig

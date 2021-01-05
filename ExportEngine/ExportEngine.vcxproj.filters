@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="ExportEngine.cpp" />
+    <ClCompile Include="Exporter.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="UserInterface.cpp" />
+    <ClCompile Include="VideoEngine.cpp" />
+    <ClCompile Include="ColorSpaceConverter.cpp">
+      <Filter>RefacModules</Filter>
+    </ClCompile>
+    <ClCompile Include="ExporterConfig.cpp">
+      <Filter>RefacModules</Filter>
+    </ClCompile>
+    <ClCompile Include="WrappedVideoEngine.cpp">
+      <Filter>RefacModules</Filter>
+    </ClCompile>
+    <ClCompile Include="FeatureProtection.cpp">
+      <Filter>RefacModules</Filter>
+    </ClCompile>
+    <ClCompile Include="FilesystemHandler.cpp">
+      <Filter>RefacModules</Filter>
+    </ClCompile>
+    <ClCompile Include="Measurement.cpp">
+      <Filter>RefacModules</Filter>
+    </ClCompile>
+    <ClCompile Include="ProgressHandler.cpp">
+      <Filter>RefacModules</Filter>
+    </ClCompile>
+    <ClCompile Include="LogHandler.cpp">
+      <Filter>RefacModules</Filter>
+    </ClCompile>
+    <ClCompile Include="ExportHandler.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ArrangmentData.h" />
+    <ClInclude Include="ExportData.h" />
+    <ClInclude Include="ExportEngine.h" />
+    <ClInclude Include="Exporter.h" />
+    <ClInclude Include="UserInterface.h" />
+    <ClInclude Include="VideoEngine.h" />
+    <ClInclude Include="ColorSpaceConverter.h">
+      <Filter>RefacModules</Filter>
+    </ClInclude>
+    <ClInclude Include="WrappedVideoEngine.h">
+      <Filter>RefacModules</Filter>
+    </ClInclude>
+    <ClInclude Include="ExporterConfig.h">
+      <Filter>RefacModules</Filter>
+    </ClInclude>
+    <ClInclude Include="FeatureProtection.h">
+      <Filter>RefacModules</Filter>
+    </ClInclude>
+    <ClInclude Include="FilesystemHandler.h">
+      <Filter>RefacModules</Filter>
+    </ClInclude>
+    <ClInclude Include="ProgressHandler.h">
+      <Filter>RefacModules</Filter>
+    </ClInclude>
+    <ClInclude Include="Measurement.h">
+      <Filter>RefacModules</Filter>
+    </ClInclude>
+    <ClInclude Include="ExportHandler.h">
+      <Filter>RefacModules</Filter>
+    </ClInclude>
+    <ClInclude Include="LogHandler.h">
+      <Filter>RefacModules</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="RefacModules">
+      <UniqueIdentifier>{9888f72b-617c-44b4-bf67-ad928074a469}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

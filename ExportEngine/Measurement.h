@@ -1,13 +1,13 @@
 #pragma once
-#include <chrono>
+#include "ExportData.h"
 
 struct Measurement
 {
 	void Start();
 	void Stop();
-	int GetPassesTime() const;
+	auto GetElapsedTime() -> long long;
 
 private:
-	std::chrono::steady_clock::time_point start;
-	std::chrono::steady_clock::time_point stop;
+	std::chrono::steady_clock::time_point start{};
+	std::chrono::steady_clock::time_point stop{};
 };

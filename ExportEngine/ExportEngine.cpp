@@ -3,85 +3,100 @@
 #include <iostream>
 #include <chrono>
 #include "ArrangmentData.h"
-#include "ColorSpaceConverter.h"
-#include "FilesystemHandler.h"
-#include "ProgressHandler.h"
-#include "Measurement.h"
-#include "Log.h"
 
-bool ExportEngine::Bounce(const ExportEngineConfig& config)
+#include "FeatureProtection.h"
+#include "FilesystemHandler.h"
+#include "Measurement.h"
+#include "LogHandler.h"
+#include "ExportHandler.h"
+
+Progress GetOpenedProgress(IUserInterface* ui, long long range)
 {
-	VideoEngine vidEngine{};
-	int result;
+	Progress progress{ui};
+	progress.OpenProgress(range);
+	return progress;
+}
+
+Measurement ExportFramesReturnElapsedTime(Progress& progress, int& result, WrappedVideoEngine& wVideoEng, const ExportEngineConfig& config, ExportHandler& expHandler)
+{
+	Measurement measurement;
+	measurement.Start();
+	expHandler.ExportFrames(progress, result, wVideoEng, config);
+	measurement.Stop();
+	return measurement;
+}
+
+int ExportIfBounceIsValid(const ExportEngineConfig& config)
+{
+	int result{-1};
 	try
 	{
-		m_config = config;
-		result = -1;
-		m_pExporter = IVideoExport::ConfigExporter(m_config);
-		if(CheckBounceIsValid())
+		ExportHandler expHandler{config.pExporter, config.createExport, static_cast<ExportFlags>(config.flagsExport)};
+		if(expHandler.CheckBounceIsValid(config))
 		{
-			Log log{};
-			CheckFeatureProtection(m_pExporter);
-			FilesystemHandler fsHandler{};
-			fsHandler.FindOtherFile(m_config);
-			fsHandler.ConfigPath(m_config, log);
-			ProgressHandler prgHandler{m_config.pUserInterface};
-			prgHandler.OpenProgress(m_config);
-			vidEngine.PrepareVideoEngine(*m_config.pPI);
-			m_pExporter->Initialize(m_config.targetFileName);
-			log.LogFileName(m_config);
-			log.LogRange(m_config);
-			Measurement measure{};
-			measure.Start();
-			size_t totalWritten = 0;
-			for(__int64 i{m_config.pPI->rangeStart}; i < m_config.pPI->rangeEnd; i += static_cast<__int64>(m_config.pPI->frameRate))
-			{
-				prgHandler.ThrowIFProgressAbort(result);
-				auto videoframe = vidEngine.GetFrame(i);
-				ColorSpaceConverter csc{};
-				csc.ConvertFrameColorFormat(m_pExporter, videoframe);
-				m_pExporter->WriteFrame(videoframe, totalWritten, prgHandler);
-			}
-			measure.Stop();
-			log.LogExport(measure, m_config);
+			ThrowIfProtectedFeature(expHandler.GetExportConfig().type);
+			auto progress = GetOpenedProgress(config.pUserInterface, config.pPI->rangeEnd - config.pPI->rangeStart);
+			auto targetPath = ConfigDirectory(static_cast<ExportFlags>(config.flagsExport) == ExportFlags::RENAME_FILENAME_IF_EXIST, config.targetFileName);
+			WrappedVideoEngine wVideoEng;
+			wVideoEng.Prepare(*config.pPI);
+			expHandler.Initialize(targetPath);
+			LogExportRange(config.pPI->rangeStart, config.pPI->rangeEnd, targetPath.string());
+			auto measurement = ExportFramesReturnElapsedTime(progress, result, wVideoEng, config, expHandler);
+			LogExportTime(config.pPI->rangeEnd - config.pPI->rangeStart / config.pPI->frameRate, measurement.GetElapsedTime());
 			result = 1;
 		}
 	}
 	catch(std::exception ex)
 	{
-		std::cerr << "error during export occurred: " << ex.what();
+		LogExportError(ex);
 	}
-	catch(int)
-	{
-		std::cout << "aborted by user";
-	}
-	vidEngine.ShutdownVideoEngine();
-	m_pExporter = nullptr;
-	m_config = {};
+	return result;
+}
+
+bool ExportEngine::Bounce(const ExportEngineConfig& config)
+{
+	int result = ExportIfBounceIsValid(config);
 	return result == 1;
 }
 
-bool ExportEngine::CheckBounceIsValid() const
+Measurement ExportGrayscaleFramesReturnElapsedTime(Progress& progress, int& result, WrappedVideoEngine& wVideoEng, const ExportEngineConfig& config, ExportHandler& expHandler)
 {
-	if(m_config.flagsExport & BOUNCE_IF_VALID and m_pExporter and m_config.pPI)
-	{
-		ExportConfig exConfig{};
-		m_pExporter->GetExportInfo(&exConfig);
-		return m_config.pPI->aspectRation == exConfig.aspectRatio
-			and m_config.pPI->width >= exConfig.width
-			and m_config.pPI->height >= exConfig.height
-			and not m_config.targetFileName.empty();
-	}
-	return false;
+	Measurement measurement;
+	measurement.Start();
+	expHandler.ExportGrayscaleFrames(progress, result, wVideoEng, config);
+	measurement.Stop();
+	return measurement;
 }
 
-void ExportEngine::CheckFeatureProtection(IVideoExport* pExporter) const
+int ExportGrayscaleIfBounceIsValid(const ExportEngineConfig& config)
 {
-	if(pExporter)
+	int result{-1};
+	try
 	{
-		ExportConfig config{};
-		pExporter->GetExportInfo(&config);
-		if(not(config.type == ExportType::DVD or config.type == ExportType::MP4))
-			throw std::exception("Feature not allowed");
+		ExportHandler expHandler{config.pExporter, config.createExport, static_cast<ExportFlags>(config.flagsExport)};
+		if(expHandler.CheckBounceIsValid(config))
+		{
+			ThrowIfProtectedFeature(expHandler.GetExportConfig().type);
+			auto progress = GetOpenedProgress(config.pUserInterface, config.pPI->rangeEnd - config.pPI->rangeStart);
+			auto targetPath = ConfigDirectory(static_cast<ExportFlags>(config.flagsExport) == ExportFlags::RENAME_FILENAME_IF_EXIST, config.targetFileName);
+			WrappedVideoEngine wVideoEng;
+			wVideoEng.Prepare(*config.pPI);
+			expHandler.Initialize(targetPath);
+			LogExportRange(config.pPI->rangeStart, config.pPI->rangeEnd, targetPath.string());
+			auto measurement = ExportGrayscaleFramesReturnElapsedTime(progress, result, wVideoEng, config, expHandler);
+			LogExportTime(config.pPI->rangeEnd - config.pPI->rangeStart / config.pPI->frameRate, measurement.GetElapsedTime());
+			result = 1;
+		}
 	}
+	catch(std::exception ex)
+	{
+		LogExportError(ex);
+	}
+	return result;
 }
+bool ExportEngine::BounceGrayscale(const ExportEngineConfig& config)
+{
+	int result = ExportGrayscaleIfBounceIsValid(config);
+	return result == 1;
+}
+
