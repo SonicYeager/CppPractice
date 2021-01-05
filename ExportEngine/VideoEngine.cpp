@@ -5,13 +5,13 @@ __int64 end;
 
 void PrepareVideoEngine(const ProjectInfo& PI)
 {
-	start = PI.rangeStart;
-	end = PI.rangeEnd;
+	this->mStart = PI.rangeStart;
+	this->mEnd = PI.rangeEnd;
 }
 
-VideoFrame* VideoEngineGetFrame(__int64 i)
+VideoFrame* VideoEngine::VideoEngineGetFrame(__int64 i)
 {
-	if(start > i or i > end)
+	if(mStart > i or i > mEnd)
 		return nullptr;
 	char c = static_cast<char>(i);
 	// clang-format off
@@ -34,7 +34,15 @@ VideoFrame* VideoEngineGetFrame(__int64 i)
 	return new VideoFrame{12, 12, VideoFrameColorFormat::RGB, rgbData};
 }
 
-void ShutdownVideoEngine()
+VideoFrame* VideoEngine::GetFrame(long long i)
 {
-	start = end = 0;
+	auto res = VideoEngineGetFrame(i);
+	if(res == nullptr)
+		throw std::exception("GetFrame error");
+	return res;
+}
+
+void VideoEngine::ShutdownVideoEngine()
+{
+	mStart = mEnd = 0;
 }

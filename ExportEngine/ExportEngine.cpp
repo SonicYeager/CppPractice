@@ -94,7 +94,6 @@ int ExportGrayscaleIfBounceIsValid(const ExportEngineConfig& config)
 	}
 	return result;
 }
-
 bool ExportEngine::BounceGrayscale(const ExportEngineConfig& config)
 {
 	int result = ExportGrayscaleIfBounceIsValid(config);

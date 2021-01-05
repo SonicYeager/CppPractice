@@ -11,7 +11,7 @@ int main()
 	PI.aspectRation = 1.0;
 	ExportEngineConfig config{};
 	config.pPI = &PI;
-	config.flagsExport = BOUNCE_IF_VALID | RENAME_FILENAME_IF_EXIST; // | RGB_EXPORT;
+	config.flagsExport = BOUNCE_IF_VALID | RENAME_FILENAME_IF_EXIST | RGB_EXPORT;
 	config.pUserInterface = IUserInterface::Create();
 	auto ret = exporter.Bounce(config);
 	delete config.pUserInterface;

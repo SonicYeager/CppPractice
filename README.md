@@ -10,3 +10,6 @@ Complete Collection of all Practices on my C++ Education Adventure.
 ![GitHub](https://img.shields.io/github/license/SonicYeager/CppPractice?style=flat-square)
 ## Some Data
 <a href="https://wakatime.com"><img src="https://wakatime.com/share/@MagnusCook/3bb31dac-9242-4f25-8127-d70714f5394f.png" /></a>
+
+
+Explanations are left out -> can be added or asked by me: kimstone.yeager@gmail.com

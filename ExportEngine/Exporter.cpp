@@ -1,4 +1,6 @@
 #include "Exporter.h"
+#include "ExportData.h"
+#include "ProgressHandler.h"
 #include <string>
 #include <fstream>
 #include <windows.h>
@@ -56,6 +58,23 @@ public:
 		config->type = m_format == ExportColorFormat::RGB ? ExportType::DVD : ExportType::MP4;
 	}
 
+	void WriteFrame(VideoFrame* videoframe, size_t& totalWritten, ProgressHandler& prgHandler) override
+	{
+		size_t written = 0;
+		bool success = EncodeVideo(videoframe, &written);
+		if(success)
+		{
+			totalWritten += written;
+			prgHandler.SetProgress(totalWritten);
+			delete videoframe;
+		}
+		else
+		{
+			delete videoframe;
+			throw std::exception("Encode error");
+		}
+	}
+
 	std::filesystem::path m_targetFilePath = {};
 	ExportColorFormat m_format;
 	int m_count = 0;
@@ -64,4 +83,19 @@ public:
 IVideoExport* IVideoExport::Create(ExportColorFormat format)
 {
 	return new Exporter(format);
+}
+
+IVideoExport* IVideoExport::ConfigExporter(const ExportEngineConfig& expConf)
+{
+	if(expConf.pExporter)
+	{
+		return expConf.pExporter;
+	}
+	else
+	{
+		if(expConf.createExport)
+			return expConf.createExport(expConf.flagsExport & RGB_EXPORT ? ExportColorFormat::RGB : ExportColorFormat::YUV);
+		else
+			throw std::exception("no export available");
+	}
 }
