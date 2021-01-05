@@ -1,5 +1,5 @@
 #include "gmock/gmock.h"
-#include "ColorSpaceConverter.h"
+#include "../ColorSpaceConverter.h"
 #include <iostream>
 
 // clang-format off
