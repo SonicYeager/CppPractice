@@ -31,9 +31,10 @@ TEST(TestHourlyClassification, CalculatePay_Rate9MultipleTimeCard5HNoOvertime_Re
 {
 	Payroll::HourlyClassification hc{ 9.0 };
 	Payroll::Paycheck pc{ {1, 2, 2000 }, {4, 2, 2000 } };
-	Payroll::TimeCard tc{ {2, 2, 2000 }, 5.0 };
-	Payroll::TimeCard tc{ {3, 2, 2000 }, 5.0 };
-	hc.AddTimeCard(tc);
+	Payroll::TimeCard tc1{ {2, 2, 2000 }, 5.0 };
+	Payroll::TimeCard tc2{ {3, 2, 2000 }, 5.0 };
+	hc.AddTimeCard(tc1);
+	hc.AddTimeCard(tc2);
 
 	auto actual = hc.CalculatePay(pc);
 	double expected = 90.0;
@@ -45,9 +46,10 @@ TEST(TestHourlyClassification, CalculatePay_Rate9MultipleTimeCard9HOvertime_Retu
 {
 	Payroll::HourlyClassification hc{ 9.0 };
 	Payroll::Paycheck pc{ {1, 2, 2000 }, {4, 2, 2000 } };
-	Payroll::TimeCard tc{ {2, 2, 2000 }, 9.0 };
-	Payroll::TimeCard tc{ {3, 2, 2000 }, 9.0 };
-	hc.AddTimeCard(tc);
+	Payroll::TimeCard tc1{ {2, 2, 2000 }, 9.0 };
+	Payroll::TimeCard tc2{ {3, 2, 2000 }, 9.0 };
+	hc.AddTimeCard(tc1);
+	hc.AddTimeCard(tc2);
 
 	auto actual = hc.CalculatePay(pc);
 	double expected = 171.0;
