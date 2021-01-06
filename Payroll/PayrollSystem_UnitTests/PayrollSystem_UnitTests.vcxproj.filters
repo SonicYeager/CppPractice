@@ -13,5 +13,8 @@
     <ClCompile Include="test_GermanExpenses.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="test_HourlyClassification.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

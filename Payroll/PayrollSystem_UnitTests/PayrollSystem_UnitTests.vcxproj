@@ -151,6 +151,7 @@
   <ItemGroup>
     <ClCompile Include="test_CommonExpenses.cpp" />
     <ClCompile Include="test_GermanExpenses.cpp" />
+    <ClCompile Include="test_HourlyClassification.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
