@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Employee.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="AddHourlyEmployee.cpp">
+      <Filter>Implementation\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="AddSalariedEmployee.cpp">
+      <Filter>Implementation\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="ChangeGermanExpenses.cpp">
+      <Filter>Implementation\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="CommonExpenses.cpp">
+      <Filter>Implementation\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="GermanExpenses.cpp">
+      <Filter>Implementation\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="HourlyClassification.cpp">
+      <Filter>Implementation\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="MonthlySchedule.cpp">
+      <Filter>Implementation\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="PayrollDatabase.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="SalariedClassification.cpp">
+      <Filter>Implementation\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeCard.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="WeeklySchedule.cpp">
+      <Filter>Implementation\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="AddEmployeeTransaction.cpp">
+      <Filter>Implementation\Transaction\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="ChangeEmployeeTransaction.cpp">
+      <Filter>Implementation\Transaction\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="PaydayTransaction.cpp">
+      <Filter>Implementation\Transaction\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeCardTransaction.cpp">
+      <Filter>Implementation\Transaction\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Date.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Transaction.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="PaymentSchedule.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="PaymentClassification.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Expenses.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Employee.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="AddHourlyEmployee.h">
+      <Filter>Implementation\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="AddSalariedEmployee.h">
+      <Filter>Implementation\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="ChangeGermanExpenses.h">
+      <Filter>Implementation\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonExpenses.h">
+      <Filter>Implementation\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="GermanExpenses.h">
+      <Filter>Implementation\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="HourlyClassification.h">
+      <Filter>Implementation\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="MonthlySchedule.h">
+      <Filter>Implementation\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Paycheck.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="PayrollDatabase.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="SalariedClassification.h">
+      <Filter>Implementation\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeCard.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="WeeklySchedule.h">
+      <Filter>Implementation\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="AddEmployeeTransaction.h">
+      <Filter>Implementation\Transaction\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="ChangeEmployeeTransaction.h">
+      <Filter>Implementation\Transaction\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="PaydayTransaction.h">
+      <Filter>Implementation\Transaction\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeCardTransaction.h">
+      <Filter>Implementation\Transaction\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Date.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Base">
+      <UniqueIdentifier>{493277cd-027a-4485-8dd4-78a86a396b0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data">
+      <UniqueIdentifier>{1b0c8d49-3317-47e0-952d-e455d6a37631}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Implementation">
+      <UniqueIdentifier>{3ed35e74-6f81-411b-95f8-7b167fa9812b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Implementation\Header">
+      <UniqueIdentifier>{6d83dddc-d875-445c-86ea-404fc35a0460}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Implementation\Source">
+      <UniqueIdentifier>{eb355a94-070b-48ce-9dbc-90d21fff1bf2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Implementation\Transaction">
+      <UniqueIdentifier>{0a9c7a2d-ca74-493e-a0a4-3193346cc4e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Implementation\Transaction\Header">
+      <UniqueIdentifier>{71d1ba1e-c75e-457a-9bce-b66e53e7176d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Implementation\Transaction\Source">
+      <UniqueIdentifier>{6eec5e16-1e9d-43c6-b8fd-3523d08b85a9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
