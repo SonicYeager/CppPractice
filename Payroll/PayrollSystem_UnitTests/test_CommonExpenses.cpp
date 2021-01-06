@@ -21,3 +21,14 @@ TEST(TestCommonExpenses, CalculateDeductions_Twothousand_ReturnSixhundred)
 
 	EXPECT_EQ(actual, 600.0);
 }
+
+TEST(TestCommonExpenses, CalculateDeductions_1999dot99_Return599dot997)
+{
+	Payroll::CommonExpenses cexpenses{};
+	Payroll::Paycheck pc{};
+	pc.m_grossPay = 1999.99;
+
+	auto actual = cexpenses.CalculateDeductions(pc);
+
+	EXPECT_EQ(actual, 599.997);
+}
