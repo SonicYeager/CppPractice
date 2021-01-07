@@ -151,9 +151,11 @@
   <ItemGroup>
     <ClCompile Include="test_ChangeEmployeeTransaction.cpp" />
     <ClCompile Include="test_CommonExpenses.cpp" />
+    <ClCompile Include="test_Date.cpp" />
     <ClCompile Include="test_GermanExpenses.cpp" />
     <ClCompile Include="test_HourlyClassification.cpp" />
     <ClCompile Include="test_MonthlySchedule.cpp" />
+    <ClCompile Include="test_TimeCardTransaction.cpp" />
     <ClCompile Include="test_WeeklySchedule.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
