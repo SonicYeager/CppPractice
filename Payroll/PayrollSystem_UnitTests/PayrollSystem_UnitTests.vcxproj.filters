@@ -16,5 +16,8 @@
     <ClCompile Include="test_HourlyClassification.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="test_MonthlySchedule.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

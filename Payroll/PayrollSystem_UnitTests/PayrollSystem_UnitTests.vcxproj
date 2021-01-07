@@ -152,6 +152,7 @@
     <ClCompile Include="test_CommonExpenses.cpp" />
     <ClCompile Include="test_GermanExpenses.cpp" />
     <ClCompile Include="test_HourlyClassification.cpp" />
+    <ClCompile Include="test_MonthlySchedule.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
