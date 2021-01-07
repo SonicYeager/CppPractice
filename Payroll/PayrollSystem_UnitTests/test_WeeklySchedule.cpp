@@ -63,3 +63,33 @@ TEST(TestWeeklySchedule, IsPayDate_IsNotPayDateMon_ReturnFalse)
 
 	EXPECT_FALSE(actual);
 }
+
+TEST(TestWeeklySchedule, GetPayPeriodStartDate_Thursday_ReturnFridayWeekBefore)
+{
+	Payroll::WeeklySchedule ws{};
+
+	auto actual = ws.GetPayPeriodStartDate({7,1,2021});
+	Date expected{ 1,1,2021 };
+
+	EXPECT_EQ(actual, expected);
+}
+
+TEST(TestWeeklySchedule, GetPayPeriodStartDate_Friday_ReturnThisFriday)
+{
+	Payroll::WeeklySchedule ws{};
+
+	auto actual = ws.GetPayPeriodStartDate({ 8,1,2021 });
+	Date expected{ 8,1,2021 };
+
+	EXPECT_EQ(actual, expected);
+}
+
+TEST(TestWeeklySchedule, GetPayPeriodStartDate_Saturday_ReturnThisWeeksFriday)
+{
+	Payroll::WeeklySchedule ws{};
+
+	auto actual = ws.GetPayPeriodStartDate({ 9,1,2021 });
+	Date expected{ 8,1,2021 };
+
+	EXPECT_EQ(actual, expected);
+}
