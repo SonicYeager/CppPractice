@@ -148,3 +148,63 @@ TEST(TestDate, GetDayOfWeek_Sun_ReturnSun)
 	auto actual = d.GetDayOfWeek();
 	EXPECT_EQ(actual, DayOfWeek::SUNDAY);
 }
+
+TEST(TestDate, IsInPeriod_DateIsInPeriod_ReturnTrue)
+{
+	Date d{ 1,1,2021 };
+
+	auto actual = d.IsInPeriod(d, {31,12,2020}, {2,1,2021});
+	EXPECT_TRUE(actual);
+}
+
+TEST(TestDate, IsInPeriod_DateIsNotInPeriod_ReturnFalse)
+{
+	Date d{ 3,1,2021 };
+
+	auto actual = d.IsInPeriod(d, { 31,12,2020 }, { 2,1,2021 });
+	EXPECT_FALSE(actual);
+}
+
+TEST(TestDate, IsInPeriod_YearIsNotInPeriod_ReturnFalse)
+{
+	Date d{ 1,1,2022 };
+
+	auto actual = d.IsInPeriod(d, { 31,12,2020 }, { 2,1,2021 });
+	EXPECT_FALSE(actual);
+}
+
+TEST(TestDate, DiffDays_CasualMonthDiff_Return31)
+{
+	Date d{ };
+
+	auto actual = d.DiffDays({ 1,12,2020 }, { 1,1,2021 });
+
+	EXPECT_EQ(actual, 31);
+}
+
+TEST(TestDate, DiffDays_CasualMonthDiffFebrOnLeapYear_Return29)
+{
+	Date d{ };
+
+	auto actual = d.DiffDays({ 1,2,2020 }, { 1,3,2020 });
+
+	EXPECT_EQ(actual, 29);
+}
+
+TEST(TestDate, DiffDays_SeveralMonthDiff_Return61)
+{
+	Date d{ };
+
+	auto actual = d.DiffDays({ 1,3,2020 }, { 1,5,2020 });
+
+	EXPECT_EQ(actual, 61);
+}
+
+TEST(TestDate, DiffDays_YearDiff_Return365)
+{
+	Date d{ };
+
+	auto actual = d.DiffDays({ 1,1,2021 }, { 1,1,2022 });
+
+	EXPECT_EQ(actual, 365);
+}

@@ -148,6 +148,9 @@
       <Project>{c661e2b7-b715-4e2c-9214-4db0f9790783}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="test_PaydayTransaction.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
