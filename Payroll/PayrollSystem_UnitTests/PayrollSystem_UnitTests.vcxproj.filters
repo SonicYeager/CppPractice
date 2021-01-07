@@ -22,5 +22,8 @@
     <ClCompile Include="test_WeeklySchedule.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="test_ChangeEmployeeTransaction.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

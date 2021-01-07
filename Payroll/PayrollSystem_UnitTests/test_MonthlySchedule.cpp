@@ -36,3 +36,23 @@ TEST(TestMonthlySchedule, IsPayDay_NoPayDayOnLeapYear_ReturnFalse)
 
 	EXPECT_FALSE(actual);
 }
+
+TEST(TestMonthlySchedule, GetPayPeriodStartDate_LastDayThisMonth_ReturnFirstDay)
+{
+	Payroll::MonthlySchedule ms{};
+
+	auto actual = ms.GetPayPeriodStartDate({ 31,1,2021 });
+	Date expected{ 1,1,2021 };
+
+	EXPECT_EQ(actual, expected);
+}
+
+TEST(TestMonthlySchedule, GetPayPeriodStartDate_FirtsDayThisMonth_ReturnFirstDay)
+{
+	Payroll::MonthlySchedule ms{};
+
+	auto actual = ms.GetPayPeriodStartDate({ 1,1,2021 });
+	Date expected{ 1,1,2021 };
+
+	EXPECT_EQ(actual, expected);
+}
