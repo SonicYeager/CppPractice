@@ -18,6 +18,35 @@ TEST(TestPaydayTransaction, Execute_PaydayOnOneHouerlyEmployeeCommonExpensesWeek
 	EXPECT_EQ(pcs, epcs);
 }
 
+TEST(TestPaydayTransaction, Execute_PaydayOnOneHouerlyEmployeeCommonExpensesWeeklyScheduleMutlipleTC_PaychecksFilledWithOnePaycheck)
+{
+
+	Payroll::Database db{};
+	Payroll::Paychecks pcs{};
+	Date d{ 8,1,2021 };
+	FillDatabase(db);
+	Payroll::PaydayTransaction pdtrans{ &pcs, d, &db };
+
+	pdtrans.Execute();
+
+	auto epcs = GetExpectedPaychecksHourlyEmployeeMultiTC();
+	EXPECT_EQ(pcs, epcs);
+}
+
+TEST(TestPaydayTransaction, Execute_PaydayOnOneHouerlyEmployeeCommonExpensesWeeklyScheduleNoWorkDone_PaychecksFilledWithNoPaycheck)
+{
+	Payroll::Database db{};
+	Payroll::Paychecks pcs{};
+	Date d{ 8,1,2021 };
+	FillDatabase(db);
+	Payroll::PaydayTransaction pdtrans{ &pcs, d, &db };
+
+	pdtrans.Execute();
+
+	Payroll::Paychecks epcs{};
+	EXPECT_EQ(pcs, epcs);
+}
+
 TEST(TestPaydayTransaction, Execute_PaydayOnOneSalariedEmployeeGermanExpensesMonthlySchedule_PaychecksFilledWithOnePaycheck)
 {
 
