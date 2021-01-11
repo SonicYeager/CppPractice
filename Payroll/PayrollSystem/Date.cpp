@@ -53,7 +53,14 @@ auto Date::AddDays(int days) const -> Date
 
 auto Date::GetDayOfWeek() const -> DayOfWeek
 {
-	return DayOfWeek((m_day - 3) % 7);
+	auto d = m_day;
+	auto m = m_month;
+	auto y = m_year;
+
+	if (m < 3)
+		y = y - 1;
+	double w = std::fmod((std::fmod((d + std::floor(2.6 * ((m + 9) % 12 + 1) - 0.2) + y % 100 + std::floor(y % 100 / 4) + std::floor(y / 400) - 2 * std::floor(y / 100) - 1), 7) + 7), 7) + 1;
+	return DayOfWeek(w == 7 ? 0 : w);
 }
 
 auto Date::IsInPeriod(Date c, Date min, Date max) -> bool
