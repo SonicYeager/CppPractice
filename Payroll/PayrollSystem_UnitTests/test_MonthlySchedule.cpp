@@ -28,7 +28,7 @@ TEST(TestMonthlySchedule, IsPayDay_PayDayOnLeapYear_ReturnTrue)
 	EXPECT_TRUE(actual);
 }
 
-TEST(TestMonthlySchedule, IsPayDay_NoPayDayOnLeapYear_ReturnFalse)
+TEST(TestMonthlySchedule, IsPayDay_NoPayDayOnLeapYearFebLastDay_ReturnFalse)
 {
 	Payroll::MonthlySchedule ms{};
 

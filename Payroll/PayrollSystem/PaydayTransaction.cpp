@@ -17,7 +17,11 @@ namespace Payroll
 			if(e->IsPayDay(m_payDate))
 			{
 				Paycheck pc(e->GetPayPeriodStartDate(m_payDate), m_payDate);
-				(*m_paychecks)[id] = e->Payday(pc);
+				auto cpc = e->Payday(pc);
+				if(cpc.m_netPay != 0 && cpc.m_grossPay != 0 && cpc.m_deductions != 0)
+				{
+					(*m_paychecks)[id] = e->Payday(pc);
+				}
 			}
 		}
 	}

@@ -9,7 +9,11 @@ namespace Payroll
 
 	void HourlyClassification::AddTimeCard(TimeCard tc)
 	{
-		m_timeCards[tc.GetDate()] = tc;
+		auto etc = m_timeCards.find(tc.GetDate());
+		if(etc == m_timeCards.end())
+			m_timeCards[tc.GetDate()] = tc;
+		else
+			m_timeCards[tc.GetDate()] = TimeCard(tc.GetDate(), m_timeCards[tc.GetDate()].GetHours() + tc.GetHours());
 	}
 
 	TimeCard HourlyClassification::GetTimeCard(Date d)
