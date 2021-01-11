@@ -42,8 +42,13 @@ auto Date::AddDays(int days) const -> Date
 	{
 		newDays = daysPerMonth[m_month - 1] + newDays;
 		newMonth -= 1;
+		if(newMonth < 1)
+		{
+			newMonth = 12;
+			--newYear;
+		}
 	}
-	return Date(newDays, newMonth, m_year);
+	return Date(newDays, newMonth, newYear);
 }
 
 auto Date::GetDayOfWeek() const -> DayOfWeek
