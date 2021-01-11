@@ -10,6 +10,8 @@ namespace Payroll
 
 	Date WeeklySchedule::GetPayPeriodStartDate(Date d) const
 	{
-		return d.AddDays(-6);
+		while(d.GetDayOfWeek() != DayOfWeek::SATURDARY)
+			d = d.AddDays(-1);
+		return d;
 	}
 } // namespace Payroll
