@@ -27,10 +27,16 @@ auto Date::AddDays(int days) const -> Date
 	const int daysPerMonth[] = {31, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 	auto newDays = m_day + days;
 	auto newMonth = m_month;
+	auto newYear = m_year;
 	if(newDays > daysPerMonth[m_month])
 	{
 		newDays -= daysPerMonth[m_month];
 		newMonth += 1;
+		if(newMonth > 12)
+		{
+			newMonth = 1;
+			++newYear;
+		}
 	}
 	else if(newDays <= 0)
 	{
