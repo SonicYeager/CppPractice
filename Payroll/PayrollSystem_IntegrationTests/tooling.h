@@ -117,7 +117,7 @@ void FillDatabaseWithoutTimeCards(Payroll::Database& db)
 
 Payroll::Paychecks GetExpectedPaychecksHourlyEmployee()
 {
-	Payroll::Paycheck pc1{ {4,1,2021}, {8,1,2021} };
+	Payroll::Paycheck pc1{ {2,1,2021}, {8,1,2021} };
 	pc1.m_grossPay = 20.0;
 	pc1.m_netPay = 14.0;
 	pc1.m_deductions = 6.0;
@@ -127,7 +127,7 @@ Payroll::Paychecks GetExpectedPaychecksHourlyEmployee()
 
 Payroll::Paychecks GetExpectedPaychecksHourlyEmployeeMultiTC()
 {
-	Payroll::Paycheck pc1{ {4,1,2021}, {8,1,2021} };
+	Payroll::Paycheck pc1{ {2,1,2021}, {8,1,2021} };
 	pc1.m_grossPay = 40.0;
 	pc1.m_netPay = 28.0;
 	pc1.m_deductions = 12;
@@ -137,7 +137,7 @@ Payroll::Paychecks GetExpectedPaychecksHourlyEmployeeMultiTC()
 
 Payroll::Paychecks GetExpectedPaychecksHourlyEmployeeWithoutTC()
 {
-	Payroll::Paycheck pc1{ {4,1,2021}, {8,1,2021} };
+	Payroll::Paycheck pc1{ {2,1,2021}, {8,1,2021} };
 	pc1.m_grossPay = 0.0;
 	pc1.m_netPay = 0.0;
 	pc1.m_deductions = 0.0;

@@ -42,7 +42,7 @@ auto Date::AddDays(int days) const -> Date
 
 auto Date::GetDayOfWeek() const -> DayOfWeek
 {
-	return DayOfWeek((m_day - 1) % 7);
+	return DayOfWeek((m_day - 3) % 7);
 }
 
 auto Date::IsInPeriod(Date c, Date min, Date max) -> bool
