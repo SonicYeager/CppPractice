@@ -82,5 +82,27 @@ void CardStack::LoadStack()
 		{CARDCOLOR::NONE, CARDSYMBOL::DRAWFOURCHANGECOLOR},
 		{CARDCOLOR::NONE, CARDSYMBOL::DRAWFOURCHANGECOLOR}
 	};
-	//randomise it
+}
+
+std::vector<Card> CardStack::DrawCards(int num)
+{
+	std::vector<Card> ret{};
+	for (size_t i{ 0 }; i < num; ++i)
+	{
+		ret.push_back(DrawCard());
+	}
+	return ret;
+}
+
+Card CardStack::DrawCard()
+{
+	auto ret = stack.back();
+	stack.pop_back();
+	return ret;
+}
+
+void CardStack::MixCards()
+{
+	unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+	std::shuffle(std::begin(stack), std::end(stack), std::default_random_engine(seed));
 }
