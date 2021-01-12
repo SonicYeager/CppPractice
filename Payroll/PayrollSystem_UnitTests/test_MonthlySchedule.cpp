@@ -19,22 +19,22 @@ TEST(TestMonthlySchedule, IsPayDay_NoPayDay_ReturnFalse)
 	EXPECT_FALSE(actual);
 }
 
-TEST(TestMonthlySchedule, IsPayDay_PayDayOnLeapYear_ReturnTrue)
+TEST(TestMonthlySchedule, IsPayDay_NoPayDayOnLeapYear_ReturnFalse)
 {
 	Payroll::MonthlySchedule ms{};
 
 	auto actual = ms.IsPayDate({ 28,2,2020 });
 
-	EXPECT_TRUE(actual);
+	EXPECT_FALSE(actual);
 }
 
-TEST(TestMonthlySchedule, IsPayDay_NoPayDayOnLeapYearFebLastDay_ReturnFalse)
+TEST(TestMonthlySchedule, IsPayDay_PayDayOnLeapYearFebLastDay_ReturnTrue)
 {
 	Payroll::MonthlySchedule ms{};
 
 	auto actual = ms.IsPayDate({ 29,2,2020 });
 
-	EXPECT_FALSE(actual);
+	EXPECT_TRUE(actual);
 }
 
 TEST(TestMonthlySchedule, GetPayPeriodStartDate_LastDayThisMonth_ReturnFirstDay)

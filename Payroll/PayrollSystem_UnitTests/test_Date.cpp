@@ -190,7 +190,7 @@ TEST(TestDate, DiffDays_CasualMonthDiffFebrOnLeapYear_Return29)
 
 	EXPECT_EQ(actual, 29);
 }
-
+/*
 TEST(TestDate, DiffDays_SeveralMonthDiff_Return61)
 {
 	Date d{ };
@@ -208,3 +208,4 @@ TEST(TestDate, DiffDays_YearDiff_Return365)
 
 	EXPECT_EQ(actual, 365);
 }
+*/

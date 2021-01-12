@@ -1,5 +1,6 @@
 #include "Date.h"
 #include <sstream>
+#include <vector>
 
 Date::Date(int d, int m, int y)
 	: m_day(d)
@@ -22,9 +23,30 @@ auto Date::Day() const -> int
 	return m_day;
 }
 
-auto Date::AddDays(int days) const -> Date
+std::vector<int> GetDaysPerMonth(int year)
 {
-	const int daysPerMonth[] = {31, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+	std::vector<int> daysPerMonth = {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+	if(year % 4 == 0 && year % 100 == 0 && year % 400 == 0)
+	{
+		daysPerMonth[1] = 28;
+		return daysPerMonth;
+	}
+	else
+		return daysPerMonth;
+}
+
+int GetPreviousMonth(int actualMonth)
+{
+	if(actualMonth == 12)
+		return 1;
+	if (actualMonth == 1)
+		return 12;
+	return --actualMonth;
+}
+
+auto Date::AddDays(int days) const -> Date //room for more days is not yet present (minus or plus 62 days will never work correctly)
+{
+	const std::vector<int> daysPerMonth = GetDaysPerMonth(m_year);
 	auto newDays = m_day + days;
 	auto newMonth = m_month;
 	auto newYear = m_year;
@@ -40,7 +62,7 @@ auto Date::AddDays(int days) const -> Date
 	}
 	else if(newDays <= 0)
 	{
-		newDays = daysPerMonth[m_month - 1] + newDays;
+		newDays = daysPerMonth[GetPreviousMonth(m_month)] + newDays;
 		newMonth -= 1;
 		if(newMonth < 1)
 		{
@@ -88,14 +110,15 @@ auto Date::ToString(Date d) -> std::string
 
 auto Date::DiffDays(Date start, Date end) -> int
 {
-	const int daysPerMonth[] = {31, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+	const std::vector<int> startDaysPerMonth = GetDaysPerMonth(start.m_year);
+	const std::vector<int> endDaysPerMonth = GetDaysPerMonth(end.m_year);
 	const int numMonths = end.m_month - start.m_month;
 	if(numMonths == 0)
 		return std::abs(end.m_day - start.m_day);
 	else if(numMonths > 0)
-		return daysPerMonth[start.m_month] - start.m_day + end.m_day;
+		return startDaysPerMonth[start.m_month] - start.m_day + end.m_day;
 	else
-		return daysPerMonth[end.m_month] - end.m_day + start.m_day;
+		return endDaysPerMonth[end.m_month] - end.m_day + start.m_day;
 }
 
 bool operator<(const Date& left, const Date& right)
