@@ -1,0 +1,35 @@
+#pragma once
+
+enum class CARDCOLOR
+{
+	RED,
+	GREEN,
+	YELLOW,
+	BLUE,
+	NONE
+};
+
+enum class CARDSYMBOL
+{
+	ONE,
+	TWO,
+	THREE,
+	FOUR,
+	FIVE,
+	SIX,
+	SEVEN,
+	EIGHT,
+	NINE,
+	ZERO,
+	REVERSE,
+	SUSPEND,
+	DRAWTWO,
+	DRAWFOURCHANGECOLOR,
+	CHANGECOLOR
+};
+
+struct Card
+{
+	CARDCOLOR color{};
+	CARDSYMBOL symbol{};
+};
