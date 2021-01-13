@@ -2,7 +2,12 @@
 
 namespace Payroll
 {
-	bool BiweeklySchedule::IsPayDate(Date) const
+	int DetermineDatesWeekInYear(Date d)
+	{
+
+	}
+
+	bool BiweeklySchedule::IsPayDate(Date d) const
 	{
 		return false; //TODO
 	}
