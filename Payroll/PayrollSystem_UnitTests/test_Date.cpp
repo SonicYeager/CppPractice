@@ -27,7 +27,7 @@ std::ostream& operator<< (std::ostream& os, const DayOfWeek& date)
 	}
 }
 
-TEST(TestDate, AddDays_Five_ReturnSithOfFirst)
+TEST(TestDate, AddDays_Five_ReturnSixthOfFirst)
 {
 	Date d{1,1,2021};
 	
@@ -94,6 +94,16 @@ TEST(TestDate, AddDays_One_ReturnTwentynine)
 	auto actual = d.AddDays(1);
 
 	Date expected{ 29,2,2020 };
+	EXPECT_EQ(actual, expected);
+}
+
+TEST(TestDate, AddDays_MinusOneFromFirstOfFebNoLeapYear_ReturnTwentyEight)
+{
+	Date d{ 1,3,2021 };
+
+	auto actual = d.AddDays(-1);
+
+	Date expected{ 28,2,2021 };
 	EXPECT_EQ(actual, expected);
 }
 
@@ -189,6 +199,24 @@ TEST(TestDate, DiffDays_CasualMonthDiffFebrOnLeapYear_Return29)
 	auto actual = d.DiffDays({ 1,2,2020 }, { 1,3,2020 });
 
 	EXPECT_EQ(actual, 29);
+}
+
+TEST(TestDate, DiffDays_ByondMonthDiffFebrNoLeapYearYear_Return28)
+{
+	Date d{ };
+
+	auto actual = d.DiffDays({ 1,2,2021 }, { 1,3,2021 });
+
+	EXPECT_EQ(actual, 28);
+}
+
+TEST(TestDate, DiffDays_DiffTwoDaysSameMonth_Return4)
+{
+	Date d{ };
+
+	auto actual = d.DiffDays({ 5,3,2020 }, { 1,3,2020 });
+
+	EXPECT_EQ(actual, 4);
 }
 /*
 TEST(TestDate, DiffDays_SeveralMonthDiff_Return61)

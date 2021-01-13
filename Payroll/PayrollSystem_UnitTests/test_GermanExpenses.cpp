@@ -25,6 +25,18 @@ TEST(TestGermanExpenses, CalculateDeductions_4000Year2000_Return1400)
 	EXPECT_EQ(actual, 1400.0);
 }
 
+TEST(TestGermanExpenses, CalculateDeductions_10000Year2000_Return5408)
+{
+	Payroll::GermanExpenses gexp{};
+	Payroll::Paycheck pc{};
+	pc.m_grossPay = 10000.0;
+	pc.m_payPeriodStart = Date(1, 1, 2000);
+
+	auto actual = gexp.CalculateDeductions(pc);
+
+	EXPECT_EQ(actual, 5408.0);
+}
+
 TEST(TestGermanExpenses, CalculateDeductions_2500Year2006_Return830)
 {
 	Payroll::GermanExpenses gexp{};

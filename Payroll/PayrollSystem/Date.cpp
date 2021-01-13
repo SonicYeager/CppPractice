@@ -25,10 +25,10 @@ auto Date::Day() const -> int
 
 std::vector<int> GetDaysPerMonth(int year)
 {
-	std::vector<int> daysPerMonth = {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-	if(year % 4 == 0 && year % 100 == 0 && year % 400 == 0)
+	std::vector<int> daysPerMonth = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+	if(year % 4 == 0 && (year % 400 == 0 || year % 100 != 0))
 	{
-		daysPerMonth[1] = 28;
+		daysPerMonth[2] = 29;
 		return daysPerMonth;
 	}
 	else

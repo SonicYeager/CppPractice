@@ -1,8 +1,6 @@
 #include "gmock/gmock.h"
 #include "tooling.h"
 
-//EXPECTED TO WORK (WITH EXPECTED CORRECT BEHAVIOUR)
-
 TEST(TestPaydayTransaction, Execute_PaydayOnOneHouerlyEmployeeCommonExpensesWeeklySchedule_PaychecksFilledWithOnePaycheck)
 {
 
@@ -49,7 +47,6 @@ TEST(TestPaydayTransaction, Execute_PaydayOnOneHouerlyEmployeeCommonExpensesWeek
 
 TEST(TestPaydayTransaction, Execute_PaydayOnOneSalariedEmployeeGermanExpensesMonthlySchedule_PaychecksFilledWithOnePaycheck)
 {
-
 	Payroll::Database db{};
 	Payroll::Paychecks pcs{};
 	Date d{ 31,1,2021 };
@@ -62,50 +59,249 @@ TEST(TestPaydayTransaction, Execute_PaydayOnOneSalariedEmployeeGermanExpensesMon
 	EXPECT_EQ(pcs, epcs);
 }
 
-//EXPECTED NOT TO WORK (WITH EXPECTED WRONG BEHAVIOUR) -> they are only incorrect cause the year just started (too lazy to change)
-/*
-TEST(TestPaydayTransaction, Execute_PaydayOnOneHouerlyEmployeeCommonExpensesWeeklyScheduleWrongDay_PaychecksFilledWithOnePaycheck)
+TEST(TestPaydayTransaction, Execute_PaydayOnOneHourlyEmployeeCommonExpensesWeeklyScheduleOnLeapYearFeb_PaychecksFilledWithOnePaycheck)
 {
-
 	Payroll::Database db{};
 	Payroll::Paychecks pcs{};
-	Date d{ 6,1,2021 };
-	FillDatabase(db);
+	Date d{ 29,2,2036 };
+	int empid = 1;
+	Payroll::AddHourlyEmployee(empid, "CG", 10.0 , &db ).Execute();
+	Payroll::TimeCardTransaction({25,2,2036}, 5, empid, &db).Execute();
 	Payroll::PaydayTransaction pdtrans{ &pcs, d, &db };
 
 	pdtrans.Execute();
 
-	auto epcs = GetExpectedPaychecksHourlyEmployeeWrongDate();
-	EXPECT_EQ(pcs, epcs);
+	Payroll::Paycheck pc{ {23,2,2036}, {29,2,2036} };
+	pc.m_grossPay = 50.0;
+	pc.m_netPay = 35.0;
+	pc.m_deductions = 15.0;
+	EXPECT_EQ(pcs[empid], pc);
 }
 
-TEST(TestPaydayTransaction, Execute_PaydayOnOneHouerlyEmployeeCommonExpensesWeeklyScheduleMultiTCOneDay_PaychecksFilledWithOnePaycheck)
+TEST(TestPaydayTransaction, Execute_PaydayOnOneSalariedEmployeeGermanExpensesMonthlyScheduleOnLeapYearFeb_PaychecksFilledWithOnePaycheck)
 {
-
 	Payroll::Database db{};
 	Payroll::Paychecks pcs{};
-	Date d{ 6,1,2021 };
-	FillDatabaseWithMultipleTimeCardsOnOneDay(db);
+	Date d{ 29,2,2020 };
+	int empid = 1;
+	Payroll::AddSalariedEmployee(empid, "CG", 2500.0, &db).Execute();
+	Payroll::ChangeGermanExpenses(empid, &db).Execute();
 	Payroll::PaydayTransaction pdtrans{ &pcs, d, &db };
 
 	pdtrans.Execute();
 
-	auto epcs = GetExpectedPaychecksHourlyEmployeeMultiTCWrongDateWrongPay();
-	EXPECT_EQ(pcs, epcs);
+	Payroll::Paycheck pc{ {1,2,2020}, {29,2,2020} };
+	pc.m_grossPay = 2500.0;
+	pc.m_netPay = 1670.0;
+	pc.m_deductions = 830.0;
+	EXPECT_EQ(pcs[empid], pc);
 }
 
-TEST(TestPaydayTransaction, Execute_PaydayOnOneHouerlyEmployeeCommonExpensesWeeklyScheduleWrongDayWithoutAnyTC_PaychecksFilledWithOnePaycheck)
+TEST(TestPaydayTransaction, Execute_PaydayOnOneHourlyEmployeeCommonExpensesWeeklyScheduleNoLeapYearFeb_PaychecksFilledWithOnePaycheck)
 {
-
 	Payroll::Database db{};
 	Payroll::Paychecks pcs{};
-	Date d{ 6,1,2021 };
-	FillDatabaseWithoutTimeCards(db);
+	Date d{ 28,2,2025 };
+	int empid = 1;
+	Payroll::AddHourlyEmployee(empid, "CG", 10.0, &db).Execute();
+	Payroll::TimeCardTransaction({ 25,2,2025 }, 5, empid, &db).Execute();
 	Payroll::PaydayTransaction pdtrans{ &pcs, d, &db };
 
 	pdtrans.Execute();
 
-	auto epcs = GetExpectedPaychecksHourlyEmployeeWithoutTCWrongDate();
-	EXPECT_EQ(pcs, epcs);
+	Payroll::Paycheck pc{ {22,2,2025}, {28,2,2025} };
+	pc.m_grossPay = 50.0;
+	pc.m_netPay = 35.0;
+	pc.m_deductions = 15.0;
+	EXPECT_EQ(pcs[empid], pc);
 }
-*/
+
+TEST(TestPaydayTransaction, Execute_PaydayOnOneSalariedEmployeeGermanExpensesMonthlyScheduleNoLeapYearFeb_PaychecksFilledWithOnePaycheck)
+{
+	Payroll::Database db{};
+	Payroll::Paychecks pcs{};
+	Date d{ 28,2,2021 };
+	int empid = 1;
+	Payroll::AddSalariedEmployee(empid, "CG", 2500.0, &db).Execute();
+	Payroll::ChangeGermanExpenses(empid, &db).Execute();
+	Payroll::PaydayTransaction pdtrans{ &pcs, d, &db };
+
+	pdtrans.Execute();
+
+	Payroll::Paycheck pc{ {1,2,2021}, {28,2,2021} };
+	pc.m_grossPay = 2500.0;
+	pc.m_netPay = 1670.0;
+	pc.m_deductions = 830.0;
+	EXPECT_EQ(pcs[empid], pc);
+}
+
+TEST(TestPaydayTransaction, Execute_NoPaydayOnOneSalariedEmployeeGermanExpensesMonthlyScheduleNoLeapYearFeb_PaychecksFilledWithNoPaycheck)
+{
+	Payroll::Database db{};
+	Payroll::Paychecks pcs{};
+	Date d{ 27,2,2021 };
+	int empid = 1;
+	Payroll::AddSalariedEmployee(empid, "CG", 2500.0, &db).Execute();
+	Payroll::ChangeGermanExpenses(empid, &db).Execute();
+	Payroll::PaydayTransaction pdtrans{ &pcs, d, &db };
+
+	pdtrans.Execute();
+
+	EXPECT_TRUE(pcs.size() == 0);
+}
+
+TEST(TestPaydayTransaction, Execute_PaydayOnOneHourlyEmployeeCommonExpensesWeeklyScheduleWeakOverYear_PaychecksFilledWithOnePaycheck)
+{
+	Payroll::Database db{};
+	Payroll::Paychecks pcs{};
+	Date d{ 1,1,2021 };
+	int empid = 1;
+	Payroll::AddHourlyEmployee(empid, "CG", 10.0, &db).Execute();
+	Payroll::TimeCardTransaction({ 28,12,2020 }, 5, empid, &db).Execute();
+	Payroll::PaydayTransaction pdtrans{ &pcs, d, &db };
+
+	pdtrans.Execute();
+
+	Payroll::Paycheck pc{ {26,12,2020}, {1,1,2021} };
+	pc.m_grossPay = 50.0;
+	pc.m_netPay = 35.0;
+	pc.m_deductions = 15.0;
+	EXPECT_EQ(pcs[empid], pc);
+}
+
+TEST(TestPaydayTransaction, Execute_PaydayOnOneHourlyEmployeeCommonExpensesWeeklyScheduleMutlipleTCDiffDays_PaychecksFilledWithOnePaycheck)
+{
+	Payroll::Database db{};
+	Payroll::Paychecks pcs{};
+	Date d{ 1,1,2021 };
+	int empid = 1;
+	Payroll::AddHourlyEmployee(empid, "CG", 10.0, &db).Execute();
+	Payroll::TimeCardTransaction({ 27,12,2020 }, 5, empid, &db).Execute();
+	Payroll::TimeCardTransaction({ 28,12,2020 }, 5, empid, &db).Execute();
+	Payroll::PaydayTransaction pdtrans{ &pcs, d, &db };
+
+	pdtrans.Execute();
+
+	Payroll::Paycheck pc{ {26,12,2020}, {1,1,2021} };
+	pc.m_grossPay = 100;
+	pc.m_netPay = 70.0;
+	pc.m_deductions = 30.0;
+	EXPECT_EQ(pcs[empid], pc);
+}
+
+TEST(TestPaydayTransaction, Execute_PaydayOnOneHourlyEmployeeCommonExpensesWeeklyScheduleMutlipleTCSameDay_PaychecksFilledWithOnePaycheckSum)
+{
+	Payroll::Database db{};
+	Payroll::Paychecks pcs{};
+	Date d{ 1,1,2021 };
+	int empid = 1;
+	Payroll::AddHourlyEmployee(empid, "CG", 10.0, &db).Execute();
+	Payroll::TimeCardTransaction({ 28,12,2020 }, 2, empid, &db).Execute();
+	Payroll::TimeCardTransaction({ 28,12,2020 }, 3, empid, &db).Execute();
+	Payroll::PaydayTransaction pdtrans{ &pcs, d, &db };
+
+	pdtrans.Execute();
+
+	Payroll::Paycheck pc{ {26,12,2020}, {1,1,2021} };
+	pc.m_grossPay = 50.0;
+	pc.m_netPay = 35.0;
+	pc.m_deductions = 15.0;
+	EXPECT_EQ(pcs[empid], pc);
+}
+
+TEST(TestPaydayTransaction, Execute_PaydayOnOneHourlyEmployeeCommonExpensesWeeklyScheduleMutlipleTCDiffDaysOvertime_PaychecksFilledWithOnePaycheck)
+{
+	Payroll::Database db{};
+	Payroll::Paychecks pcs{};
+	Date d{ 1,1,2021 };
+	int empid = 1;
+	Payroll::AddHourlyEmployee(empid, "CG", 10.0, &db).Execute();
+	Payroll::TimeCardTransaction({ 27,12,2020 }, 10, empid, &db).Execute();
+	Payroll::TimeCardTransaction({ 28,12,2020 }, 10, empid, &db).Execute();
+	Payroll::PaydayTransaction pdtrans{ &pcs, d, &db };
+
+	pdtrans.Execute();
+
+	Payroll::Paycheck pc{ {26,12,2020}, {1,1,2021} };
+	pc.m_grossPay = 220.0;
+	pc.m_netPay = 154.0;
+	pc.m_deductions = 66.0;
+	EXPECT_EQ(pcs[empid], pc);
+}
+
+TEST(TestPaydayTransaction, Execute_PaydayOnOneHourlyEmployeeCommonExpensesWeeklyScheduleMutlipleTCSameDayOvertime_PaychecksFilledWithOnePaycheckSum)
+{
+	Payroll::Database db{};
+	Payroll::Paychecks pcs{};
+	Date d{ 1,1,2021 };
+	int empid = 1;
+	Payroll::AddHourlyEmployee(empid, "CG", 10.0, &db).Execute();
+	Payroll::TimeCardTransaction({ 28,12,2020 }, 5, empid, &db).Execute();
+	Payroll::TimeCardTransaction({ 28,12,2020 }, 5, empid, &db).Execute();
+	Payroll::PaydayTransaction pdtrans{ &pcs, d, &db };
+
+	pdtrans.Execute();
+
+	Payroll::Paycheck pc{ {26,12,2020}, {1,1,2021} };
+	pc.m_grossPay = 110.0;
+	pc.m_netPay = 77.0;
+	pc.m_deductions = 33.0;
+	EXPECT_EQ(pcs[empid], pc);
+}
+
+TEST(TestPaydayTransaction, Execute_PaydayOnOneSalariedEmployeeGermanExpensesMonthlyScheduleLegacyExpenseClassy_PaychecksFilledWithOnePaycheck)
+{
+	Payroll::Database db{};
+	Payroll::Paychecks pcs{};
+	Date d{ 31,12,2000 };
+	int empid = 1;
+	Payroll::AddSalariedEmployee(empid, "CG", 2500.0, &db).Execute();
+	Payroll::ChangeGermanExpenses(empid, &db).Execute();
+	Payroll::PaydayTransaction pdtrans{ &pcs, d, &db };
+
+	pdtrans.Execute();
+
+	Payroll::Paycheck pc{ {1,12,2000}, {31,12,2000} };
+	pc.m_grossPay = 2500.0;
+	pc.m_netPay = 1670.0;
+	pc.m_deductions = 830.0;
+	EXPECT_EQ(pcs[empid], pc);
+}
+
+TEST(TestPaydayTransaction, Execute_PaydayOnOneSalariedEmployeeGermanExpensesMonthlyScheduleLegacyExpenseWellPayed_PaychecksFilledWithOnePaycheck)
+{
+	Payroll::Database db{};
+	Payroll::Paychecks pcs{};
+	Date d{ 31,12,2000 };
+	int empid = 1;
+	Payroll::AddSalariedEmployee(empid, "CG", 4000.0, &db).Execute();
+	Payroll::ChangeGermanExpenses(empid, &db).Execute();
+	Payroll::PaydayTransaction pdtrans{ &pcs, d, &db };
+
+	pdtrans.Execute();
+
+	Payroll::Paycheck pc{ {1,12,2000}, {31,12,2000} };
+	pc.m_grossPay = 4000.0;
+	pc.m_netPay = 2600.0;
+	pc.m_deductions = 1400.0;
+	EXPECT_EQ(pcs[empid], pc);
+}
+
+TEST(TestPaydayTransaction, Execute_PaydayOnOneSalariedEmployeeGermanExpensesMonthlyScheduleLegacyExpenseVeryWellPayed_PaychecksFilledWithOnePaycheck)
+{
+	Payroll::Database db{};
+	Payroll::Paychecks pcs{};
+	Date d{ 31,12,2000 };
+	int empid = 1;
+	Payroll::AddSalariedEmployee(empid, "CG", 10000.0, &db).Execute();
+	Payroll::ChangeGermanExpenses(empid, &db).Execute();
+	Payroll::PaydayTransaction pdtrans{ &pcs, d, &db };
+
+	pdtrans.Execute();
+
+	Payroll::Paycheck pc{ {1,12,2000}, {31,12,2000} };
+	pc.m_grossPay = 10000.0;
+	pc.m_netPay = 4592,0;
+	pc.m_deductions = 5408.0;
+	EXPECT_EQ(pcs[empid], pc);
+}

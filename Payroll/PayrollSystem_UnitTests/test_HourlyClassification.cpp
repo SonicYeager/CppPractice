@@ -1,6 +1,17 @@
 #include "gmock/gmock.h"
 #include "../PayrollSystem/HourlyClassification.h"
 
+TEST(TestHourlyClassification, CalculatePay_Rate9ZeroTimeCard_ReturnZero)
+{
+	Payroll::HourlyClassification hc{ 9.0 };
+	Payroll::Paycheck pc{ {1, 2, 2000 }, {3, 2, 2000 } };
+
+	auto actual = hc.CalculatePay(pc);
+	double expected = 0.0;
+
+	EXPECT_EQ(actual, expected);
+}
+
 TEST(TestHourlyClassification, CalculatePay_Rate9OneTimeCard5HNoOvertime_Return45)
 {
 	Payroll::HourlyClassification hc{9.0};
@@ -38,6 +49,21 @@ TEST(TestHourlyClassification, CalculatePay_Rate9MultipleTimeCard5HNoOvertime_Re
 
 	auto actual = hc.CalculatePay(pc);
 	double expected = 90.0;
+
+	EXPECT_EQ(actual, expected);
+}
+
+TEST(TestHourlyClassification, CalculatePay_Rate9MultipleTimeCardSameDay5HOvertime_Return90)
+{
+	Payroll::HourlyClassification hc{ 9.0 };
+	Payroll::Paycheck pc{ {1, 2, 2000 }, {4, 2, 2000 } };
+	Payroll::TimeCard tc1{ {2, 2, 2000 }, 5.0 };
+	Payroll::TimeCard tc2{ {2, 2, 2000 }, 5.0 };
+	hc.AddTimeCard(tc1);
+	hc.AddTimeCard(tc2);
+
+	auto actual = hc.CalculatePay(pc);
+	double expected = 99.0;
 
 	EXPECT_EQ(actual, expected);
 }

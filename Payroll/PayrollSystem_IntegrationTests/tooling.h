@@ -8,6 +8,10 @@
 #include "../PayrollSystem/MonthlySchedule.h"
 #include "../PayrollSystem/CommonExpenses.h"
 #include "../PayrollSystem/GermanExpenses.h"
+#include "../PayrollSystem/AddSalariedEmployee.h"
+#include "../PayrollSystem/AddHourlyEmployee.h"
+#include "../PayrollSystem/TimeCardTransaction.h"
+#include "../PayrollSystem/ChangeGermanExpenses.h"
 
 namespace Payroll
 {
@@ -144,48 +148,6 @@ Payroll::Paychecks GetExpectedPaychecksHourlyEmployeeWithoutTC()
 	Payroll::Paychecks pcs{ {1,{pc1}} };
 	return pcs;
 }
-
-//incorrect
-Payroll::Paychecks GetExpectedPaychecksHourlyEmployeeWrongDate()
-{
-	Payroll::Paycheck pc1{ {31,0,2021}, {6,1,2021} };
-	pc1.m_grossPay = 20.0;
-	pc1.m_netPay = 14.0;
-	pc1.m_deductions = 6.0;
-	Payroll::Paychecks pcs{ {1,{pc1}} };
-	return pcs;
-}
-
-Payroll::Paychecks GetExpectedPaychecksHourlyEmployeeMultiTCWrongDate()
-{
-	Payroll::Paycheck pc1{ {31,0,2021}, {6,1,2021} };
-	pc1.m_grossPay = 40.0;
-	pc1.m_netPay = 28.0;
-	pc1.m_deductions = 12;
-	Payroll::Paychecks pcs{ {1,{pc1}} };
-	return pcs;
-}
-
-Payroll::Paychecks GetExpectedPaychecksHourlyEmployeeMultiTCWrongDateWrongPay()
-{
-	Payroll::Paycheck pc1{ {31,0,2021}, {6,1,2021} };
-	pc1.m_grossPay = 20.0;
-	pc1.m_netPay = 14.0;
-	pc1.m_deductions = 6;
-	Payroll::Paychecks pcs{ {1,{pc1}} };
-	return pcs;
-}
-
-Payroll::Paychecks GetExpectedPaychecksHourlyEmployeeWithoutTCWrongDate()
-{
-	Payroll::Paycheck pc1{ {31,0,2021}, {6,1,2021} };
-	pc1.m_grossPay = 0.0;
-	pc1.m_netPay = 0.0;
-	pc1.m_deductions = 0.0;
-	Payroll::Paychecks pcs{ {1,{pc1}} };
-	return pcs;
-}
-//
 
 Payroll::Paychecks GetExpectedPaychecksSalariedEmployee()
 {

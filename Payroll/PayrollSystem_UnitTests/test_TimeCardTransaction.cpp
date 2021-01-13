@@ -10,7 +10,6 @@ namespace Payroll
 	}
 }
 
-
 TEST(TestTimeCardTransaction, Execute_EmployeeExistsHourlyClassificationExists_ExecuteTimeCardIsAdded)
 {
 	Payroll::Database db{};
