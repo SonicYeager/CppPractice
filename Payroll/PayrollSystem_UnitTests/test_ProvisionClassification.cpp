@@ -3,7 +3,7 @@
 
 TEST(TestProvisionClassification, CalculatePay_ZeroReceiptPerc10Sal1000_Return1000)
 {
-	Payroll::ProvisionClassification proc{ 10.0, 1000.0 };
+	Payroll::ProvisionClassification proc{ 0.1, 1000.0 };
 	Payroll::Paycheck pc{ {1, 2, 2000 }, {3, 2, 2000 } };
 
 	auto actual = proc.CalculatePay(pc);
@@ -12,9 +12,9 @@ TEST(TestProvisionClassification, CalculatePay_ZeroReceiptPerc10Sal1000_Return10
 	EXPECT_EQ(actual, expected);
 }
 
-TEST(TestHourlyClassification, CalculatePay_OneReceipt1000ReceiptPerc10Sal1000_Return1100)
+TEST(TestProvisionClassification, CalculatePay_OneReceipt1000ReceiptPerc10Sal1000_Return1100)
 {
-	Payroll::ProvisionClassification proc{ 10.0, 1000.0 };
+	Payroll::ProvisionClassification proc{ 0.1, 1000.0 };
 	Payroll::Paycheck pc{ {1, 2, 2000 }, {3, 2, 2000 } };
 	Payroll::Receipt tc{ {2, 2, 2000 }, 1000.0 };
 	proc.AddReceipt(tc);
@@ -25,9 +25,9 @@ TEST(TestHourlyClassification, CalculatePay_OneReceipt1000ReceiptPerc10Sal1000_R
 	EXPECT_EQ(actual, expected);
 }
 
-TEST(TestHourlyClassification, CalculatePay_MultipleReceipts1000DiffDaysReceiptPerc10Sal1000_Return1300)
+TEST(TestProvisionClassification, CalculatePay_MultipleReceipts1000DiffDaysReceiptPerc10Sal1000_Return1300)
 {
-	Payroll::ProvisionClassification proc{ 10.0, 1000.0 };
+	Payroll::ProvisionClassification proc{ 0.1, 1000.0 };
 	Payroll::Paycheck pc{ {1, 2, 2000 }, {5, 2, 2000 } };
 	Payroll::Receipt tc{ {2, 2, 2000 }, 1000.0 };
 	Payroll::Receipt tc2{ {3, 2, 2000 }, 1000.0 };
@@ -42,9 +42,9 @@ TEST(TestHourlyClassification, CalculatePay_MultipleReceipts1000DiffDaysReceiptP
 	EXPECT_EQ(actual, expected);
 }
 
-TEST(TestHourlyClassification, CalculatePay_MultipleReceipts1000SameDayReceiptPerc10Sal1000_Return1300)
+TEST(TestProvisionClassification, CalculatePay_MultipleReceipts1000SameDayReceiptPerc10Sal1000_Return1300)
 {
-	Payroll::ProvisionClassification proc{ 10.0, 1000.0 };
+	Payroll::ProvisionClassification proc{ 0.1, 1000.0 };
 	Payroll::Paycheck pc{ {1, 2, 2000 }, {3, 2, 2000 } };
 	Payroll::Receipt tc{ {2, 2, 2000 }, 1000.0 };
 	Payroll::Receipt tc2{ {2, 2, 2000 }, 1000.0 };

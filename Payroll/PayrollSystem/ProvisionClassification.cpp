@@ -7,14 +7,24 @@ namespace Payroll
 		, m_sharesPercentage(sharesPercentage)
 	{}
 	
-	double ProvisionClassification::CalculatePay(const Paycheck&)
+	double ProvisionClassification::CalculatePay(const Paycheck& pc)
 	{
-		return 0.0;	//TODO
+		double totalPay = 0.0;
+		for(const auto& receipt : m_receipts)
+		{
+			if(Date::IsInPeriod(receipt.first, pc.m_payPeriodStart, pc.m_payPeriodEnd))
+				totalPay += CalculatePayForTimeCard(receipt.second);
+		}
+		return totalPay + m_salary;
 	}
 	
-	void ProvisionClassification::AddReceipt(Receipt)
+	void ProvisionClassification::AddReceipt(Receipt r)
 	{
-		//TODO
+		auto etc = m_receipts.find(r.GetDate());
+		if(etc == m_receipts.end())
+			m_receipts[r.GetDate()] = r;
+		else
+			m_receipts[r.GetDate()] = Receipt(r.GetDate(), m_receipts[r.GetDate()].GetRevenue() + r.GetRevenue());
 	}
 	
 	Receipt ProvisionClassification::GetReceipt(Date d)
@@ -22,9 +32,8 @@ namespace Payroll
 		return m_receipts.at(d);
 	}
 	
-	double ProvisionClassification::CalculatePayForTimeCard(Receipt second)
+	double ProvisionClassification::CalculatePayForTimeCard(Receipt receipt)
 	{
-		return 0.0;	//TODO
-	
+		return receipt.GetRevenue() * m_sharesPercentage;
 	}
 }

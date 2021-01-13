@@ -37,7 +37,7 @@ TEST(TestBiweeklySchedule, IsPayDate_IsNotPayDateWedThirdWeek_ReturnFalse)
 	EXPECT_FALSE(actual);
 }
 
-TEST(TestWeeklySchedule, GetPayPeriodStartDate_Friday53rdWeek_ReturnSatFrom52ndWeekYearBefore)
+TEST(TestBiweeklySchedule, GetPayPeriodStartDate_Friday53rdWeek_ReturnSatFrom52ndWeekYearBefore)
 {
 	Payroll::BiweeklySchedule ws{};
 
@@ -47,7 +47,7 @@ TEST(TestWeeklySchedule, GetPayPeriodStartDate_Friday53rdWeek_ReturnSatFrom52ndW
 	EXPECT_EQ(actual, expected);
 }
 
-TEST(TestWeeklySchedule, GetPayPeriodStartDate_Friday2ndWeek_ReturnSatFrom53rdWeek)
+TEST(TestBiweeklySchedule, GetPayPeriodStartDate_Friday2ndWeek_ReturnSatFrom53rdWeek)
 {
 	Payroll::BiweeklySchedule ws{};
 
