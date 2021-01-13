@@ -1,6 +1,6 @@
 #pragma once
-#include "PaymentClassification.h"
 #include <map>
+#include "PaymentClassification.h"
 #include "TimeCard.h"
 
 namespace Payroll

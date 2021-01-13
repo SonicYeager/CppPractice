@@ -53,6 +53,18 @@
     <ClCompile Include="Date.cpp">
       <Filter>Data</Filter>
     </ClCompile>
+    <ClCompile Include="AddProvisionalEmployee.cpp">
+      <Filter>NewFeature</Filter>
+    </ClCompile>
+    <ClCompile Include="Receipt.cpp">
+      <Filter>NewFeature</Filter>
+    </ClCompile>
+    <ClCompile Include="ProvisionClassification.cpp">
+      <Filter>NewFeature</Filter>
+    </ClCompile>
+    <ClCompile Include="BiweeklySchedule.cpp">
+      <Filter>NewFeature</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Transaction.h">
@@ -121,6 +133,18 @@
     <ClInclude Include="Date.h">
       <Filter>Data</Filter>
     </ClInclude>
+    <ClInclude Include="BiweeklySchedule.h">
+      <Filter>NewFeature</Filter>
+    </ClInclude>
+    <ClInclude Include="ProvisionClassification.h">
+      <Filter>NewFeature</Filter>
+    </ClInclude>
+    <ClInclude Include="Receipt.h">
+      <Filter>NewFeature</Filter>
+    </ClInclude>
+    <ClInclude Include="AddProvisionalEmployee.h">
+      <Filter>NewFeature</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Base">
@@ -146,6 +170,9 @@
     </Filter>
     <Filter Include="Implementation\Transaction\Source">
       <UniqueIdentifier>{6eec5e16-1e9d-43c6-b8fd-3523d08b85a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewFeature">
+      <UniqueIdentifier>{b1324654-11b6-48bf-90c6-dac8794a638f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

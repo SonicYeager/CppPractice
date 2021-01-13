@@ -71,7 +71,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AddHourlyEmployee.cpp" />
+    <ClCompile Include="AddProvisionalEmployee.cpp" />
     <ClCompile Include="AddSalariedEmployee.cpp" />
+    <ClCompile Include="BiweeklySchedule.cpp" />
     <ClCompile Include="ChangeEmployeeTransaction.cpp" />
     <ClCompile Include="ChangeGermanExpenses.cpp" />
     <ClCompile Include="Date.cpp" />
@@ -84,6 +86,8 @@
     <ClCompile Include="Employee.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="AddEmployeeTransaction.cpp" />
+    <ClCompile Include="ProvisionClassification.cpp" />
+    <ClCompile Include="Receipt.cpp" />
     <ClCompile Include="SalariedClassification.cpp" />
     <ClCompile Include="TimeCard.cpp" />
     <ClCompile Include="TimeCardTransaction.cpp" />
@@ -91,7 +95,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AddHourlyEmployee.h" />
+    <ClInclude Include="AddProvisionalEmployee.h" />
     <ClInclude Include="AddSalariedEmployee.h" />
+    <ClInclude Include="BiweeklySchedule.h" />
     <ClInclude Include="ChangeEmployeeTransaction.h" />
     <ClInclude Include="ChangeGermanExpenses.h" />
     <ClInclude Include="Expenses.h" />
@@ -107,6 +113,8 @@
     <ClInclude Include="Employee.h" />
     <ClInclude Include="PaymentSchedule.h" />
     <ClInclude Include="AddEmployeeTransaction.h" />
+    <ClInclude Include="ProvisionClassification.h" />
+    <ClInclude Include="Receipt.h" />
     <ClInclude Include="SalariedClassification.h" />
     <ClInclude Include="TimeCard.h" />
     <ClInclude Include="TimeCardTransaction.h" />
