@@ -37,5 +37,8 @@
     <ClCompile Include="test_ProvisionClassification.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="test_ReceiptTransaction.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

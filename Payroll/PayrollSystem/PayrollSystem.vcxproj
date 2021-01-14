@@ -88,6 +88,7 @@
     <ClCompile Include="AddEmployeeTransaction.cpp" />
     <ClCompile Include="ProvisionClassification.cpp" />
     <ClCompile Include="Receipt.cpp" />
+    <ClCompile Include="ReceiptTransaction.cpp" />
     <ClCompile Include="SalariedClassification.cpp" />
     <ClCompile Include="TimeCard.cpp" />
     <ClCompile Include="TimeCardTransaction.cpp" />
@@ -115,6 +116,7 @@
     <ClInclude Include="AddEmployeeTransaction.h" />
     <ClInclude Include="ProvisionClassification.h" />
     <ClInclude Include="Receipt.h" />
+    <ClInclude Include="ReceiptTransaction.h" />
     <ClInclude Include="SalariedClassification.h" />
     <ClInclude Include="TimeCard.h" />
     <ClInclude Include="TimeCardTransaction.h" />

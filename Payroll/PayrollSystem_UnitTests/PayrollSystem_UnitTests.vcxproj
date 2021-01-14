@@ -157,6 +157,7 @@
     <ClCompile Include="test_HourlyClassification.cpp" />
     <ClCompile Include="test_MonthlySchedule.cpp" />
     <ClCompile Include="test_ProvisionClassification.cpp" />
+    <ClCompile Include="test_ReceiptTransaction.cpp" />
     <ClCompile Include="test_TimeCardTransaction.cpp" />
     <ClCompile Include="test_WeeklySchedule.cpp" />
   </ItemGroup>

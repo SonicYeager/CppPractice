@@ -12,6 +12,8 @@
 #include "../PayrollSystem/AddHourlyEmployee.h"
 #include "../PayrollSystem/TimeCardTransaction.h"
 #include "../PayrollSystem/ChangeGermanExpenses.h"
+#include "../PayrollSystem/AddProvisionalEmployee.h"
+#include "../PayrollSystem/ReceiptTransaction.h"
 
 namespace Payroll
 {

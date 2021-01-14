@@ -12,7 +12,7 @@ namespace Payroll
 
 	std::unique_ptr<PaymentClassification>AddProvisionalEmployee::MakeClassification()
 	{
-		return std::make_unique<ProvisionClassification>(m_salary, m_sharesPercentage);
+		return std::make_unique<ProvisionClassification>(m_sharesPercentage, m_salary);
 	}
 
 	std::unique_ptr<PaymentSchedule>AddProvisionalEmployee::MakeSchedule()

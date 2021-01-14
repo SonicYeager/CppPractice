@@ -65,6 +65,9 @@
     <ClCompile Include="BiweeklySchedule.cpp">
       <Filter>NewFeature</Filter>
     </ClCompile>
+    <ClCompile Include="ReceiptTransaction.cpp">
+      <Filter>NewFeature</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Transaction.h">
@@ -143,6 +146,9 @@
       <Filter>NewFeature</Filter>
     </ClInclude>
     <ClInclude Include="AddProvisionalEmployee.h">
+      <Filter>NewFeature</Filter>
+    </ClInclude>
+    <ClInclude Include="ReceiptTransaction.h">
       <Filter>NewFeature</Filter>
     </ClInclude>
   </ItemGroup>

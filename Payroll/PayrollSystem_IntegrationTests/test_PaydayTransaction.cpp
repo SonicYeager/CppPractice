@@ -305,3 +305,116 @@ TEST(TestPaydayTransaction, Execute_PaydayOnOneSalariedEmployeeGermanExpensesMon
 	pc.m_deductions = 5408.0;
 	EXPECT_EQ(pcs[empid], pc);
 }
+
+TEST(TestPaydayTransaction, Execute_PaydayOnOneProvisionalEmployeeCommonExpensesBiweeklyScheduleWithOneProvision53rdWeek_PaychecksFilledWithOnePaycheck)
+{
+	Payroll::Database db{};
+	Payroll::Paychecks pcs{};
+	Date d{ 1,1,2021 };
+	int empid = 1;
+	Payroll::AddProvisionalEmployee(empid, "CG", 1000.0, 0.1, &db).Execute();
+	Payroll::ReceiptTransaction({ 28,12,2020 }, 1000, empid, &db).Execute();
+	Payroll::PaydayTransaction pdtrans{ &pcs, d, &db };
+
+	pdtrans.Execute();
+
+	Payroll::Paycheck pc{ {26,12,2020}, {1,1,2021} };
+	pc.m_grossPay = 1100.0;
+	pc.m_netPay = 770.0;
+	pc.m_deductions = 330.0;
+	EXPECT_EQ(pcs[empid], pc);
+}
+
+TEST(TestPaydayTransaction, Execute_PaydayOnOneProvisionalEmployeeCommonExpensesBiweeklyScheduleNoProvision_PaychecksFilledWithOnePaycheck)
+{
+	Payroll::Database db{};
+	Payroll::Paychecks pcs{};
+	Date d{ 1,1,2021 };
+	int empid = 1;
+	Payroll::AddProvisionalEmployee(empid, "CG", 1000.0, 0.1, &db).Execute();
+	Payroll::PaydayTransaction pdtrans{ &pcs, d, &db };
+
+	pdtrans.Execute();
+
+	Payroll::Paycheck pc{ {26,12,2020}, {1,1,2021} };
+	pc.m_grossPay = 1000.0;
+	pc.m_netPay = 700.0;
+	pc.m_deductions = 300.0;
+	EXPECT_EQ(pcs[empid], pc);
+}
+
+TEST(TestPaydayTransaction, Execute_PaydayOnOneProvisionalEmployeeCommonExpensesBiweeklyScheduleSeveralProvisions_PaychecksFilledWithOnePaycheck)
+{
+	Payroll::Database db{};
+	Payroll::Paychecks pcs{};
+	Date d{ 1,1,2021 };
+	int empid = 1;
+	Payroll::AddProvisionalEmployee(empid, "CG", 1000.0, 0.1, &db).Execute();
+	Payroll::ReceiptTransaction({ 28,12,2020 }, 1000, empid, &db).Execute();
+	Payroll::ReceiptTransaction({ 29,12,2020 }, 1000, empid, &db).Execute();
+	Payroll::ReceiptTransaction({ 27,12,2020 }, 1000, empid, &db).Execute();
+	Payroll::PaydayTransaction pdtrans{ &pcs, d, &db };
+
+	pdtrans.Execute();
+
+	Payroll::Paycheck pc{ {26,12,2020}, {1,1,2021} };
+	pc.m_grossPay = 1300.0;
+	pc.m_netPay = 910.0;
+	pc.m_deductions = 390.0;
+	EXPECT_EQ(pcs[empid], pc);
+}
+
+TEST(TestPaydayTransaction, Execute_PaydayOnOneProvisionalEmployeeCommonExpensesBiweeklyScheduleSeveralProvisionsSameDay_PaychecksFilledWithOnePaycheck)
+{
+	Payroll::Database db{};
+	Payroll::Paychecks pcs{};
+	Date d{ 1,1,2021 };
+	int empid = 1;
+	Payroll::AddProvisionalEmployee(empid, "CG", 1000.0, 0.1, &db).Execute();
+	Payroll::ReceiptTransaction({ 28,12,2020 }, 1000, empid, &db).Execute();
+	Payroll::ReceiptTransaction({ 28,12,2020 }, 1000, empid, &db).Execute();
+	Payroll::ReceiptTransaction({ 28,12,2020 }, 1000, empid, &db).Execute();
+	Payroll::PaydayTransaction pdtrans{ &pcs, d, &db };
+
+	pdtrans.Execute();
+
+	Payroll::Paycheck pc{ {26,12,2020}, {1,1,2021} };
+	pc.m_grossPay = 1300.0;
+	pc.m_netPay = 910.0;
+	pc.m_deductions = 390.0;
+	EXPECT_EQ(pcs[empid], pc);
+}
+
+TEST(TestPaydayTransaction, Execute_NoPaydayOnOneProvisionalEmployeeCommonExpensesBiweeklyScheduleNoProvision_PaychecksFilledWithOnePaycheck)
+{
+	Payroll::Database db{};
+	Payroll::Paychecks pcs{};
+	Date d{ 2,1,2021 };
+	int empid = 1;
+	Payroll::AddProvisionalEmployee(empid, "CG", 1000.0, 0.1, &db).Execute();
+	Payroll::PaydayTransaction pdtrans{ &pcs, d, &db };
+
+	pdtrans.Execute();
+
+	Payroll::Paycheck pc{ };
+	EXPECT_EQ(pcs[empid], pc);
+}
+
+TEST(TestPaydayTransaction, Execute_PaydayOnOneProvisionalEmployeeCommonExpensesBiweeklyScheduleWithOneProvisionSecondWeek_PaychecksFilledWithOnePaycheck)
+{
+	Payroll::Database db{};
+	Payroll::Paychecks pcs{};
+	Date d{ 15,1,2021 };
+	int empid = 1;
+	Payroll::AddProvisionalEmployee(empid, "CG", 1000.0, 0.1, &db).Execute();
+	Payroll::ReceiptTransaction({ 3,1,2021 }, 1000, empid, &db).Execute();
+	Payroll::PaydayTransaction pdtrans{ &pcs, d, &db };
+
+	pdtrans.Execute();
+
+	Payroll::Paycheck pc{ {2,1,2021}, {15,1,2021} };
+	pc.m_grossPay = 1100.0;
+	pc.m_netPay = 770.0;
+	pc.m_deductions = 330.0;
+	EXPECT_EQ(pcs[empid], pc);
+}
