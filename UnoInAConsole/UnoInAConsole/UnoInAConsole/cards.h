@@ -35,6 +35,26 @@ struct Card
 	CARDSYMBOL symbol{};
 };
 
+struct ConsoleRepresentation
+{
+
+	std::string Get()
+	{
+
+	}
+
+private:
+	std::map<CARDCOLOR, std::string> color
+	{
+		{CARDCOLOR::NONE, "none"},
+		{CARDCOLOR::BLUE, "blue"},
+		{CARDCOLOR::RED, "red"},
+		{CARDCOLOR::YELLOW, "yellow"}
+	};
+	std::map<CARDSYMBOL, std::string> symbol{};
+};
+
+/*
 const std::string blueone{"1 - Blue"};
 const std::string bluetwo{ "2 - Blue" };
 const std::string bluethree{ "3 - Blue" };
@@ -90,3 +110,4 @@ const std::string yellowzero{ "0 - Yellow" };
 const std::string yellowreverse{ "<< - Yellow" };
 const std::string yellowsuspend{ "/ - Yellow" };
 const std::string yellowdraw{ "+2 - Yellow" };
+*/
