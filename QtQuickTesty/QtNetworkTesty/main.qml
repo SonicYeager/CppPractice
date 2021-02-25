@@ -1,22 +1,37 @@
 import QtQuick 2.15
+import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.3
 
 ApplicationWindow {
-    width: 640
-    height: 480
+    width: 200
+    height: 200
     visible: true
-    title: qsTr("Scroll")
+    title: qsTr("Prototype")
 
-    ScrollView {
+    ColumnLayout{
+        id: buttons
         anchors.fill: parent
-
-        ListView {
-            id: listView
-            width: parent.width
-            model: 20
-            delegate: ItemDelegate {
-                text: "Item " + (index + 1)
-                width: listView.width
+        Layout.alignment: Qt.AlignHCenter
+        Label{
+            Layout.alignment: Qt.AlignHCenter
+            text: qmlAdapter.labelText
+        }
+        RowLayout{
+            Layout.alignment: Qt.AlignHCenter
+            Button{
+                id: buttonhost
+                text: "Host";
+                onClicked: {
+                    //qmlAdapter.prepareNextRound();
+                }
+            }
+            Button{
+                id: buttonjoin
+                text: "Join"
+                onClicked: {
+                    //qmlAdapter.prepareNextRound();
+                }
             }
         }
     }
