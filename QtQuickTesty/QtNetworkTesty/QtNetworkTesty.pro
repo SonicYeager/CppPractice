@@ -1,6 +1,6 @@
 QT += quick
 
-CONFIG += c++11
+CONFIG += c++17
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -24,6 +24,19 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
+QMAKE_LFLAGS += /STACK:256000000
+
 HEADERS += \
     controller.h \
     qmladapter.h
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../BackEnd/x64/Release/ -lBackEnd
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../BackEnd/x64/Debug/ -lBackEnd
+
+INCLUDEPATH += $$PWD/../BackEnd/BackEnd
+DEPENDPATH += $$PWD/../BackEnd/BackEnd
+
+win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../BackEnd/x64/Release/libBackEnd.a
+else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../BackEnd/x64/Debug/libBackEnd.a
+else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../BackEnd/x64/Release/BackEnd.lib
+else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../BackEnd/x64/Debug/BackEnd.lib

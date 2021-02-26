@@ -3,6 +3,8 @@
 #include <QtCore/qglobal.h>
 #include <QtNetwork/qhostinfo.h>
 #include <QtNetwork/qnetworkinterface.h>
+#include <QtNetwork/qtcpserver.h>
+#include <QtNetwork/qtcpsocket.h>
 
 #ifndef BUILD_STATIC
 # if defined(BACKEND_LIB)

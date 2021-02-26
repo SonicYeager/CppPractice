@@ -1,12 +1,19 @@
 #pragma once
-
 #include "backend_global.h"
+#include "datatypes.h"
+#include "network.h"
 
-class BACKEND_EXPORT Interactor
+class Interactor
 {
 public:
-    Interactor();
+    Interactor(Network* );
 
-	//StartHost
-	//JoinHost
+	void StartHost();
+	void JoinHost();
+
+	Event<const std::string> onNewConnection;
+	Event<const std::string> onDataReceived;
+
+private:
+	Network* net{};
 };

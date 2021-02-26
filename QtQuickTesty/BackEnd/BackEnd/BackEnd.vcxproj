@@ -108,7 +108,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="network.cpp" />
     <ClInclude Include="backend_global.h" />
+    <ClInclude Include="datatypes.h" />
     <ClInclude Include="network.h" />
     <ClInclude Include="interactor.h" />
     <ClCompile Include="interactor.cpp" />

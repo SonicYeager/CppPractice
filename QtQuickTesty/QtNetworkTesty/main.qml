@@ -23,14 +23,14 @@ ApplicationWindow {
                 id: buttonhost
                 text: "Host";
                 onClicked: {
-                    //qmlAdapter.prepareNextRound();
+                    qmlAdapter.startHost();
                 }
             }
             Button{
                 id: buttonjoin
                 text: "Join"
                 onClicked: {
-                    //qmlAdapter.prepareNextRound();
+                    qmlAdapter.joinHost();
                 }
             }
         }

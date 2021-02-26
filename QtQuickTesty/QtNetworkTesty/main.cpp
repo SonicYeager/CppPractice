@@ -1,7 +1,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
-#include "qmladapter.h"
+#include "controller.h"
 
 int main(int argc, char *argv[])
 {
@@ -10,10 +10,10 @@ int main(int argc, char *argv[])
 #endif
 
     QmlAdapter qmlAdapter{};
-
-    //interactor
-    //Controller
-    //run
+    Network net{};
+    Interactor inter{&net};
+    controller cntr{&qmlAdapter, &inter};
+    cntr.Run();
 
     QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;

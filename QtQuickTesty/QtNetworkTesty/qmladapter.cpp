@@ -5,7 +5,7 @@ QmlAdapter::QmlAdapter(QObject *parent) : QObject(parent)
 
 void QmlAdapter::LogConnection(const std::string & logText)
 {
-    //setLabelText(logText);
+    setLabelText(logText.c_str());
 }
 
 QString QmlAdapter::getData()
@@ -32,10 +32,10 @@ void QmlAdapter::setLabelText(QString text)
 
 void QmlAdapter::startHost()
 {
-    //onStartHost
+    onStartHost();
 }
 
 void QmlAdapter::joinHost()
 {
-    //onJoinHost
+    onJoinHost();
 }

@@ -22,6 +22,11 @@
     <Filter Include="Resource">
       <UniqueIdentifier>{0bf5875e-58d3-47bb-bd28-23b32a0d73e9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+      <ParseFiles>true</ParseFiles>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="backend_global.h">
@@ -33,10 +38,16 @@
     <ClInclude Include="interactor.h">
       <Filter>Interactor</Filter>
     </ClInclude>
+    <ClInclude Include="datatypes.h">
+      <Filter>Data</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="interactor.cpp">
       <Filter>Interactor</Filter>
+    </ClCompile>
+    <ClCompile Include="network.cpp">
+      <Filter>Resource</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

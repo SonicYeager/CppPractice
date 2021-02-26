@@ -5,6 +5,7 @@
 #include <QObject>
 #include <QAbstractListModel>
 #include <string>
+#include "datatypes.h"
 
 class QmlAdapter : public QObject
 {
@@ -27,8 +28,8 @@ public:
     void setLabelText(QString text);
 
     //events
-    //Event<> onStartHost;
-    //Event<> onJoinHost;
+    Event<> onStartHost;
+    Event<> onJoinHost;
 
 public slots:
 
@@ -42,5 +43,5 @@ signals:
 
 private:
     QString _data = "";
-    QString _labelText = "Connections:\n";
+    QString _labelText = "Logs:\n";
 };
