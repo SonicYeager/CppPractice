@@ -22,6 +22,7 @@ public slots:
 	void ConnectionError(QAbstractSocket::SocketError);
 	void Connected();
 
+private:
 	QTcpServer server{};
 	QTcpSocket socket{};
 	std::vector<QTcpSocket*> connections;
