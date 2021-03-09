@@ -32,21 +32,21 @@
     <ClInclude Include="backend_global.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="network.h">
-      <Filter>Resource</Filter>
-    </ClInclude>
     <ClInclude Include="interactor.h">
       <Filter>Interactor</Filter>
     </ClInclude>
     <ClInclude Include="datatypes.h">
       <Filter>Data</Filter>
     </ClInclude>
+    <ClInclude Include="Network.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="interactor.cpp">
       <Filter>Interactor</Filter>
     </ClCompile>
-    <ClCompile Include="network.cpp">
+    <ClCompile Include="Network.cpp">
       <Filter>Resource</Filter>
     </ClCompile>
   </ItemGroup>

@@ -70,11 +70,13 @@
     <QtInstall>Six</QtInstall>
     <QtModules>core;network</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
+    <QtDeploy>false</QtDeploy>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
     <QtInstall>Six</QtInstall>
     <QtModules>core;network</QtModules>
     <QtBuildConfig>release</QtBuildConfig>
+    <QtDeploy>true</QtDeploy>
   </PropertyGroup>
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.props')">
     <Import Project="$(QtMsBuild)\qt.props" />
@@ -108,12 +110,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="network.cpp" />
+    <ClCompile Include="Network.cpp" />
     <ClInclude Include="backend_global.h" />
     <ClInclude Include="datatypes.h" />
-    <ClInclude Include="network.h" />
     <ClInclude Include="interactor.h" />
     <ClCompile Include="interactor.cpp" />
+    <ClInclude Include="Network.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

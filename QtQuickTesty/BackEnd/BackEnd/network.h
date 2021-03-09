@@ -1,29 +1,39 @@
 #pragma once
-#include "datatypes.h"
 #include "backend_global.h"
+#include "datatypes.h"
 
 const int PORT = 4242;
+const int HEADERSIZE = sizeof(int);
 
-struct Network : public QObject
+class Network : public QObject
 {
-	//funcs from flow design pls
-	explicit Network(QObject* parent = nullptr);
-	std::string GenerateLobbyCode();
-	void StartServer();
-	void ConnectToServer(const std::string&);
-	~Network();
+public:
+	Network();
 
-	Event<const std::string&> onLog;
-	Event<const std::string&> onDataReceived;
+	std::string GenerateLobbyCode();
+	LobbyCode StartServer();
+	void ConnectToServer(const LobbyCode&);
+	void WriteTo(const ByteStream&, int);
+	void WriteToHost(const ByteStream&);
+	void Broadcast(const ByteStream&);
+	ByteStream ReceiveData();
+	ByteStream ReceiveData(int);
+	void WaitForNewConnection();
+
+	Event<std::string> onLog;
+	Event<ByteStream> onData;
 
 public slots:
-	void NewConnection();
-	void ReadyRead();
-	void ConnectionError(QAbstractSocket::SocketError);
-	void Connected();
+	void OnNewConnection();
+	void OnSelfReceivedData();
+	void OnReceivedData(int);
+	void OnClientConnectError(const QAbstractSocket::SocketError&);
+	void OnHostConnectError(const QAbstractSocket::SocketError&);
+	void OnConnected();
 
 private:
-	QTcpServer server{};
-	QTcpSocket socket{};
-	std::vector<QTcpSocket*> connections;
+	QThread serverThread;
+	QTcpServer m_server;
+	QTcpSocket m_serverSocket;
+	std::vector<std::unique_ptr<QTcpSocket>> m_sockets;
 };
